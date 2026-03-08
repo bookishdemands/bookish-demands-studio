@@ -97,20 +97,15 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function randomizeAll() {
-    if (COMPLEXIONS.length) complexionSelect.value = pick(COMPLEXIONS);
-    if (BODY_TYPES.length) bodyTypeSelect.value = pick(BODY_TYPES);
-    if (FACE_SHAPES.length) faceShapeSelect.value = pick(FACE_SHAPES);
 
-    if (hairSelect.options.length) hairSelect.selectedIndex = Math.floor(Math.random() * hairSelect.options.length);
-    if (outfitSelect.options.length) outfitSelect.selectedIndex = Math.floor(Math.random() * outfitSelect.options.length);
-    if (expressionSelect.options.length) expressionSelect.selectedIndex = Math.floor(Math.random() * expressionSelect.options.length);
-    if (microSelect.options.length) microSelect.selectedIndex = Math.floor(Math.random() * microSelect.options.length);
-    if (attitudeSelect.options.length) attitudeSelect.selectedIndex = Math.floor(Math.random() * attitudeSelect.options.length);
-    if (poseSelect.options.length) poseSelect.selectedIndex = Math.floor(Math.random() * poseSelect.options.length);
-    if (propSelect.options.length) propSelect.selectedIndex = Math.floor(Math.random() * propSelect.options.length);
-    if (sceneSelect.options.length) sceneSelect.selectedIndex = Math.floor(Math.random() * sceneSelect.options.length);
-    if (paletteSelect.options.length) paletteSelect.selectedIndex = Math.floor(Math.random() * paletteSelect.options.length);
-  }
+  hairSelect.value = pick(HAIR);
+  outfitSelect.value = pick(OUTFITS);
+  expressionSelect.value = pick(EXPRESSIONS);
+  poseSelect.value = pick(POSES);
+  propSelect.value = pick(PROPS);
+  paletteSelect.value = pick(PALETTES);
+
+}
 
   function resetBuilder() {
   if (!ARCHETYPES.length) return;
