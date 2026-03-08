@@ -62,23 +62,21 @@ paletteSelect.value=pick(PALETTES);
 
 }
 
-function generate(){
+function generate() {
+  const archetype = archetypeSelect.value;
 
-const archetype=archetypeSelect.value;
+  const options = {
+    hair: hairSelect.value,
+    outfit: outfitSelect.value,
+    expression: expressionSelect.value,
+    pose: poseSelect.value,
+    prop: propSelect.value,
+    palette: paletteSelect.value
+  };
 
-const options={
-hair:hairSelect.value,
-outfit:outfitSelect.value,
-expression:expressionSelect.value,
-pose:poseSelect.value,
-prop:propSelect.value,
-palette:paletteSelect.value
-};
+  const prompt = buildCharacterPrompt(archetype, options);
 
-const prompt=buildCharacterPrompt(archetype,options);
-
-output.value=prompt;
-
+  output.value = prompt;
 }
 
 randomArchetypeBtn.onclick=()=>{
