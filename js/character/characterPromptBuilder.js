@@ -49,22 +49,28 @@ const STYLE_LOCK = [
   "sticker-friendly character design"
 ];
 
+function resolveValue(customValue, selectedValue, fallbackArray = []) {
+  if (customValue && customValue.trim()) return customValue.trim();
+  if (selectedValue && selectedValue.trim()) return selectedValue.trim();
+  return fallbackArray.length ? pick(fallbackArray) : "";
+}
+
 export function buildCharacterPrompt(archetype, options = {}) {
   const dna = ARCHETYPE_DNA[archetype] || ARCHETYPE_DNA["Soft Girl Menace"];
 
-  const complexion = options.complexion || pick(COMPLEXIONS);
-  const bodyType = options.bodyType || pick(BODY_TYPES);
-  const faceShape = options.faceShape || pick(FACE_SHAPES);
+  const complexion = resolveValue(options.complexionCustom, options.complexion, COMPLEXIONS);
+  const bodyType = resolveValue(options.bodyTypeCustom, options.bodyType, BODY_TYPES);
+  const faceShape = resolveValue(options.faceShapeCustom, options.faceShape, FACE_SHAPES);
 
-  const expression = options.expression || pick(dna.expression || []);
-  const micro = options.micro || pick(dna.micro || []);
-  const attitude = options.attitude || pick(dna.attitude || []);
-  const pose = options.pose || pick(dna.pose || []);
-  const prop = options.prop || pick(dna.prop || []);
-  const scene = options.scene || pick(dna.scene || []);
-  const outfit = options.outfit || pick(dna.outfit || []);
-  const hair = options.hair || pick(dna.hair || []);
-  const palette = options.palette || pick(dna.palette || []);
+  const hair = resolveValue(options.hairCustom, options.hair, dna.hair || []);
+  const outfit = resolveValue(options.outfitCustom, options.outfit, dna.outfit || []);
+  const expression = resolveValue(options.expressionCustom, options.expression, dna.expression || []);
+  const micro = resolveValue(options.microCustom, options.micro, dna.micro || []);
+  const attitude = resolveValue(options.attitudeCustom, options.attitude, dna.attitude || []);
+  const pose = resolveValue(options.poseCustom, options.pose, dna.pose || []);
+  const prop = resolveValue(options.propCustom, options.prop, dna.prop || []);
+  const scene = resolveValue(options.sceneCustom, options.scene, dna.scene || []);
+  const palette = resolveValue(options.paletteCustom, options.palette, dna.palette || []);
 
   const sections = [
     "PROMPT",
@@ -77,8 +83,8 @@ export function buildCharacterPrompt(archetype, options = {}) {
     outfit,
     "",
     "EXPRESSION",
-    `${expression} expression`,
-    `${micro} micro-expression`,
+    expression ? `${expression} expression` : "",
+    micro ? `${micro} micro-expression` : "",
     attitude,
     "",
     "ACTION",
@@ -87,8 +93,8 @@ export function buildCharacterPrompt(archetype, options = {}) {
     scene,
     "",
     "ARCHETYPE",
-    `reader archetype: ${archetype}`,
-    `palette influence: ${palette}`,
+    archetype ? `reader archetype: ${archetype}` : "",
+    palette ? `palette influence: ${palette}` : "",
     "",
     "STYLE",
     ...STYLE_LOCK,
