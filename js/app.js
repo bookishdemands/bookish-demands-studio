@@ -16,7 +16,7 @@ function fillSelect(selectEl, options) {
   if (!selectEl) return;
   selectEl.innerHTML = "";
 
-  (options || []).forEach(option => {
+  (options || []).forEach((option) => {
     const el = document.createElement("option");
     el.value = option;
     el.textContent = option;
@@ -25,7 +25,6 @@ function fillSelect(selectEl, options) {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  const studioMode = document.getElementById("studioMode");
   const archetypeSelect = document.getElementById("archetypeSelect");
   const hairSelect = document.getElementById("hairSelect");
   const outfitSelect = document.getElementById("outfitSelect");
@@ -45,14 +44,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function populateBuilderOptions(archetype) {
     const dna = ARCHETYPE_DNA[archetype];
-    if (!dna) return;
 
-    fillSelect(hairSelect, dna.hair || HAIR);
-    fillSelect(outfitSelect, dna.outfit || OUTFITS);
-    fillSelect(expressionSelect, dna.expression || EXPRESSIONS);
-    fillSelect(poseSelect, dna.pose || POSES);
-    fillSelect(propSelect, dna.prop || PROPS);
-    fillSelect(paletteSelect, dna.palette || PALETTES);
+    fillSelect(hairSelect, dna?.hair?.length ? dna.hair : HAIR);
+    fillSelect(outfitSelect, dna?.outfit?.length ? dna.outfit : OUTFITS);
+    fillSelect(expressionSelect, dna?.expression?.length ? dna.expression : EXPRESSIONS);
+    fillSelect(poseSelect, dna?.pose?.length ? dna.pose : POSES);
+    fillSelect(propSelect, dna?.prop?.length ? dna.prop : PROPS);
+    fillSelect(paletteSelect, dna?.palette?.length ? dna.palette : PALETTES);
   }
 
   function initialize() {
@@ -65,12 +63,12 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function randomizeAll() {
-    hairSelect.value = pick(HAIR);
-    outfitSelect.value = pick(OUTFITS);
-    expressionSelect.value = pick(EXPRESSIONS);
-    poseSelect.value = pick(POSES);
-    propSelect.value = pick(PROPS);
-    paletteSelect.value = pick(PALETTES);
+    if (HAIR.length) hairSelect.value = pick(HAIR);
+    if (OUTFITS.length) outfitSelect.value = pick(OUTFITS);
+    if (EXPRESSIONS.length) expressionSelect.value = pick(EXPRESSIONS);
+    if (POSES.length) poseSelect.value = pick(POSES);
+    if (PROPS.length) propSelect.value = pick(PROPS);
+    if (PALETTES.length) paletteSelect.value = pick(PALETTES);
   }
 
   function generate() {
