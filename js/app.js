@@ -26,107 +26,133 @@ function fillSelect(selectEl, options) {
 
 document.addEventListener("DOMContentLoaded", () => {
   const archetypeSelect = document.getElementById("archetypeSelect");
+  const complexionSelect = document.getElementById("complexionSelect");
+  const bodyTypeSelect = document.getElementById("bodyTypeSelect");
+  const faceShapeSelect = document.getElementById("faceShapeSelect");
   const hairSelect = document.getElementById("hairSelect");
   const outfitSelect = document.getElementById("outfitSelect");
   const expressionSelect = document.getElementById("expressionSelect");
+  const microSelect = document.getElementById("microSelect");
+  const attitudeSelect = document.getElementById("attitudeSelect");
   const poseSelect = document.getElementById("poseSelect");
   const propSelect = document.getElementById("propSelect");
+  const sceneSelect = document.getElementById("sceneSelect");
   const paletteSelect = document.getElementById("paletteSelect");
+
   const randomArchetypeBtn = document.getElementById("randomArchetypeBtn");
   const randomizeAllBtn = document.getElementById("randomizeAllBtn");
   const generateBtn = document.getElementById("generateBtn");
   const output = document.getElementById("output");
 
-  try {
-    output.value =
-      "DEBUG START\n\n" +
-      `ARCHETYPES: ${Array.isArray(ARCHETYPES) ? ARCHETYPES.length : "not array"}\n` +
-      `DNA keys: ${ARCHETYPE_DNA ? Object.keys(ARCHETYPE_DNA).length : "missing"}\n` +
-      `HAIR: ${Array.isArray(HAIR) ? HAIR.length : "not array"}\n` +
-      `OUTFITS: ${Array.isArray(OUTFITS) ? OUTFITS.length : "not array"}\n` +
-      `EXPRESSIONS: ${Array.isArray(EXPRESSIONS) ? EXPRESSIONS.length : "not array"}\n` +
-      `POSES: ${Array.isArray(POSES) ? POSES.length : "not array"}\n` +
-      `PROPS: ${Array.isArray(PROPS) ? PROPS.length : "not array"}\n` +
-      `PALETTES: ${Array.isArray(PALETTES) ? PALETTES.length : "not array"}\n\n`;
+  const COMPLEXIONS = [
+    "deep espresso brown skin",
+    "rich dark chocolate skin",
+    "warm cocoa brown skin",
+    "golden brown skin",
+    "deep mahogany skin",
+    "radiant caramel brown skin"
+  ];
 
-    function populateArchetypeOptions() {
-      fillSelect(archetypeSelect, ARCHETYPES);
-    }
+  const BODY_TYPES = [
+    "curvy feminine silhouette",
+    "soft hourglass figure",
+    "plus-size curvy body type",
+    "mid-size curvy body type"
+  ];
 
-    function populateBuilderOptions(archetype) {
-      const dna = ARCHETYPE_DNA[archetype];
+  const FACE_SHAPES = [
+    "soft oval face shape",
+    "soft heart-shaped face",
+    "soft round face shape",
+    "softened square face shape"
+  ];
 
-      fillSelect(hairSelect, dna?.hair?.length ? dna.hair : HAIR);
-      fillSelect(outfitSelect, dna?.outfit?.length ? dna.outfit : OUTFITS);
-      fillSelect(expressionSelect, dna?.expression?.length ? dna.expression : EXPRESSIONS);
-      fillSelect(poseSelect, dna?.pose?.length ? dna.pose : POSES);
-      fillSelect(propSelect, dna?.prop?.length ? dna.prop : PROPS);
-      fillSelect(paletteSelect, dna?.palette?.length ? dna.palette : PALETTES);
-    }
-
-    function initialize() {
-      populateArchetypeOptions();
-
-      if (ARCHETYPES.length) {
-        archetypeSelect.value = ARCHETYPES[0];
-        populateBuilderOptions(ARCHETYPES[0]);
-      }
-
-      output.value +=
-        "AFTER INIT\n\n" +
-        `archetype options: ${archetypeSelect?.options?.length ?? "missing"}\n` +
-        `hair options: ${hairSelect?.options?.length ?? "missing"}\n` +
-        `outfit options: ${outfitSelect?.options?.length ?? "missing"}\n` +
-        `expression options: ${expressionSelect?.options?.length ?? "missing"}\n` +
-        `pose options: ${poseSelect?.options?.length ?? "missing"}\n` +
-        `prop options: ${propSelect?.options?.length ?? "missing"}\n` +
-        `palette options: ${paletteSelect?.options?.length ?? "missing"}\n`;
-    }
-
-    function randomizeAll() {
-      if (HAIR.length) hairSelect.value = pick(HAIR);
-      if (OUTFITS.length) outfitSelect.value = pick(OUTFITS);
-      if (EXPRESSIONS.length) expressionSelect.value = pick(EXPRESSIONS);
-      if (POSES.length) poseSelect.value = pick(POSES);
-      if (PROPS.length) propSelect.value = pick(PROPS);
-      if (PALETTES.length) paletteSelect.value = pick(PALETTES);
-    }
-
-    function generate() {
-      const archetype = archetypeSelect.value;
-
-      const options = {
-        hair: hairSelect.value,
-        outfit: outfitSelect.value,
-        expression: expressionSelect.value,
-        pose: poseSelect.value,
-        prop: propSelect.value,
-        palette: paletteSelect.value
-      };
-
-      output.value = buildCharacterPrompt(archetype, options);
-    }
-
-    archetypeSelect.addEventListener("change", () => {
-      populateBuilderOptions(archetypeSelect.value);
-    });
-
-    randomArchetypeBtn.addEventListener("click", () => {
-      archetypeSelect.value = pick(ARCHETYPES);
-      populateBuilderOptions(archetypeSelect.value);
-    });
-
-    randomizeAllBtn.addEventListener("click", () => {
-      randomizeAll();
-    });
-
-    generateBtn.addEventListener("click", () => {
-      generate();
-    });
-
-    initialize();
-    randomizeAll();
-  } catch (err) {
-    output.value = "APP ERROR\n\n" + (err?.message || String(err));
+  function populateArchetypeOptions() {
+    fillSelect(archetypeSelect, ARCHETYPES);
   }
+
+  function populateBuilderOptions(archetype) {
+    const dna = ARCHETYPE_DNA[archetype];
+
+    fillSelect(complexionSelect, COMPLEXIONS);
+    fillSelect(bodyTypeSelect, BODY_TYPES);
+    fillSelect(faceShapeSelect, FACE_SHAPES);
+    fillSelect(hairSelect, dna?.hair?.length ? dna.hair : HAIR);
+    fillSelect(outfitSelect, dna?.outfit?.length ? dna.outfit : OUTFITS);
+    fillSelect(expressionSelect, dna?.expression?.length ? dna.expression : EXPRESSIONS);
+    fillSelect(microSelect, dna?.micro?.length ? dna.micro : []);
+    fillSelect(attitudeSelect, dna?.attitude?.length ? dna.attitude : []);
+    fillSelect(poseSelect, dna?.pose?.length ? dna.pose : POSES);
+    fillSelect(propSelect, dna?.prop?.length ? dna.prop : PROPS);
+    fillSelect(sceneSelect, dna?.scene?.length ? dna.scene : []);
+    fillSelect(paletteSelect, dna?.palette?.length ? dna.palette : PALETTES);
+  }
+
+  function initialize() {
+    populateArchetypeOptions();
+
+    if (ARCHETYPES.length) {
+      archetypeSelect.value = ARCHETYPES[0];
+      populateBuilderOptions(ARCHETYPES[0]);
+      randomizeAll();
+    }
+  }
+
+  function randomizeAll() {
+    if (COMPLEXIONS.length) complexionSelect.value = pick(COMPLEXIONS);
+    if (BODY_TYPES.length) bodyTypeSelect.value = pick(BODY_TYPES);
+    if (FACE_SHAPES.length) faceShapeSelect.value = pick(FACE_SHAPES);
+
+    if (hairSelect.options.length) hairSelect.selectedIndex = Math.floor(Math.random() * hairSelect.options.length);
+    if (outfitSelect.options.length) outfitSelect.selectedIndex = Math.floor(Math.random() * outfitSelect.options.length);
+    if (expressionSelect.options.length) expressionSelect.selectedIndex = Math.floor(Math.random() * expressionSelect.options.length);
+    if (microSelect.options.length) microSelect.selectedIndex = Math.floor(Math.random() * microSelect.options.length);
+    if (attitudeSelect.options.length) attitudeSelect.selectedIndex = Math.floor(Math.random() * attitudeSelect.options.length);
+    if (poseSelect.options.length) poseSelect.selectedIndex = Math.floor(Math.random() * poseSelect.options.length);
+    if (propSelect.options.length) propSelect.selectedIndex = Math.floor(Math.random() * propSelect.options.length);
+    if (sceneSelect.options.length) sceneSelect.selectedIndex = Math.floor(Math.random() * sceneSelect.options.length);
+    if (paletteSelect.options.length) paletteSelect.selectedIndex = Math.floor(Math.random() * paletteSelect.options.length);
+  }
+
+  function generate() {
+    const archetype = archetypeSelect.value;
+
+    const options = {
+      complexion: complexionSelect.value,
+      bodyType: bodyTypeSelect.value,
+      faceShape: faceShapeSelect.value,
+      hair: hairSelect.value,
+      outfit: outfitSelect.value,
+      expression: expressionSelect.value,
+      micro: microSelect.value,
+      attitude: attitudeSelect.value,
+      pose: poseSelect.value,
+      prop: propSelect.value,
+      scene: sceneSelect.value,
+      palette: paletteSelect.value
+    };
+
+    output.value = buildCharacterPrompt(archetype, options);
+  }
+
+  archetypeSelect.addEventListener("change", () => {
+    populateBuilderOptions(archetypeSelect.value);
+    randomizeAll();
+  });
+
+  randomArchetypeBtn.addEventListener("click", () => {
+    archetypeSelect.value = pick(ARCHETYPES);
+    populateBuilderOptions(archetypeSelect.value);
+    randomizeAll();
+  });
+
+  randomizeAllBtn.addEventListener("click", () => {
+    randomizeAll();
+  });
+
+  generateBtn.addEventListener("click", () => {
+    generate();
+  });
+
+  initialize();
 });
