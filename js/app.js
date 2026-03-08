@@ -13,6 +13,9 @@ import { buildCharacterPrompt } from "./character/characterPromptBuilder.js";
 import { buildStickerPrompt } from "./sticker/stickerPromptBuilder.js";
 import { buildKindleInsertPrompt } from "./sticker/kindleInsertPromptBuilder.js";
 import { STICKER_PRODUCTS } from "./sticker/products.js";
+import { STICKER_QUOTES } from "./sticker/quotes.js";
+import { STICKER_MICRO_QUOTES } from "./sticker/microQuotes.js";
+
 
 function pick(arr) {
   return arr[Math.floor(Math.random() * arr.length)];
@@ -424,17 +427,22 @@ document.addEventListener("DOMContentLoaded", () => {
     stickerSpiceSelect.value = "";
 
     clearStickerCustomInputs();
+stickerQuoteInput.value = STICKER_QUOTES[0] || "";
+stickerMicroQuoteInput.value = STICKER_MICRO_QUOTES[0] || "";
   }
 
   function randomSticker() {
-    randomizeSelect(stickerProductSelect);
-    randomizeSelect(stickerVibeSelect);
-    randomizeSelect(stickerPaletteSelect);
-    randomizeSelect(stickerBackgroundSelect);
-    randomizeSelect(stickerBorderSelect);
-    randomizeSelect(stickerOutlineSelect);
-    randomizeSelect(stickerSpiceSelect);
-  }
+  randomizeSelect(stickerProductSelect);
+  randomizeSelect(stickerVibeSelect);
+  randomizeSelect(stickerPaletteSelect);
+  randomizeSelect(stickerBackgroundSelect);
+  randomizeSelect(stickerBorderSelect);
+  randomizeSelect(stickerOutlineSelect);
+  randomizeSelect(stickerSpiceSelect);
+
+  stickerQuoteInput.value = randomFrom(STICKER_QUOTES);
+  stickerMicroQuoteInput.value = randomFrom(STICKER_MICRO_QUOTES);
+}
 
   function getStickerProductObject(productValue) {
     return STICKER_PRODUCTS.find((item) => item.value === productValue) || null;
