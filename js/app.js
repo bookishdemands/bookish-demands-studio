@@ -114,17 +114,6 @@ document.addEventListener("DOMContentLoaded", () => {
   if (dna.palette?.length) paletteSelect.value = dna.palette[0];
 }
 
-  function randomizeSelect(selectEl) {
-  if (!selectEl) return;
-
-  const validOptions = Array.from(selectEl.options).filter(option => option.value !== "");
-
-  if (!validOptions.length) return;
-
-  const randomOption = pick(validOptions);
-  selectEl.value = randomOption.value;
-}
-
 function randomizeSelect(selectEl) {
 
   if (!selectEl) return;
@@ -142,6 +131,9 @@ function randomizeSelect(selectEl) {
 }
 
 function randomizeAll() {
+  randomizeSelect(archetypeSelect);
+
+  populateBuilderOptions(archetypeSelect.value);
 
   randomizeSelect(complexionSelect);
   randomizeSelect(bodyTypeSelect);
@@ -159,7 +151,6 @@ function randomizeAll() {
   randomizeSelect(sceneSelect);
 
   randomizeSelect(paletteSelect);
-
 }
 
   function randomizeArchetype() {
@@ -251,14 +242,25 @@ function randomizeAll() {
   }
 
   archetypeSelect.addEventListener("change", () => {
-    populateBuilderOptions(archetypeSelect.value);
-    randomizeAll();
-  });
+  populateBuilderOptions(archetypeSelect.value);
+});
 
   randomArchetypeBtn.addEventListener("click", () => {
-  randomizeArchetype();
+  randomizeSelect(archetypeSelect);
   populateBuilderOptions(archetypeSelect.value);
-  randomizeAll();
+
+  randomizeSelect(complexionSelect);
+  randomizeSelect(bodyTypeSelect);
+  randomizeSelect(faceShapeSelect);
+  randomizeSelect(hairSelect);
+  randomizeSelect(outfitSelect);
+  randomizeSelect(expressionSelect);
+  randomizeSelect(microSelect);
+  randomizeSelect(attitudeSelect);
+  randomizeSelect(poseSelect);
+  randomizeSelect(propSelect);
+  randomizeSelect(sceneSelect);
+  randomizeSelect(paletteSelect);
 });
 
   randomizeAllBtn.addEventListener("click", () => {
