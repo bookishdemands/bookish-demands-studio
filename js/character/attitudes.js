@@ -1,1 +1,20 @@
-
+export const ATTITUDES = [
+  "quietly petty",
+  "judgy but correct energy",
+  "pretty but dangerous energy",
+  "soft voice hard leverage",
+  "chaotic reader energy",
+  "emotionally invested",
+  "villain apologist energy",
+  "romantically unhinged energy",
+  "high standards energy",
+  "wealth recognizes wealth energy",
+  "bossy main character energy",
+  "booked and in charge energy",
+  "hyper-feminine glam energy",
+  "multitasking reader energy",
+  "3AM chapter spiral energy",
+  "supernatural obsession energy",
+  "trust nobody energy",
+  "haunted but intrigued energy"
+];
