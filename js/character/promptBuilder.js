@@ -6,22 +6,22 @@ function pick(arr) {
   return arr[Math.floor(Math.random() * arr.length)];
 }
 
-export function buildCharacterPrompt(archetype) {
+export function buildCharacterPrompt(archetype, options={})
   const dna = ARCHETYPE_DNA[archetype] || ARCHETYPE_DNA["Soft Girl Menace"];
 
   const complexion = pick(COMPLEXIONS);
   const bodyType = pick(BODY_TYPES);
   const faceShape = pick(FACE_SHAPES);
 
-  const expression = pick(dna.expression);
+  const expression = options.expression || pick(dna.expression);
   const micro = pick(dna.micro);
   const attitude = pick(dna.attitude);
-  const pose = pick(dna.pose);
-  const prop = pick(dna.prop);
+  const pose = options.pose || pick(dna.pose);
+  const prop = options.prop || pick(dna.prop);
   const scene = pick(dna.scene);
-  const outfit = pick(dna.outfit);
-  const hair = pick(dna.hair);
-  const palette = pick(dna.palette);
+  const outfit = options.outfit || pick(dna.outfit);
+  const hair = options.hair || pick(dna.hair);
+  const palette = options.palette || pick(dna.palette);
 
   const parts = [
     "PROMPT",
