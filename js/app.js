@@ -41,6 +41,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const randomArchetypeBtn = document.getElementById("randomArchetypeBtn");
   const randomizeAllBtn = document.getElementById("randomizeAllBtn");
+  const resetBtn = document.getElementById("resetBtn");
   const generateBtn = document.getElementById("generateBtn");
   const output = document.getElementById("output");
 
@@ -88,16 +89,6 @@ document.addEventListener("DOMContentLoaded", () => {
     fillSelect(paletteSelect, dna?.palette?.length ? dna.palette : PALETTES);
   }
 
-  function initialize() {
-    populateArchetypeOptions();
-
-    if (ARCHETYPES.length) {
-      archetypeSelect.value = ARCHETYPES[0];
-      populateBuilderOptions(ARCHETYPES[0]);
-      randomizeAll();
-    }
-  }
-
   function randomizeAll() {
     if (COMPLEXIONS.length) complexionSelect.value = pick(COMPLEXIONS);
     if (BODY_TYPES.length) bodyTypeSelect.value = pick(BODY_TYPES);
@@ -112,6 +103,40 @@ document.addEventListener("DOMContentLoaded", () => {
     if (propSelect.options.length) propSelect.selectedIndex = Math.floor(Math.random() * propSelect.options.length);
     if (sceneSelect.options.length) sceneSelect.selectedIndex = Math.floor(Math.random() * sceneSelect.options.length);
     if (paletteSelect.options.length) paletteSelect.selectedIndex = Math.floor(Math.random() * paletteSelect.options.length);
+  }
+
+  function resetBuilder() {
+    if (!ARCHETYPES.length) return;
+
+    const defaultArchetype = ARCHETYPES[0];
+    archetypeSelect.value = defaultArchetype;
+    populateBuilderOptions(defaultArchetype);
+
+    complexionSelect.value = COMPLEXIONS[0];
+    bodyTypeSelect.value = BODY_TYPES[0];
+    faceShapeSelect.value = FACE_SHAPES[0];
+
+    if (hairSelect.options.length) hairSelect.selectedIndex = 0;
+    if (outfitSelect.options.length) outfitSelect.selectedIndex = 0;
+    if (expressionSelect.options.length) expressionSelect.selectedIndex = 0;
+    if (microSelect.options.length) microSelect.selectedIndex = 0;
+    if (attitudeSelect.options.length) attitudeSelect.selectedIndex = 0;
+    if (poseSelect.options.length) poseSelect.selectedIndex = 0;
+    if (propSelect.options.length) propSelect.selectedIndex = 0;
+    if (sceneSelect.options.length) sceneSelect.selectedIndex = 0;
+    if (paletteSelect.options.length) paletteSelect.selectedIndex = 0;
+
+    output.value = "";
+  }
+
+  function initialize() {
+    populateArchetypeOptions();
+
+    if (ARCHETYPES.length) {
+      archetypeSelect.value = ARCHETYPES[0];
+      populateBuilderOptions(ARCHETYPES[0]);
+      randomizeAll();
+    }
   }
 
   function generate() {
@@ -148,6 +173,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
   randomizeAllBtn.addEventListener("click", () => {
     randomizeAll();
+  });
+
+  resetBtn.addEventListener("click", () => {
+    resetBuilder();
   });
 
   generateBtn.addEventListener("click", () => {
