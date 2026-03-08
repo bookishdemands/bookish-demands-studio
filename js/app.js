@@ -2,6 +2,9 @@ import { ARCHETYPES } from "./core/archetypes.js";
 import { ARCHETYPE_DNA } from "./character/archetypeDNA.js";
 import { HAIR } from "./character/hair.js";
 import { OUTFITS } from "./character/outfits.js";
+import { MICRO_EXPRESSIONS } from "./character/microExpressions.js";
+import { ATTITUDES } from "./character/attitudes.js";
+import { SCENES } from "./character/scenes.js";
 import { EXPRESSIONS } from "./character/expressions.js";
 import { POSES } from "./character/poses.js";
 import { PROPS } from "./character/props.js";
@@ -80,21 +83,36 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function populateBuilderOptions(archetype) {
-    const dna = ARCHETYPE_DNA[archetype];
+  const dna = ARCHETYPE_DNA[archetype];
 
-    fillSelect(complexionSelect, COMPLEXIONS);
-    fillSelect(bodyTypeSelect, BODY_TYPES);
-    fillSelect(faceShapeSelect, FACE_SHAPES);
-    fillSelect(hairSelect, dna?.hair?.length ? dna.hair : HAIR);
-    fillSelect(outfitSelect, dna?.outfit?.length ? dna.outfit : OUTFITS);
-    fillSelect(expressionSelect, dna?.expression?.length ? dna.expression : EXPRESSIONS);
-    fillSelect(microSelect, dna?.micro?.length ? dna.micro : []);
-    fillSelect(attitudeSelect, dna?.attitude?.length ? dna.attitude : []);
-    fillSelect(poseSelect, dna?.pose?.length ? dna.pose : POSES);
-    fillSelect(propSelect, dna?.prop?.length ? dna.prop : PROPS);
-    fillSelect(sceneSelect, dna?.scene?.length ? dna.scene : []);
-    fillSelect(paletteSelect, dna?.palette?.length ? dna.palette : PALETTES);
-  }
+  // Always full vault
+  fillSelect(complexionSelect, COMPLEXIONS);
+  fillSelect(bodyTypeSelect, BODY_TYPES);
+  fillSelect(faceShapeSelect, FACE_SHAPES);
+
+  fillSelect(hairSelect, HAIR);
+  fillSelect(outfitSelect, OUTFITS);
+
+  // Archetype influenced categories
+  fillSelect(expressionSelect, dna?.expression?.length ? dna.expression : EXPRESSIONS);
+  fillSelect(microSelect, dna?.micro?.length ? dna.micro : MICRO_EXPRESSIONS);
+  fillSelect(attitudeSelect, dna?.attitude?.length ? dna.attitude : ATTITUDES);
+  fillSelect(poseSelect, dna?.pose?.length ? dna.pose : POSES);
+  fillSelect(propSelect, dna?.prop?.length ? dna.prop : PROPS);
+  fillSelect(sceneSelect, dna?.scene?.length ? dna.scene : SCENES);
+  fillSelect(paletteSelect, dna?.palette?.length ? dna.palette : PALETTES);
+
+  // Optional: apply archetype default selections
+  if (!dna) return;
+
+  if (dna.expression?.length) expressionSelect.value = dna.expression[0];
+  if (dna.micro?.length) microSelect.value = dna.micro[0];
+  if (dna.attitude?.length) attitudeSelect.value = dna.attitude[0];
+  if (dna.pose?.length) poseSelect.value = dna.pose[0];
+  if (dna.prop?.length) propSelect.value = dna.prop[0];
+  if (dna.scene?.length) sceneSelect.value = dna.scene[0];
+  if (dna.palette?.length) paletteSelect.value = dna.palette[0];
+}
 
   function randomizeSelect(selectEl) {
   if (!selectEl) return;
