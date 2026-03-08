@@ -1,5 +1,5 @@
 import { ARCHETYPES } from "./core/archetypes.js";
-
+import { buildCharacterPrompt } from "./character/characterPromptBuilder.js";
 const modeSelect = document.getElementById("studioMode");
 const generateBtn = document.getElementById("generateBtn");
 const output = document.getElementById("output");
@@ -9,20 +9,21 @@ function pick(arr) {
 }
 
 generateBtn.addEventListener("click", () => {
-  const mode = modeSelect.value;
 
-  if (mode === "character") {
-    const archetype = pick(ARCHETYPES);
+const mode = modeSelect.value;
 
-    output.value = `CHARACTER STUDIO
+if(mode === "character"){
 
-Selected Archetype:
-${archetype}
+const archetype = pick(ARCHETYPES);
 
-Next step: prompt builder will generate the full character prompt here.`;
-  }
+const prompt = buildCharacterPrompt(archetype);
 
-  if (mode === "sticker") {
-    output.value = "Sticker Studio coming next.";
-  }
+output.value = prompt;
+
+}
+
+if(mode === "sticker"){
+output.value = "Sticker Studio coming next.";
+}
+
 });
