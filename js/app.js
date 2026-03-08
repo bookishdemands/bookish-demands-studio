@@ -119,14 +119,40 @@ const generate5StickerBtn = document.getElementById("generate5StickerBtn");
   ];
 
   const STICKER_PRODUCTS = [
-  "quote sticker",
-  "reaction sticker",
-  "kindle insert sticker",
-  "warning label sticker",
-  "book club sticker",
-  "dark romance sticker",
-  "reader mood sticker",
-  "annotation sticker"
+  "IV Drip Bag",
+  "Delulu Meter",
+  "Pill Bottle",
+  "Confession Note",
+  "Blood Oath Vial",
+  "Velvet Sin Perfume Bottle",
+  "Obsessed Heart Monitor",
+  "Possessive Energy Warning Tag",
+  "Morally Gray Passport Stamp",
+  "Red Flag Collector Card",
+  "Smut Door Hanger",
+  "Plot Twist Emergency Button",
+  "Kindle Addict Prescription Pad",
+  "Book Hangover Recovery Kit",
+  "Villain Energy Membership Card",
+  "Soft Life Serum Dropper",
+  "Emotional Support Bookmark Badge",
+  "Main Character License Card",
+  "Guest List Wristband",
+  "Backstage Access Pass",
+  "Luxury Key Fob Tag",
+  "VIP Lounge Card",
+  "Court Evidence Tag",
+  "Case File Folder Tab",
+  "Receipt of Emotional Damage",
+  "Library Fine Ticket",
+  "Dangerous MMC Business Card",
+  "Delulu Fuel Juice Box",
+  "Plot Armor Spray",
+  "Spoiler Alert Tape",
+  "Overstimulated Reader Meter",
+  "TBR Mountain Warning Sign",
+  "Fantasy Realm Boarding Pass",
+  "Smut Loading Progress Bar"
 ];
 
 const STICKER_VIBES = [
