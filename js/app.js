@@ -119,40 +119,144 @@ const generate5StickerBtn = document.getElementById("generate5StickerBtn");
   ];
 
   const STICKER_PRODUCTS = [
-  "IV Drip Bag",
-  "Delulu Meter",
-  "Pill Bottle",
-  "Confession Note",
-  "Blood Oath Vial",
-  "Velvet Sin Perfume Bottle",
-  "Obsessed Heart Monitor",
-  "Possessive Energy Warning Tag",
-  "Morally Gray Passport Stamp",
-  "Red Flag Collector Card",
-  "Smut Door Hanger",
-  "Plot Twist Emergency Button",
-  "Kindle Addict Prescription Pad",
-  "Book Hangover Recovery Kit",
-  "Villain Energy Membership Card",
-  "Soft Life Serum Dropper",
-  "Emotional Support Bookmark Badge",
-  "Main Character License Card",
-  "Guest List Wristband",
-  "Backstage Access Pass",
-  "Luxury Key Fob Tag",
-  "VIP Lounge Card",
-  "Court Evidence Tag",
-  "Case File Folder Tab",
-  "Receipt of Emotional Damage",
-  "Library Fine Ticket",
-  "Dangerous MMC Business Card",
-  "Delulu Fuel Juice Box",
-  "Plot Armor Spray",
-  "Spoiler Alert Tape",
-  "Overstimulated Reader Meter",
-  "TBR Mountain Warning Sign",
-  "Fantasy Realm Boarding Pass",
-  "Smut Loading Progress Bar"
+  {
+    value: "IV Drip Bag",
+    subject: "minimal vector sticker of an IV drip bag with a clean label panel and subtle glossy highlights; no medical branding"
+  },
+  {
+    value: "Delulu Meter",
+    subject: "delulu meter sticker with labeled levels and a slider indicator; cute + cocky vibe; bold readable text"
+  },
+  {
+    value: "Pill Bottle",
+    subject: "amber prescription-style bottle with childproof cap; clean warning label panel; a few stylized pills; no pharmacy branding"
+  },
+  {
+    value: "Confession Note",
+    subject: "confession note sticker with header 'CONFESSION:' and a bold handwritten quote; clean paper edges; dramatic cute vibe"
+  },
+  {
+    value: "Blood Oath Vial",
+    subject: "small glass vial sticker with deep red liquid, minimalist label panel for quote placement, subtle shine highlights, luxe dark romance vibe, no branding",
+    paletteLock: "blood"
+  },
+  {
+    value: "Velvet Sin Perfume Bottle",
+    subject: "luxury perfume bottle sticker with a clean label panel for the quote, glossy highlights, ornate but modern silhouette, no brand logos"
+  },
+  {
+    value: "Obsessed Heart Monitor",
+    subject: "heart monitor / EKG screen sticker showing a bold heartbeat line, clean caption area for the quote, high contrast pop-art style"
+  },
+  {
+    value: "Possessive Energy Warning Tag",
+    subject: "warning label/tag sticker with a blank text panel for the quote, bold icons, high contrast, no real brand marks"
+  },
+  {
+    value: "Morally Gray Passport Stamp",
+    subject: "passport stamp sticker with a central text area for the quote, distressed edges but clean readability, no country seals"
+  },
+  {
+    value: "Red Flag Collector Card",
+    subject: "trading card style sticker with a bold frame and stats layout, large title panel for the quote, playful toxic romance humor vibe, no copyrighted characters",
+    paletteLock: "blood"
+  },
+  {
+    value: "Smut Door Hanger",
+    subject: "door hanger sticker with a large centered label area for the quote, simple icon accents, bold readable typography, no hotel branding"
+  },
+  {
+    value: "Plot Twist Emergency Button",
+    subject: "big red emergency button sticker with a circular top label area for the quote, dramatic highlights, bold comic pop style"
+  },
+  {
+    value: "Kindle Addict Prescription Pad",
+    subject: "prescription pad / Rx note sticker with fake fields and a large handwritten quote area, medical-themed but no pharmacy branding, playful and clean"
+  },
+  {
+    value: "Book Hangover Recovery Kit",
+    subject: "first-aid kit / care kit box sticker with a clean label panel for the quote, subtle gloss, cute but edgy romance reader vibe"
+  },
+  {
+    value: "Villain Energy Membership Card",
+    subject: "membership card sticker with a bold header and centered quote line area, luxe dark aesthetic, no real company branding"
+  },
+  {
+    value: "Soft Life Serum Dropper",
+    subject: "glass dropper bottle sticker with soft glow, clean label panel for the quote, luxe self-care vibe, no skincare branding"
+  },
+  {
+    value: "Emotional Support Bookmark Badge",
+    subject: "badge/ribbon seal sticker with a central text panel for the quote, bold outline, cute bookish energy, no school logos"
+  },
+  {
+    value: "Main Character License Card",
+    subject: "novelty ID/license card sticker with a large quote line area, clean grid layout, no real state or government seals"
+  },
+  {
+    value: "Guest List Wristband",
+    subject: "event wristband sticker with a bold text strip area for the quote, minimal icons, nightlife romance vibe, no venue branding"
+  },
+  {
+    value: "Backstage Access Pass",
+    subject: "laminated backstage pass sticker with a big center panel for the quote, lanyard hole detail, high contrast, no band/venue logos"
+  },
+  {
+    value: "Luxury Key Fob Tag",
+    subject: "luxury key tag sticker with a large centered label panel for the quote, sleek silhouette, metallic highlights, no car logos"
+  },
+  {
+    value: "VIP Lounge Card",
+    subject: "VIP card sticker with bold typography and a main quote line area, luxe minimal style, no club branding"
+  },
+  {
+    value: "Court Evidence Tag",
+    subject: "evidence tag sticker with a large text block for the quote, barcode-like lines, no department branding"
+  },
+  {
+    value: "Case File Folder Tab",
+    subject: "file folder/tab sticker with a blank label strip for the quote, thriller aesthetic, clean and readable"
+  },
+  {
+    value: "Receipt of Emotional Damage",
+    subject: "receipt sticker with a bold quote centered as the total or note, clean grid layout, no real restaurant branding"
+  },
+  {
+    value: "Library Fine Ticket",
+    subject: "library due-date/fine ticket sticker with a big quote area, clean stamped look, no library logos"
+  },
+  {
+    value: "Dangerous MMC Business Card",
+    subject: "luxury business card sticker with a strong typographic quote as the headline, minimal details, no real company names"
+  },
+  {
+    value: "Delulu Fuel Juice Box",
+    subject: "juice box sticker with a clean label panel for the quote, straw detail, cute + chaotic vibe, no brand logos"
+  },
+  {
+    value: "Plot Armor Spray",
+    subject: "spray bottle sticker with a big label panel for the quote, bold icons, pop-art shine, no real product branding"
+  },
+  {
+    value: "Spoiler Alert Tape",
+    subject: "tape strip sticker with the quote printed repeatedly or as a bold center line, high contrast"
+  },
+  {
+    value: "Overstimulated Reader Meter",
+    subject: "meter/gauge sticker with levels and a slider needle, big quote panel, cute but edgy reader vibe"
+  },
+  {
+    value: "TBR Mountain Warning Sign",
+    subject: "warning road sign style sticker with a big center text area for the quote, simple icon of a book stack mountain"
+  },
+  {
+    value: "Fantasy Realm Boarding Pass",
+    subject: "boarding pass sticker with a bold quote as the main destination line, fantasy vibe but modern design, no airline branding"
+  },
+  {
+    value: "Smut Loading Progress Bar",
+    subject: "progress bar sticker with percentage ticks and a big quote line above or below, bold readable typography"
+  }
 ];
 
 const STICKER_VIBES = [
@@ -356,7 +460,7 @@ const STICKER_SPICE = [
   }
 
   function populateStickerControls() {
-    fillSelect(stickerProductSelect, STICKER_PRODUCTS);
+    fillSelect(stickerProductSelect, STICKER_PRODUCTS.map(item => item.value));
     fillSelect(stickerVibeSelect, STICKER_VIBES);
     fillSelect(stickerPaletteSelect, PALETTES);
     fillSelect(stickerBackgroundSelect, STICKER_BACKGROUNDS);
@@ -410,22 +514,30 @@ const STICKER_SPICE = [
   }
 
   function getStickerOptionsFromUI() {
-    return {
-      product: stickerProductSelect.value,
-      productCustom: stickerProductCustom.value,
-      quote: stickerQuoteInput.value,
-      microQuote: stickerMicroQuoteInput.value,
-      vibe: stickerVibeSelect.value,
-      vibeCustom: stickerVibeCustom.value,
-      palette: stickerPaletteSelect.value,
-      paletteCustom: stickerPaletteCustom.value,
-      background: stickerBackgroundSelect.value,
-      border: stickerBorderSelect.value,
-      outline: stickerOutlineSelect.value,
-      spice: stickerSpiceSelect.value
-    };
-  }
+  const productObj = getStickerProductObject(stickerProductSelect.value);
 
+  return {
+    product: stickerProductSelect.value,
+    productSubject: productObj?.subject || "",
+    productCustom: stickerProductCustom.value,
+    quote: stickerQuoteInput.value,
+    microQuote: stickerMicroQuoteInput.value,
+    vibe: stickerVibeSelect.value,
+    vibeCustom: stickerVibeCustom.value,
+    palette: stickerPaletteSelect.value,
+    paletteCustom: stickerPaletteCustom.value,
+    background: stickerBackgroundSelect.value,
+    border: stickerBorderSelect.value,
+    outline: stickerOutlineSelect.value,
+    spice: stickerSpiceSelect.value,
+    paletteLock: productObj?.paletteLock || ""
+  };
+}
+
+  function getStickerProductObject(productValue) {
+  return STICKER_PRODUCTS.find(item => item.value === productValue) || null;
+}
+  
   function generateSticker() {
     output.value = buildStickerPrompt(getStickerOptionsFromUI());
   }
