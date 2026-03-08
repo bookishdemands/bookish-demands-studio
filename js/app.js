@@ -6,7 +6,7 @@ import { EXPRESSIONS } from "./character/expressions.js";
 import { POSES } from "./character/poses.js";
 import { PROPS } from "./character/props.js";
 import { PALETTES } from "./character/palettes.js";
-import { buildCharacterPrompt } from "./character/promptBuilder.js";
+import { buildCharacterPrompt } from "./character/characterPromptBuilder.js";
 
 function pick(arr) {
   return arr[Math.floor(Math.random() * arr.length)];
