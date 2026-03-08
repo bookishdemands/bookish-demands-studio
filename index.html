@@ -195,44 +195,90 @@
         </div>
 
         <div id="stickerControls" class="hidden">
-          <label for="stickerProductSelect">Sticker Product</label>
-          <select id="stickerProductSelect"></select>
-          <input id="stickerProductCustom" type="text" placeholder="Custom sticker product..." />
+  <label for="stickerSubMode">Sticker Studio Mode</label>
+  <select id="stickerSubMode">
+    <option value="sticker" selected>Sticker</option>
+    <option value="kindle">Kindle Insert</option>
+  </select>
 
-          <label for="stickerQuoteInput">Main Quote</label>
-          <input id="stickerQuoteInput" type="text" placeholder="Enter main quote..." />
+  <div class="spacer"></div>
 
-          <label for="stickerMicroQuoteInput">Micro Quote</label>
-          <input id="stickerMicroQuoteInput" type="text" placeholder="Enter micro quote..." />
+  <div id="stickerModeControls">
+    <label for="stickerProductSelect">Sticker Product</label>
+    <select id="stickerProductSelect"></select>
+    <input id="stickerProductCustom" type="text" placeholder="Custom sticker product..." />
 
-          <label for="stickerVibeSelect">Vibe</label>
-          <select id="stickerVibeSelect"></select>
-          <input id="stickerVibeCustom" type="text" placeholder="Custom vibe..." />
+    <label for="stickerQuoteInput">Main Quote</label>
+    <input id="stickerQuoteInput" type="text" placeholder="Enter main quote..." />
 
-          <label for="stickerPaletteSelect">Palette</label>
-          <select id="stickerPaletteSelect"></select>
-          <input id="stickerPaletteCustom" type="text" placeholder="Custom sticker palette..." />
+    <label for="stickerMicroQuoteInput">Micro Quote</label>
+    <input id="stickerMicroQuoteInput" type="text" placeholder="Enter micro quote..." />
 
-          <label for="stickerBackgroundSelect">Background</label>
-          <select id="stickerBackgroundSelect"></select>
+    <label for="stickerVibeSelect">Vibe</label>
+    <select id="stickerVibeSelect"></select>
+    <input id="stickerVibeCustom" type="text" placeholder="Custom vibe..." />
 
-          <label for="stickerBorderSelect">Border</label>
-          <select id="stickerBorderSelect"></select>
+    <label for="stickerPaletteSelect">Palette</label>
+    <select id="stickerPaletteSelect"></select>
+    <input id="stickerPaletteCustom" type="text" placeholder="Custom sticker palette..." />
 
-          <label for="stickerOutlineSelect">Outline</label>
-          <select id="stickerOutlineSelect"></select>
+    <label for="stickerBackgroundSelect">Background</label>
+    <select id="stickerBackgroundSelect"></select>
 
-          <label for="stickerSpiceSelect">Spice Level</label>
-          <select id="stickerSpiceSelect"></select>
+    <label for="stickerBorderSelect">Border</label>
+    <select id="stickerBorderSelect"></select>
 
-          <div class="btnrow">
-            <button id="randomStickerBtn" type="button">Random Sticker</button>
-            <button id="resetStickerBtn" type="button">Reset Sticker</button>
-            <button id="clearStickerBtn" type="button">Clear Sticker</button>
-            <button id="generateStickerBtn" class="primary" type="button">Generate Sticker Prompt</button>
-            <button id="generate5StickerBtn" type="button">Generate 5 Stickers</button>
-          </div>
-        </div>
+    <label for="stickerOutlineSelect">Outline</label>
+    <select id="stickerOutlineSelect"></select>
+
+    <label for="stickerSpiceSelect">Spice Level</label>
+    <select id="stickerSpiceSelect"></select>
+
+    <div class="btnrow">
+      <button id="randomStickerBtn" type="button">Random Sticker</button>
+      <button id="resetStickerBtn" type="button">Reset Sticker</button>
+      <button id="clearStickerBtn" type="button">Clear Sticker</button>
+      <button id="generateStickerBtn" class="primary" type="button">Generate Sticker Prompt</button>
+      <button id="generate5StickerBtn" type="button">Generate 5 Stickers</button>
+    </div>
+  </div>
+
+  <div id="kindleModeControls" class="hidden">
+    <label for="kindleQuoteInput">Main Quote</label>
+    <input id="kindleQuoteInput" type="text" placeholder="Enter main insert quote..." />
+
+    <label for="kindleMicroQuoteInput">Micro Quote</label>
+    <input id="kindleMicroQuoteInput" type="text" placeholder="Enter supporting micro quote..." />
+
+    <label for="kindleThemeSelect">Insert Theme</label>
+    <select id="kindleThemeSelect"></select>
+    <input id="kindleThemeCustom" type="text" placeholder="Custom insert theme..." />
+
+    <label for="kindlePaletteSelect">Palette</label>
+    <select id="kindlePaletteSelect"></select>
+    <input id="kindlePaletteCustom" type="text" placeholder="Custom insert palette..." />
+
+    <label for="kindleBackgroundSelect">Background</label>
+    <select id="kindleBackgroundSelect"></select>
+
+    <label for="kindleLayoutSelect">Layout Style</label>
+    <select id="kindleLayoutSelect"></select>
+
+    <label for="kindleHeatSelect">Heat Level</label>
+    <select id="kindleHeatSelect"></select>
+
+    <label for="kindleExtraInput">Optional Image / Object Note</label>
+    <input id="kindleExtraInput" type="text" placeholder="Example: luxury perfume bottle, dark floral border, e-reader corner..." />
+
+    <div class="btnrow">
+      <button id="randomKindleBtn" type="button">Random Insert</button>
+      <button id="resetKindleBtn" type="button">Reset Insert</button>
+      <button id="clearKindleBtn" type="button">Clear Insert</button>
+      <button id="generateKindleBtn" class="primary" type="button">Generate Kindle Insert Prompt</button>
+      <button id="generate5KindleBtn" type="button">Generate 5 Inserts</button>
+    </div>
+  </div>
+</div>
 
         <div class="note">
           Character mode uses archetype DNA. Sticker mode uses quote + product + vibe logic.
@@ -250,6 +296,6 @@
     </div>
   </div>
 
-  <script type="module" src="./js/app.js?v=51"></script>
+  <script type="module" src="./js/app.js?v=52"></script>
 </body>
 </html>
