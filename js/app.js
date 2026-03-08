@@ -12,7 +12,7 @@ import { SCENES } from "./character/scenes.js";
 import { buildCharacterPrompt } from "./character/characterPromptBuilder.js";
 import { buildStickerPrompt } from "./sticker/stickerPromptBuilder.js";
 import { buildKindleInsertPrompt } from "./sticker/kindleInsertPromptBuilder.js";
-
+import { STICKER_PRODUCTS } from "./sticker/products.js";
 
 
 function pick(arr) {
@@ -409,6 +409,11 @@ const STICKER_SPICE = [
     selectEl.value = random.value;
   }
 
+  function resolveValue(customValue, selectedValue) {
+  if (customValue && customValue.trim()) return customValue.trim();
+  return selectedValue || "";
+}
+  
   function clearCustomInputs() {
     [
       complexionCustom, bodyTypeCustom, faceShapeCustom, hairCustom, outfitCustom,
