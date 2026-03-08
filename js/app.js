@@ -1,4 +1,5 @@
 import { ARCHETYPES } from "./core/archetypes.js";
+import { ARCHETYPE_DNA } from "./character/archetypeDNA.js";
 import { HAIR } from "./character/hair.js";
 import { OUTFITS } from "./character/outfits.js";
 import { EXPRESSIONS } from "./character/expressions.js";
@@ -22,21 +23,50 @@ const generateBtn = document.getElementById("generateBtn");
 
 const output = document.getElementById("output");
 
+const studioMode = document.getElementById("studioMode");
+const archetypeSelect = document.getElementById("archetypeSelect");
+const hairSelect = document.getElementById("hairSelect");
+const outfitSelect = document.getElementById("outfitSelect");
+const expressionSelect = document.getElementById("expressionSelect");
+const poseSelect = document.getElementById("poseSelect");
+const propSelect = document.getElementById("propSelect");
+const paletteSelect = document.getElementById("paletteSelect");
+const output = document.getElementById("output");
+const generateBtn = document.getElementById("generateBtn");
+const randomArchetypeBtn = document.getElementById("randomArchetypeBtn");
+const randomizeAllBtn = document.getElementById("randomizeAllBtn");
+
+function populateArchetypeOptions() {
+  fillSelect(archetypeSelect, ARCHETYPES);
+}
+
+function populateBuilderOptions(archetype) {
+  const dna = ARCHETYPE_DNA[archetype];
+  if (!dna) return;
+
+  fillSelect(hairSelect, dna.hair || []);
+  fillSelect(outfitSelect, dna.outfit || []);
+  fillSelect(expressionSelect, dna.expression || []);
+  fillSelect(poseSelect, dna.pose || []);
+  fillSelect(propSelect, dna.prop || []);
+  fillSelect(paletteSelect, dna.palette || []);
+}
+
+
 function pick(arr){
 return arr[Math.floor(Math.random()*arr.length)];
 }
 
-function fillSelect(select, list){
+function fillSelect(selectEl, options) {
+  if (!selectEl) return;
+  selectEl.innerHTML = "";
 
-select.innerHTML="";
-
-list.forEach(item=>{
-const opt=document.createElement("option");
-opt.value=item;
-opt.textContent=item;
-select.appendChild(opt);
-});
-
+  options.forEach(option => {
+    const el = document.createElement("option");
+    el.value = option;
+    el.textContent = option;
+    selectEl.appendChild(el);
+  });
 }
 
 function initialize(){
@@ -49,6 +79,12 @@ fillSelect(poseSelect,POSES);
 fillSelect(propSelect,PROPS);
 fillSelect(paletteSelect,PALETTES);
 
+populateArchetypeOptions();
+
+if (ARCHETYPES.length) {
+  archetypeSelect.value = ARCHETYPES[0];
+  populateBuilderOptions(ARCHETYPES[0]);
+}
 }
 
 function randomizeAll(){
