@@ -9,20 +9,6 @@ import { PALETTES } from "./character/palettes.js";
 
 import { buildCharacterPrompt } from "./character/promptBuilder.js";
 
-const archetypeSelect = document.getElementById("archetypeSelect");
-const hairSelect = document.getElementById("hairSelect");
-const outfitSelect = document.getElementById("outfitSelect");
-const expressionSelect = document.getElementById("expressionSelect");
-const poseSelect = document.getElementById("poseSelect");
-const propSelect = document.getElementById("propSelect");
-const paletteSelect = document.getElementById("paletteSelect");
-
-const randomArchetypeBtn = document.getElementById("randomArchetypeBtn");
-const randomizeAllBtn = document.getElementById("randomizeAllBtn");
-const generateBtn = document.getElementById("generateBtn");
-
-const output = document.getElementById("output");
-
 const studioMode = document.getElementById("studioMode");
 const archetypeSelect = document.getElementById("archetypeSelect");
 const hairSelect = document.getElementById("hairSelect");
@@ -31,37 +17,22 @@ const expressionSelect = document.getElementById("expressionSelect");
 const poseSelect = document.getElementById("poseSelect");
 const propSelect = document.getElementById("propSelect");
 const paletteSelect = document.getElementById("paletteSelect");
-const output = document.getElementById("output");
-const generateBtn = document.getElementById("generateBtn");
+
 const randomArchetypeBtn = document.getElementById("randomArchetypeBtn");
 const randomizeAllBtn = document.getElementById("randomizeAllBtn");
+const generateBtn = document.getElementById("generateBtn");
 
-function populateArchetypeOptions() {
-  fillSelect(archetypeSelect, ARCHETYPES);
-}
+const output = document.getElementById("output");
 
-function populateBuilderOptions(archetype) {
-  const dna = ARCHETYPE_DNA[archetype];
-  if (!dna) return;
-
-  fillSelect(hairSelect, dna.hair || []);
-  fillSelect(outfitSelect, dna.outfit || []);
-  fillSelect(expressionSelect, dna.expression || []);
-  fillSelect(poseSelect, dna.pose || []);
-  fillSelect(propSelect, dna.prop || []);
-  fillSelect(paletteSelect, dna.palette || []);
-}
-
-
-function pick(arr){
-return arr[Math.floor(Math.random()*arr.length)];
+function pick(arr) {
+  return arr[Math.floor(Math.random() * arr.length)];
 }
 
 function fillSelect(selectEl, options) {
   if (!selectEl) return;
   selectEl.innerHTML = "";
 
-  options.forEach(option => {
+  (options || []).forEach(option => {
     const el = document.createElement("option");
     el.value = option;
     el.textContent = option;
@@ -69,33 +40,49 @@ function fillSelect(selectEl, options) {
   });
 }
 
-function initialize(){
-
-fillSelect(archetypeSelect,ARCHETYPES);
-fillSelect(hairSelect,HAIR);
-fillSelect(outfitSelect,OUTFITS);
-fillSelect(expressionSelect,EXPRESSIONS);
-fillSelect(poseSelect,POSES);
-fillSelect(propSelect,PROPS);
-fillSelect(paletteSelect,PALETTES);
-
-populateArchetypeOptions();
-
-if (ARCHETYPES.length) {
-  archetypeSelect.value = ARCHETYPES[0];
-  populateBuilderOptions(ARCHETYPES[0]);
-}
+function populateArchetypeOptions() {
+  fillSelect(archetypeSelect, ARCHETYPES);
 }
 
-function randomizeAll(){
+function populateBuilderOptions(archetype) {
+  const dna = ARCHETYPE_DNA[archetype];
 
-hairSelect.value=pick(HAIR);
-outfitSelect.value=pick(OUTFITS);
-expressionSelect.value=pick(EXPRESSIONS);
-poseSelect.value=pick(POSES);
-propSelect.value=pick(PROPS);
-paletteSelect.value=pick(PALETTES);
+  if (!dna) {
+    fillSelect(hairSelect, HAIR);
+    fillSelect(outfitSelect, OUTFITS);
+    fillSelect(expressionSelect, EXPRESSIONS);
+    fillSelect(poseSelect, POSES);
+    fillSelect(propSelect, PROPS);
+    fillSelect(paletteSelect, PALETTES);
+    return;
+  }
 
+  fillSelect(hairSelect, dna.hair?.length ? dna.hair : HAIR);
+  fillSelect(outfitSelect, dna.outfit?.length ? dna.outfit : OUTFITS);
+  fillSelect(expressionSelect, dna.expression?.length ? dna.expression : EXPRESSIONS);
+  fillSelect(poseSelect, dna.pose?.length ? dna.pose : POSES);
+  fillSelect(propSelect, dna.prop?.length ? dna.prop : PROPS);
+  fillSelect(paletteSelect, dna.palette?.length ? dna.palette : PALETTES);
+}
+
+function initialize() {
+  populateArchetypeOptions();
+
+  if (ARCHETYPES.length) {
+    archetypeSelect.value = ARCHETYPES[0];
+    populateBuilderOptions(ARCHETYPES[0]);
+  } else {
+    populateBuilderOptions("");
+  }
+}
+
+function randomizeAll() {
+  hairSelect.value = pick(HAIR);
+  outfitSelect.value = pick(OUTFITS);
+  expressionSelect.value = pick(EXPRESSIONS);
+  poseSelect.value = pick(POSES);
+  propSelect.value = pick(PROPS);
+  paletteSelect.value = pick(PALETTES);
 }
 
 function generate() {
@@ -111,17 +98,24 @@ function generate() {
   };
 
   const prompt = buildCharacterPrompt(archetype, options);
-
   output.value = prompt;
 }
 
-randomArchetypeBtn.onclick=()=>{
-archetypeSelect.value=pick(ARCHETYPES);
-};
+archetypeSelect.addEventListener("change", () => {
+  populateBuilderOptions(archetypeSelect.value);
+});
 
-randomizeAllBtn.onclick=randomizeAll;
+randomArchetypeBtn.addEventListener("click", () => {
+  archetypeSelect.value = pick(ARCHETYPES);
+  populateBuilderOptions(archetypeSelect.value);
+});
 
-generateBtn.onclick=generate;
+randomizeAllBtn.addEventListener("click", () => {
+  randomizeAll();
+});
+
+generateBtn.addEventListener("click", () => {
+  generate();
+});
 
 initialize();
-randomizeAll();
