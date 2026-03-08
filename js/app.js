@@ -125,19 +125,41 @@ document.addEventListener("DOMContentLoaded", () => {
   selectEl.value = randomOption.value;
 }
 
+function randomizeSelect(selectEl) {
+
+  if (!selectEl) return;
+
+  const validOptions = Array.from(selectEl.options).filter(
+    option => option.value !== ""
+  );
+
+  if (validOptions.length === 0) return;
+
+  const random = validOptions[Math.floor(Math.random() * validOptions.length)];
+
+  selectEl.value = random.value;
+
+}
+
 function randomizeAll() {
+
   randomizeSelect(complexionSelect);
   randomizeSelect(bodyTypeSelect);
   randomizeSelect(faceShapeSelect);
+
   randomizeSelect(hairSelect);
   randomizeSelect(outfitSelect);
+
   randomizeSelect(expressionSelect);
   randomizeSelect(microSelect);
   randomizeSelect(attitudeSelect);
+
   randomizeSelect(poseSelect);
   randomizeSelect(propSelect);
   randomizeSelect(sceneSelect);
+
   randomizeSelect(paletteSelect);
+
 }
 
   function randomizeArchetype() {
