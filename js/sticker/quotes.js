@@ -1,0 +1,22 @@
+export const STICKER_QUOTES = [
+  "Morally gray is my favorite color.",
+  "He’s toxic. I’m literate.",
+  "Booked, busy, and emotionally unstable.",
+  "This book ruined me… 5 stars.",
+  "I support women’s rights and women’s wrong fictional men.",
+  "He’s dangerous. I’m interested.",
+  "My standards are fictional and expensive.",
+  "Possessive? Only on paper.",
+  "If he’s unhinged, I’m listening.",
+  "I came for the plot. I stayed for the obsession.",
+  "This chapter has me in a chokehold.",
+  "Quiet because the plot is plotting.",
+  "I’m not dramatic. The book is.",
+  "He smirked and I lost custody of my common sense.",
+  "Touch her and die energy.",
+  "My peace is fictional and highly addictive.",
+  "I read like I have secrets too.",
+  "He needs therapy. I need chapter 28.",
+  "I fear I have a type.",
+  "This book got me acting illiterate."
+];
