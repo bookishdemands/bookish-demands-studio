@@ -96,15 +96,38 @@ document.addEventListener("DOMContentLoaded", () => {
     fillSelect(paletteSelect, dna?.palette?.length ? dna.palette : PALETTES);
   }
 
-  function randomizeAll() {
+  function randomizeSelect(selectEl) {
+  if (!selectEl) return;
 
-  hairSelect.value = pick(HAIR);
-  outfitSelect.value = pick(OUTFITS);
-  expressionSelect.value = pick(EXPRESSIONS);
-  poseSelect.value = pick(POSES);
-  propSelect.value = pick(PROPS);
-  paletteSelect.value = pick(PALETTES);
+  const validOptions = Array.from(selectEl.options).filter(option => option.value !== "");
 
+  if (!validOptions.length) return;
+
+  const randomOption = pick(validOptions);
+  selectEl.value = randomOption.value;
+}
+
+function randomizeAll() {
+  randomizeSelect(complexionSelect);
+  randomizeSelect(bodyTypeSelect);
+  randomizeSelect(faceShapeSelect);
+  randomizeSelect(hairSelect);
+  randomizeSelect(outfitSelect);
+  randomizeSelect(expressionSelect);
+  randomizeSelect(microSelect);
+  randomizeSelect(attitudeSelect);
+  randomizeSelect(poseSelect);
+  randomizeSelect(propSelect);
+  randomizeSelect(sceneSelect);
+  randomizeSelect(paletteSelect);
+}
+
+  function randomizeArchetype() {
+  const validOptions = Array.from(archetypeSelect.options).filter(option => option.value !== "");
+  if (!validOptions.length) return;
+
+  const randomOption = pick(validOptions);
+  archetypeSelect.value = randomOption.value;
 }
 
   function resetBuilder() {
@@ -193,10 +216,10 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   randomArchetypeBtn.addEventListener("click", () => {
-    archetypeSelect.value = pick(ARCHETYPES);
-    populateBuilderOptions(archetypeSelect.value);
-    randomizeAll();
-  });
+  randomizeArchetype();
+  populateBuilderOptions(archetypeSelect.value);
+  randomizeAll();
+});
 
   randomizeAllBtn.addEventListener("click", () => {
     randomizeAll();
