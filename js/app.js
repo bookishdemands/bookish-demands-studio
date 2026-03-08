@@ -1,8 +1,11 @@
-alert("app.js is loading");
+import { ARCHETYPES } from "./core/archetypes.js";
 
-const output = document.getElementById("output");
+alert("module app.js loaded");
+
+const modeSelect = document.getElementById("studioMode");
 const generateBtn = document.getElementById("generateBtn");
+const output = document.getElementById("output");
 
 generateBtn.addEventListener("click", () => {
-  output.value = "App is connected.";
+  output.value = "Loaded archetypes: " + ARCHETYPES.join(", ");
 });
