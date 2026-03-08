@@ -109,14 +109,15 @@
       margin-top:8px;
     }
     .spacer{ height:14px; }
+    .hidden{ display:none; }
   </style>
 </head>
 <body>
   <div class="wrap">
     <h1>Bookish Demands Studio</h1>
     <p class="sub">
-      Character Studio first. Sticker Studio next.
-      Build branded cartoon character prompts with stronger archetype DNA, cleaner style consistency, and easier testing.
+      Character Studio and Sticker Studio in one workspace.
+      Build branded prompts faster with modular controls, overrides, and output tools.
     </p>
 
     <div class="grid">
@@ -193,8 +194,48 @@
           </div>
         </div>
 
+        <div id="stickerControls" class="hidden">
+          <label for="stickerProductSelect">Sticker Product</label>
+          <select id="stickerProductSelect"></select>
+          <input id="stickerProductCustom" type="text" placeholder="Custom sticker product..." />
+
+          <label for="stickerQuoteInput">Main Quote</label>
+          <input id="stickerQuoteInput" type="text" placeholder="Enter main quote..." />
+
+          <label for="stickerMicroQuoteInput">Micro Quote</label>
+          <input id="stickerMicroQuoteInput" type="text" placeholder="Enter micro quote..." />
+
+          <label for="stickerVibeSelect">Vibe</label>
+          <select id="stickerVibeSelect"></select>
+          <input id="stickerVibeCustom" type="text" placeholder="Custom vibe..." />
+
+          <label for="stickerPaletteSelect">Palette</label>
+          <select id="stickerPaletteSelect"></select>
+          <input id="stickerPaletteCustom" type="text" placeholder="Custom sticker palette..." />
+
+          <label for="stickerBackgroundSelect">Background</label>
+          <select id="stickerBackgroundSelect"></select>
+
+          <label for="stickerBorderSelect">Border</label>
+          <select id="stickerBorderSelect"></select>
+
+          <label for="stickerOutlineSelect">Outline</label>
+          <select id="stickerOutlineSelect"></select>
+
+          <label for="stickerSpiceSelect">Spice Level</label>
+          <select id="stickerSpiceSelect"></select>
+
+          <div class="btnrow">
+            <button id="randomStickerBtn" type="button">Random Sticker</button>
+            <button id="resetStickerBtn" type="button">Reset Sticker</button>
+            <button id="clearStickerBtn" type="button">Clear Sticker</button>
+            <button id="generateStickerBtn" class="primary" type="button">Generate Sticker Prompt</button>
+            <button id="generate5StickerBtn" type="button">Generate 5 Stickers</button>
+          </div>
+        </div>
+
         <div class="note">
-          Dropdowns give fast options. Custom fields override dropdowns when filled in.
+          Character mode uses archetype DNA. Sticker mode uses quote + product + vibe logic.
         </div>
       </section>
 
@@ -209,6 +250,6 @@
     </div>
   </div>
 
-  <script type="module" src="./js/app.js?v=50"></script>
+  <script type="module" src="./js/app.js?v=51"></script>
 </body>
 </html>
