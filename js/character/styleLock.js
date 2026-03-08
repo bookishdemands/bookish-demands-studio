@@ -1,1 +1,26 @@
-
+export const STYLE_LOCK = [
+  "hand-drawn glam cartoon beauty illustration",
+  "high-end digital character art",
+  "modern beauty editorial cartoon style",
+  "feminine melanated glam doll aesthetic",
+  "bold clean linework",
+  "smooth controlled gradient shading",
+  "vibrant polished colors",
+  "large almond-shaped eyes with lifted outer corners",
+  "dramatic top lashes",
+  "minimal lower lashes",
+  "bright catchlights in the eyes",
+  "sculpted high-arched brows",
+  "small softly defined nose with glossy highlight",
+  "full glossy lips with defined cupid's bow",
+  "soft rounded cheek structure",
+  "clean symmetrical facial proportions",
+  "defined baby hairs and polished hairline",
+  "high visual impact beauty illustration",
+  "sticker-friendly character design",
+  "clean centered composition",
+  "isolated character",
+  "minimal background clutter",
+  "transparent or pure white background",
+  "no text, no watermark, no logo"
+];
