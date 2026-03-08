@@ -5,46 +5,55 @@ function resolveValue(customValue, selectedValue, fallback = "") {
 }
 
 export function buildStickerPrompt(options = {}) {
-
-  const product = resolveValue(options.productCustom, options.product, "quote sticker");
-  const quote = resolveValue("", options.quote, "dark romance reader quote");
+  const productName = resolveValue(options.productCustom, options.product, "Reaction Sticker");
+  const productSubject = resolveValue("", options.productSubject, "clean die-cut sticker design");
+  const quote = resolveValue("", options.quote, "bookish reaction quote");
   const microQuote = resolveValue("", options.microQuote, "");
-  const vibe = resolveValue(options.vibeCustom, options.vibe, "dark romance energy");
+  const vibe = resolveValue(options.vibeCustom, options.vibe, "bookish glam");
   const palette = resolveValue(options.paletteCustom, options.palette, "black + hot pink + silver");
-  const background = resolveValue("", options.background, "clean sticker background");
-  const border = resolveValue("", options.border, "bold die-cut sticker border");
-  const outline = resolveValue("", options.outline, "white sticker outline");
-  const spice = resolveValue("", options.spice, "spice level 2");
+  const background = resolveValue("", options.background, "transparent background");
+  const border = resolveValue("", options.border, "clean white sticker border");
+  const outline = resolveValue("", options.outline, "bold clean outline");
+  const spice = resolveValue("", options.spice, "level 2 spicy energy");
 
-  const parts = [
+  const sections = [
     "STICKER PROMPT",
     "",
-    product,
+    "PRODUCT",
+    productName,
+    productSubject,
     "",
-    "QUOTE",
+    "TEXT HIERARCHY",
     quote,
     microQuote,
+    "large readable quote treatment",
+    "clean text placement",
+    "balanced typography layout",
     "",
     "VIBE",
     vibe,
+    palette ? `palette influence: ${palette}` : "",
+    options.paletteLock ? `palette family lock: ${options.paletteLock}` : "",
     spice,
     "",
     "STYLE",
-    "bold high-end sticker design",
-    "clean vector illustration",
-    "bookish reader aesthetic",
-    palette ? `palette influence: ${palette}` : "",
-    background,
+    "high-end digital sticker art",
+    "bold die-cut sticker design",
+    "clean vector-like polish",
+    "graphic, scroll-stopping composition",
+    "bookish branded aesthetic",
+    "luxury reader lifestyle energy",
+    "",
+    "FINISH",
     border,
     outline,
-    "",
-    "DESIGN",
-    "die-cut sticker composition",
-    "centered graphic layout",
+    background,
+    "centered composition",
+    "strong silhouette readability",
     "print-ready sticker aesthetic",
     "no watermark",
     "no logo"
   ];
 
-  return parts.filter(Boolean).join("\n");
+  return sections.filter(Boolean).join("\n");
 }
