@@ -238,6 +238,12 @@ function randomizeAll() {
       palette: paletteSelect.value
     };
 
+    const copyBtn = document.getElementById("copyBtn");
+
+  copyBtn.addEventListener("click", () => {
+  navigator.clipboard.writeText(output.value);
+});
+    
     output.value = buildCharacterPrompt(archetype, options);
   }
 
