@@ -26,7 +26,7 @@
       color:var(--text);
     }
     .wrap{
-      max-width:1100px;
+      max-width:1200px;
       margin:0 auto;
       padding:24px 18px 40px;
     }
@@ -47,7 +47,7 @@
     }
     .grid{
       display:grid;
-      grid-template-columns: 420px 1fr;
+      grid-template-columns: 460px 1fr;
       gap:16px;
     }
     @media (max-width: 900px){
@@ -70,7 +70,7 @@
       font-size:12px;
       color:var(--muted);
     }
-    select, textarea, button{
+    select, textarea, button, input{
       width:100%;
       border-radius:12px;
       border:1px solid var(--line);
@@ -79,8 +79,11 @@
       padding:11px 12px;
       font-size:14px;
     }
+    input{
+      margin:6px 0 12px;
+    }
     textarea{
-      min-height:420px;
+      min-height:520px;
       resize:vertical;
       line-height:1.55;
       font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
@@ -132,67 +135,75 @@
           <label for="archetypeSelect">Choose Archetype</label>
           <select id="archetypeSelect"></select>
 
-          <div style="height:12px"></div>
-
           <label for="complexionSelect">Complexion</label>
           <select id="complexionSelect"></select>
+          <input id="complexionCustom" type="text" placeholder="Custom complexion..." />
 
           <label for="bodyTypeSelect">Body Type</label>
           <select id="bodyTypeSelect"></select>
+          <input id="bodyTypeCustom" type="text" placeholder="Custom body type..." />
 
           <label for="faceShapeSelect">Face Shape</label>
           <select id="faceShapeSelect"></select>
+          <input id="faceShapeCustom" type="text" placeholder="Custom face shape..." />
 
           <label for="hairSelect">Hair</label>
           <select id="hairSelect"></select>
+          <input id="hairCustom" type="text" placeholder="Custom hair..." />
 
           <label for="outfitSelect">Outfit</label>
           <select id="outfitSelect"></select>
+          <input id="outfitCustom" type="text" placeholder="Custom outfit..." />
 
           <label for="expressionSelect">Expression</label>
           <select id="expressionSelect"></select>
+          <input id="expressionCustom" type="text" placeholder="Custom expression..." />
 
           <label for="microSelect">Micro Expression</label>
           <select id="microSelect"></select>
+          <input id="microCustom" type="text" placeholder="Custom micro expression..." />
 
           <label for="attitudeSelect">Attitude</label>
           <select id="attitudeSelect"></select>
+          <input id="attitudeCustom" type="text" placeholder="Custom attitude..." />
 
           <label for="poseSelect">Pose</label>
           <select id="poseSelect"></select>
+          <input id="poseCustom" type="text" placeholder="Custom pose..." />
 
           <label for="propSelect">Prop</label>
           <select id="propSelect"></select>
+          <input id="propCustom" type="text" placeholder="Custom prop..." />
 
           <label for="sceneSelect">Scene</label>
           <select id="sceneSelect"></select>
+          <input id="sceneCustom" type="text" placeholder="Custom scene..." />
 
           <label for="paletteSelect">Palette</label>
           <select id="paletteSelect"></select>
+          <input id="paletteCustom" type="text" placeholder="Custom palette..." />
 
           <div class="btnrow">
-          <button id="randomArchetypeBtn" type="button">Random Archetype</button>
-          <button id="randomizeAllBtn" type="button">Randomize All</button>
-          <button id="resetBtn" type="button">Reset Defaults</button>
-          <button id="clearBtn" type="button">Clear All</button>
-          <button id="generateBtn" class="primary" type="button">Generate Character Prompt</button>
-          <button id="copyBtn" type="button">Copy Prompt</button>
-            </div>
+            <button id="randomArchetypeBtn" type="button">Random Archetype</button>
+            <button id="randomizeAllBtn" type="button">Randomize All</button>
+            <button id="resetBtn" type="button">Reset Defaults</button>
+            <button id="clearBtn" type="button">Clear All</button>
+            <button id="generateBtn" class="primary" type="button">Generate Character Prompt</button>
+            <button id="generate5Btn" type="button">Generate 5 Variations</button>
+          </div>
         </div>
 
         <div class="note">
-          Character builder is now using archetype DNA plus manual override controls.
-        </div>
-
-        <div class="spacer"></div>
-
-        <div class="note">
-          Next after this: background, presets, copy button, and cleaner final output.
+          Dropdowns give fast options. Custom fields override dropdowns when filled in.
         </div>
       </section>
 
       <section class="card">
         <h2>Prompt Output</h2>
+        <div class="btnrow" style="margin-top:0;margin-bottom:12px;">
+          <button id="copyBtn" type="button">Copy Prompt</button>
+          <button id="clearOutputBtn" type="button">Clear Output</button>
+        </div>
         <textarea id="output" readonly placeholder="Generated prompt will appear here..."></textarea>
       </section>
     </div>
