@@ -5,7 +5,8 @@ function resolveValue(customValue, selectedValue, fallback = "") {
 }
 
 export function buildStickerPrompt(options = {}) {
-  const product = resolveValue(options.productCustom, options.product, "reaction sticker");
+  const productName = resolveValue(options.productCustom, options.product, "reaction sticker");
+  const productSubject = resolveValue("", options.productSubject, productName);
   const quote = resolveValue("", options.quote, "bookish reaction quote");
   const microQuote = resolveValue("", options.microQuote, "");
   const vibe = resolveValue(options.vibeCustom, options.vibe, "bookish glam");
@@ -19,7 +20,8 @@ export function buildStickerPrompt(options = {}) {
     "STICKER PROMPT",
     "",
     "PRODUCT",
-    product,
+    productName,
+    productSubject,
     "",
     "TEXT",
     quote,
@@ -28,6 +30,7 @@ export function buildStickerPrompt(options = {}) {
     "VIBE",
     vibe,
     palette ? `palette influence: ${palette}` : "",
+    options.paletteLock ? `palette family lock: ${options.paletteLock}` : "",
     spice,
     "",
     "STYLE",
