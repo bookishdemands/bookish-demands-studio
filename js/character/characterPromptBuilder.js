@@ -50,7 +50,6 @@ const STYLE_LOCK = [
 ];
 
 export function buildCharacterPrompt(archetype, options = {}) {
-
   const dna = ARCHETYPE_DNA[archetype] || ARCHETYPE_DNA["Soft Girl Menace"];
 
   const complexion = options.complexion || pick(COMPLEXIONS);
@@ -67,44 +66,41 @@ export function buildCharacterPrompt(archetype, options = {}) {
   const hair = options.hair || pick(dna.hair || []);
   const palette = options.palette || pick(dna.palette || []);
 
-  const parts = [
-
+  const sections = [
     "PROMPT",
-
-    /* CHARACTER IDENTITY FIRST */
-
+    "",
+    "CHARACTER",
     complexion,
     bodyType,
     faceShape,
-
     hair,
     outfit,
-
+    "",
+    "EXPRESSION",
     `${expression} expression`,
     `${micro} micro-expression`,
-
     attitude,
-
+    "",
+    "ACTION",
     pose,
     prop,
     scene,
-
+    "",
+    "ARCHETYPE",
     `reader archetype: ${archetype}`,
-
     `palette influence: ${palette}`,
-
-    /* QUALITY + STYLE */
-
+    "",
+    "STYLE",
     ...STYLE_LOCK,
-
+    "",
+    "COMPOSITION",
     "clean centered composition",
     "isolated character",
     "minimal background clutter",
     "transparent or pure white background",
     "no text, no watermark, no logo",
     "upper body composition"
-
   ];
 
-  return parts.filter(Boolean).join(", ");
+  return sections.filter(Boolean).join("\n");
 }
