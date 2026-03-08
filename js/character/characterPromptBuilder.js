@@ -46,15 +46,11 @@ const STYLE_LOCK = [
   "clean symmetrical facial proportions",
   "defined baby hairs and polished hairline",
   "high visual impact beauty illustration",
-  "sticker-friendly character design",
-  "clean centered composition",
-  "isolated character",
-  "minimal background clutter",
-  "transparent or pure white background",
-  "no text, no watermark, no logo"
+  "sticker-friendly character design"
 ];
 
 export function buildCharacterPrompt(archetype, options = {}) {
+
   const dna = ARCHETYPE_DNA[archetype] || ARCHETYPE_DNA["Soft Girl Menace"];
 
   const complexion = options.complexion || pick(COMPLEXIONS);
@@ -72,22 +68,42 @@ export function buildCharacterPrompt(archetype, options = {}) {
   const palette = options.palette || pick(dna.palette || []);
 
   const parts = [
+
     "PROMPT",
-    ...STYLE_LOCK,
+
+    /* CHARACTER IDENTITY FIRST */
+
     complexion,
     bodyType,
     faceShape,
+
     hair,
     outfit,
+
     `${expression} expression`,
     `${micro} micro-expression`,
+
     attitude,
+
     pose,
     prop,
     scene,
+
     `reader archetype: ${archetype}`,
+
     `palette influence: ${palette}`,
+
+    /* QUALITY + STYLE */
+
+    ...STYLE_LOCK,
+
+    "clean centered composition",
+    "isolated character",
+    "minimal background clutter",
+    "transparent or pure white background",
+    "no text, no watermark, no logo",
     "upper body composition"
+
   ];
 
   return parts.filter(Boolean).join(", ");
