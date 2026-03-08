@@ -14,7 +14,6 @@ import { buildStickerPrompt } from "./sticker/stickerPromptBuilder.js";
 import { buildKindleInsertPrompt } from "./sticker/kindleInsertPromptBuilder.js";
 import { STICKER_PRODUCTS } from "./sticker/products.js";
 
-
 function pick(arr) {
   return arr[Math.floor(Math.random() * arr.length)];
 }
@@ -37,6 +36,7 @@ function fillSelect(selectEl, options) {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
+  // Character controls
   const archetypeSelect = document.getElementById("archetypeSelect");
   const complexionSelect = document.getElementById("complexionSelect");
   const bodyTypeSelect = document.getElementById("bodyTypeSelect");
@@ -70,38 +70,41 @@ document.addEventListener("DOMContentLoaded", () => {
   const clearBtn = document.getElementById("clearBtn");
   const generateBtn = document.getElementById("generateBtn");
   const generate5Btn = document.getElementById("generate5Btn");
+
+  // Shared controls
+  const studioMode = document.getElementById("studioMode");
+  const characterControls = document.getElementById("characterControls");
+  const stickerControls = document.getElementById("stickerControls");
   const copyBtn = document.getElementById("copyBtn");
   const clearOutputBtn = document.getElementById("clearOutputBtn");
   const output = document.getElementById("output");
 
-const studioMode = document.getElementById("studioMode");
-const characterControls = document.getElementById("characterControls");
-const stickerControls = document.getElementById("stickerControls");
-
-const stickerProductSelect = document.getElementById("stickerProductSelect");
-const stickerQuoteInput = document.getElementById("stickerQuoteInput");
-const stickerMicroQuoteInput = document.getElementById("stickerMicroQuoteInput");
-const stickerVibeSelect = document.getElementById("stickerVibeSelect");
-const stickerPaletteSelect = document.getElementById("stickerPaletteSelect");
-const stickerBackgroundSelect = document.getElementById("stickerBackgroundSelect");
-const stickerBorderSelect = document.getElementById("stickerBorderSelect");
-const stickerOutlineSelect = document.getElementById("stickerOutlineSelect");
-const stickerSpiceSelect = document.getElementById("stickerSpiceSelect");
-
-const stickerProductCustom = document.getElementById("stickerProductCustom");
-const stickerVibeCustom = document.getElementById("stickerVibeCustom");
-const stickerPaletteCustom = document.getElementById("stickerPaletteCustom");
-
-const randomStickerBtn = document.getElementById("randomStickerBtn");
-const resetStickerBtn = document.getElementById("resetStickerBtn");
-const clearStickerBtn = document.getElementById("clearStickerBtn");
-const generateStickerBtn = document.getElementById("generateStickerBtn");
-const generate5StickerBtn = document.getElementById("generate5StickerBtn");
-
+  // Sticker mode controls
   const stickerSubMode = document.getElementById("stickerSubMode");
   const stickerModeControls = document.getElementById("stickerModeControls");
   const kindleModeControls = document.getElementById("kindleModeControls");
 
+  const stickerProductSelect = document.getElementById("stickerProductSelect");
+  const stickerQuoteInput = document.getElementById("stickerQuoteInput");
+  const stickerMicroQuoteInput = document.getElementById("stickerMicroQuoteInput");
+  const stickerVibeSelect = document.getElementById("stickerVibeSelect");
+  const stickerPaletteSelect = document.getElementById("stickerPaletteSelect");
+  const stickerBackgroundSelect = document.getElementById("stickerBackgroundSelect");
+  const stickerBorderSelect = document.getElementById("stickerBorderSelect");
+  const stickerOutlineSelect = document.getElementById("stickerOutlineSelect");
+  const stickerSpiceSelect = document.getElementById("stickerSpiceSelect");
+
+  const stickerProductCustom = document.getElementById("stickerProductCustom");
+  const stickerVibeCustom = document.getElementById("stickerVibeCustom");
+  const stickerPaletteCustom = document.getElementById("stickerPaletteCustom");
+
+  const randomStickerBtn = document.getElementById("randomStickerBtn");
+  const resetStickerBtn = document.getElementById("resetStickerBtn");
+  const clearStickerBtn = document.getElementById("clearStickerBtn");
+  const generateStickerBtn = document.getElementById("generateStickerBtn");
+  const generate5StickerBtn = document.getElementById("generate5StickerBtn");
+
+  // Kindle insert controls
   const kindleQuoteInput = document.getElementById("kindleQuoteInput");
   const kindleMicroQuoteInput = document.getElementById("kindleMicroQuoteInput");
   const kindleThemeSelect = document.getElementById("kindleThemeSelect");
@@ -118,7 +121,8 @@ const generate5StickerBtn = document.getElementById("generate5StickerBtn");
   const clearKindleBtn = document.getElementById("clearKindleBtn");
   const generateKindleBtn = document.getElementById("generateKindleBtn");
   const generate5KindleBtn = document.getElementById("generate5KindleBtn");
- 
+
+  // Character arrays
   const COMPLEXIONS = [
     "deep espresso brown skin",
     "rich dark chocolate skin",
@@ -142,195 +146,45 @@ const generate5StickerBtn = document.getElementById("generate5StickerBtn");
     "softened square face shape"
   ];
 
-  const STICKER_TYPES = [
-  "quote sticker",
-  "reaction sticker",
-  "kindle insert sticker",
-  "warning label sticker",
-  "book club sticker",
-  "dark romance sticker",
-  "reader mood sticker",
-  "annotation sticker"
-];
-  
-  const STICKER_PRODUCTS = [
-  {
-    value: "IV Drip Bag",
-    subject: "minimal vector sticker of an IV drip bag with a clean label panel and subtle glossy highlights; no medical branding"
-  },
-  {
-    value: "Delulu Meter",
-    subject: "delulu meter sticker with labeled levels and a slider indicator; cute + cocky vibe; bold readable text"
-  },
-  {
-    value: "Pill Bottle",
-    subject: "amber prescription-style bottle with childproof cap; clean warning label panel; a few stylized pills; no pharmacy branding"
-  },
-  {
-    value: "Confession Note",
-    subject: "confession note sticker with header 'CONFESSION:' and a bold handwritten quote; clean paper edges; dramatic cute vibe"
-  },
-  {
-    value: "Blood Oath Vial",
-    subject: "small glass vial sticker with deep red liquid, minimalist label panel for quote placement, subtle shine highlights, luxe dark romance vibe, no branding",
-    paletteLock: "blood"
-  },
-  {
-    value: "Velvet Sin Perfume Bottle",
-    subject: "luxury perfume bottle sticker with a clean label panel for the quote, glossy highlights, ornate but modern silhouette, no brand logos"
-  },
-  {
-    value: "Obsessed Heart Monitor",
-    subject: "heart monitor / EKG screen sticker showing a bold heartbeat line, clean caption area for the quote, high contrast pop-art style"
-  },
-  {
-    value: "Possessive Energy Warning Tag",
-    subject: "warning label/tag sticker with a blank text panel for the quote, bold icons, high contrast, no real brand marks"
-  },
-  {
-    value: "Morally Gray Passport Stamp",
-    subject: "passport stamp sticker with a central text area for the quote, distressed edges but clean readability, no country seals"
-  },
-  {
-    value: "Red Flag Collector Card",
-    subject: "trading card style sticker with a bold frame and stats layout, large title panel for the quote, playful toxic romance humor vibe, no copyrighted characters",
-    paletteLock: "blood"
-  },
-  {
-    value: "Smut Door Hanger",
-    subject: "door hanger sticker with a large centered label area for the quote, simple icon accents, bold readable typography, no hotel branding"
-  },
-  {
-    value: "Plot Twist Emergency Button",
-    subject: "big red emergency button sticker with a circular top label area for the quote, dramatic highlights, bold comic pop style"
-  },
-  {
-    value: "Kindle Addict Prescription Pad",
-    subject: "prescription pad / Rx note sticker with fake fields and a large handwritten quote area, medical-themed but no pharmacy branding, playful and clean"
-  },
-  {
-    value: "Book Hangover Recovery Kit",
-    subject: "first-aid kit / care kit box sticker with a clean label panel for the quote, subtle gloss, cute but edgy romance reader vibe"
-  },
-  {
-    value: "Villain Energy Membership Card",
-    subject: "membership card sticker with a bold header and centered quote line area, luxe dark aesthetic, no real company branding"
-  },
-  {
-    value: "Soft Life Serum Dropper",
-    subject: "glass dropper bottle sticker with soft glow, clean label panel for the quote, luxe self-care vibe, no skincare branding"
-  },
-  {
-    value: "Emotional Support Bookmark Badge",
-    subject: "badge/ribbon seal sticker with a central text panel for the quote, bold outline, cute bookish energy, no school logos"
-  },
-  {
-    value: "Main Character License Card",
-    subject: "novelty ID/license card sticker with a large quote line area, clean grid layout, no real state or government seals"
-  },
-  {
-    value: "Guest List Wristband",
-    subject: "event wristband sticker with a bold text strip area for the quote, minimal icons, nightlife romance vibe, no venue branding"
-  },
-  {
-    value: "Backstage Access Pass",
-    subject: "laminated backstage pass sticker with a big center panel for the quote, lanyard hole detail, high contrast, no band/venue logos"
-  },
-  {
-    value: "Luxury Key Fob Tag",
-    subject: "luxury key tag sticker with a large centered label panel for the quote, sleek silhouette, metallic highlights, no car logos"
-  },
-  {
-    value: "VIP Lounge Card",
-    subject: "VIP card sticker with bold typography and a main quote line area, luxe minimal style, no club branding"
-  },
-  {
-    value: "Court Evidence Tag",
-    subject: "evidence tag sticker with a large text block for the quote, barcode-like lines, no department branding"
-  },
-  {
-    value: "Case File Folder Tab",
-    subject: "file folder/tab sticker with a blank label strip for the quote, thriller aesthetic, clean and readable"
-  },
-  {
-    value: "Receipt of Emotional Damage",
-    subject: "receipt sticker with a bold quote centered as the total or note, clean grid layout, no real restaurant branding"
-  },
-  {
-    value: "Library Fine Ticket",
-    subject: "library due-date/fine ticket sticker with a big quote area, clean stamped look, no library logos"
-  },
-  {
-    value: "Dangerous MMC Business Card",
-    subject: "luxury business card sticker with a strong typographic quote as the headline, minimal details, no real company names"
-  },
-  {
-    value: "Delulu Fuel Juice Box",
-    subject: "juice box sticker with a clean label panel for the quote, straw detail, cute + chaotic vibe, no brand logos"
-  },
-  {
-    value: "Plot Armor Spray",
-    subject: "spray bottle sticker with a big label panel for the quote, bold icons, pop-art shine, no real product branding"
-  },
-  {
-    value: "Spoiler Alert Tape",
-    subject: "tape strip sticker with the quote printed repeatedly or as a bold center line, high contrast"
-  },
-  {
-    value: "Overstimulated Reader Meter",
-    subject: "meter/gauge sticker with levels and a slider needle, big quote panel, cute but edgy reader vibe"
-  },
-  {
-    value: "TBR Mountain Warning Sign",
-    subject: "warning road sign style sticker with a big center text area for the quote, simple icon of a book stack mountain"
-  },
-  {
-    value: "Fantasy Realm Boarding Pass",
-    subject: "boarding pass sticker with a bold quote as the main destination line, fantasy vibe but modern design, no airline branding"
-  },
-  {
-    value: "Smut Loading Progress Bar",
-    subject: "progress bar sticker with percentage ticks and a big quote line above or below, bold readable typography"
-  }
-];
-  
-const STICKER_VIBES = [
-  "bookish glam",
-  "dark romance luxe",
-  "urban fiction energy",
-  "soft girl reader",
-  "morally gray obsession",
-  "kindle after dark",
-  "high drama reader reaction"
-];
+  // Sticker arrays
+  const STICKER_VIBES = [
+    "bookish glam",
+    "dark romance luxe",
+    "urban fiction energy",
+    "soft girl reader",
+    "morally gray obsession",
+    "kindle after dark",
+    "high drama reader reaction"
+  ];
 
-const STICKER_BACKGROUNDS = [
-  "transparent background",
-  "white background",
-  "soft pink glow background",
-  "matte black background"
-];
+  const STICKER_BACKGROUNDS = [
+    "transparent background",
+    "white background",
+    "soft pink glow background",
+    "matte black background"
+  ];
 
-const STICKER_BORDERS = [
-  "clean white sticker border",
-  "no border",
-  "thick sticker border"
-];
+  const STICKER_BORDERS = [
+    "clean white sticker border",
+    "no border",
+    "thick sticker border"
+  ];
 
-const STICKER_OUTLINES = [
-  "bold clean outline",
-  "soft outline",
-  "no outline"
-];
+  const STICKER_OUTLINES = [
+    "bold clean outline",
+    "soft outline",
+    "no outline"
+  ];
 
-const STICKER_SPICE = [
-  "level 1 sweet tension",
-  "level 2 spicy energy",
-  "level 3 dark romance heat",
-  "level 4 unhinged tension",
-  "level 5 maximum spice vibe"
-];
+  const STICKER_SPICE = [
+    "level 1 sweet tension",
+    "level 2 spicy energy",
+    "level 3 dark romance heat",
+    "level 4 unhinged tension",
+    "level 5 maximum spice vibe"
+  ];
 
+  // Kindle arrays
   const KINDLE_THEMES = [
     "luxury dark romance",
     "soft girl reader",
@@ -365,7 +219,6 @@ const STICKER_SPICE = [
     "heat level 5 maximum obsession"
   ];
 
-  
   function populateArchetypeOptions() {
     fillSelect(archetypeSelect, ARCHETYPES);
   }
@@ -402,24 +255,19 @@ const STICKER_SPICE = [
   function randomizeSelect(selectEl) {
     if (!selectEl) return;
 
-    const validOptions = Array.from(selectEl.options).filter(option => option.value !== "");
+    const validOptions = Array.from(selectEl.options).filter((option) => option.value !== "");
     if (validOptions.length === 0) return;
 
     const random = validOptions[Math.floor(Math.random() * validOptions.length)];
     selectEl.value = random.value;
   }
 
-  function resolveValue(customValue, selectedValue) {
-  if (customValue && customValue.trim()) return customValue.trim();
-  return selectedValue || "";
-}
-  
   function clearCustomInputs() {
     [
       complexionCustom, bodyTypeCustom, faceShapeCustom, hairCustom, outfitCustom,
       expressionCustom, microCustom, attitudeCustom, poseCustom, propCustom,
       sceneCustom, paletteCustom
-    ].forEach(input => {
+    ].forEach((input) => {
       if (input) input.value = "";
     });
   }
@@ -449,9 +297,9 @@ const STICKER_SPICE = [
     archetypeSelect.value = defaultArchetype;
     populateBuilderOptions(defaultArchetype);
 
-    complexionSelect.value = COMPLEXIONS[0];
-    bodyTypeSelect.value = BODY_TYPES[0];
-    faceShapeSelect.value = FACE_SHAPES[0];
+    complexionSelect.value = COMPLEXIONS[0] || "";
+    bodyTypeSelect.value = BODY_TYPES[0] || "";
+    faceShapeSelect.value = FACE_SHAPES[0] || "";
 
     clearCustomInputs();
     output.value = "";
@@ -524,7 +372,7 @@ const STICKER_SPICE = [
     output.value = variants.join("\n\n====================\n\n");
   }
 
-    function updateStudioMode() {
+  function updateStudioMode() {
     if (studioMode.value === "character") {
       characterControls.classList.remove("hidden");
       stickerControls.classList.add("hidden");
@@ -535,7 +383,7 @@ const STICKER_SPICE = [
   }
 
   function populateStickerControls() {
-    fillSelect(stickerProductSelect, STICKER_PRODUCTS.map(item => item.value));
+    fillSelect(stickerProductSelect, STICKER_PRODUCTS.map((item) => item.value));
     fillSelect(stickerVibeSelect, STICKER_VIBES);
     fillSelect(stickerPaletteSelect, PALETTES);
     fillSelect(stickerBackgroundSelect, STICKER_BACKGROUNDS);
@@ -555,13 +403,13 @@ const STICKER_SPICE = [
   function resetSticker() {
     populateStickerControls();
 
-    stickerProductSelect.value = STICKER_PRODUCTS[0];
-    stickerVibeSelect.value = STICKER_VIBES[0];
-    stickerPaletteSelect.value = PALETTES[0];
-    stickerBackgroundSelect.value = STICKER_BACKGROUNDS[0];
-    stickerBorderSelect.value = STICKER_BORDERS[0];
-    stickerOutlineSelect.value = STICKER_OUTLINES[0];
-    stickerSpiceSelect.value = STICKER_SPICE[1];
+    stickerProductSelect.value = STICKER_PRODUCTS[0]?.value || "";
+    stickerVibeSelect.value = STICKER_VIBES[0] || "";
+    stickerPaletteSelect.value = PALETTES[0] || "";
+    stickerBackgroundSelect.value = STICKER_BACKGROUNDS[0] || "";
+    stickerBorderSelect.value = STICKER_BORDERS[0] || "";
+    stickerOutlineSelect.value = STICKER_OUTLINES[0] || "";
+    stickerSpiceSelect.value = STICKER_SPICE[1] || "";
 
     clearStickerCustomInputs();
   }
@@ -588,31 +436,47 @@ const STICKER_SPICE = [
     randomizeSelect(stickerSpiceSelect);
   }
 
-  function getStickerOptionsFromUI() {
-  const productObj = getStickerProductObject(stickerProductSelect.value);
-
-  return {
-    product: stickerProductSelect.value,
-    productSubject: productObj?.subject || "",
-    productCustom: stickerProductCustom.value,
-    quote: stickerQuoteInput.value,
-    microQuote: stickerMicroQuoteInput.value,
-    vibe: stickerVibeSelect.value,
-    vibeCustom: stickerVibeCustom.value,
-    palette: stickerPaletteSelect.value,
-    paletteCustom: stickerPaletteCustom.value,
-    background: stickerBackgroundSelect.value,
-    border: stickerBorderSelect.value,
-    outline: stickerOutlineSelect.value,
-    spice: stickerSpiceSelect.value,
-    paletteLock: productObj?.paletteLock || ""
-  };
-}
-
   function getStickerProductObject(productValue) {
-  return STICKER_PRODUCTS.find(item => item.value === productValue) || null;
-}
-    function updateStickerSubMode() {
+    return STICKER_PRODUCTS.find((item) => item.value === productValue) || null;
+  }
+
+  function getStickerOptionsFromUI() {
+    const productObj = getStickerProductObject(stickerProductSelect.value);
+
+    return {
+      product: stickerProductSelect.value,
+      productSubject: productObj?.subject || "",
+      productCustom: stickerProductCustom.value,
+      quote: stickerQuoteInput.value,
+      microQuote: stickerMicroQuoteInput.value,
+      vibe: stickerVibeSelect.value,
+      vibeCustom: stickerVibeCustom.value,
+      palette: stickerPaletteSelect.value,
+      paletteCustom: stickerPaletteCustom.value,
+      background: stickerBackgroundSelect.value,
+      border: stickerBorderSelect.value,
+      outline: stickerOutlineSelect.value,
+      spice: stickerSpiceSelect.value,
+      paletteLock: productObj?.paletteLock || ""
+    };
+  }
+
+  function generateSticker() {
+    output.value = buildStickerPrompt(getStickerOptionsFromUI());
+  }
+
+  function generateStickerVariations(count = 5) {
+    const baseOptions = getStickerOptionsFromUI();
+    const rows = [];
+
+    for (let i = 0; i < count; i++) {
+      rows.push(`STICKER ${i + 1}\n\n${buildStickerPrompt(baseOptions)}`);
+    }
+
+    output.value = rows.join("\n\n====================\n\n");
+  }
+
+  function updateStickerSubMode() {
     if (stickerSubMode.value === "sticker") {
       stickerModeControls.classList.remove("hidden");
       kindleModeControls.classList.add("hidden");
@@ -641,11 +505,11 @@ const STICKER_SPICE = [
   function resetKindle() {
     populateKindleControls();
 
-    kindleThemeSelect.value = KINDLE_THEMES[0];
-    kindlePaletteSelect.value = PALETTES[0];
-    kindleBackgroundSelect.value = KINDLE_BACKGROUNDS[0];
-    kindleLayoutSelect.value = KINDLE_LAYOUTS[0];
-    kindleHeatSelect.value = KINDLE_HEAT[1];
+    kindleThemeSelect.value = KINDLE_THEMES[0] || "";
+    kindlePaletteSelect.value = PALETTES[0] || "";
+    kindleBackgroundSelect.value = KINDLE_BACKGROUNDS[0] || "";
+    kindleLayoutSelect.value = KINDLE_LAYOUTS[0] || "";
+    kindleHeatSelect.value = KINDLE_HEAT[1] || "";
 
     clearKindleInputs();
   }
@@ -701,22 +565,8 @@ const STICKER_SPICE = [
 
     output.value = rows.join("\n\n====================\n\n");
   }
-  
-  function generateSticker() {
-    output.value = buildStickerPrompt(getStickerOptionsFromUI());
-  }
 
-  function generateStickerVariations(count = 5) {
-    const baseOptions = getStickerOptionsFromUI();
-    const rows = [];
-
-    for (let i = 0; i < count; i++) {
-      rows.push(`STICKER ${i + 1}\n\n${buildStickerPrompt(baseOptions)}`);
-    }
-
-    output.value = rows.join("\n\n====================\n\n");
-  }
-  
+  // Character listeners
   archetypeSelect.addEventListener("change", () => {
     populateBuilderOptions(archetypeSelect.value);
   });
@@ -763,6 +613,7 @@ const STICKER_SPICE = [
     generateVariations(5);
   });
 
+  // Shared listeners
   clearOutputBtn.addEventListener("click", () => {
     output.value = "";
   });
@@ -786,33 +637,35 @@ const STICKER_SPICE = [
         }, 1200);
       }
     });
-
-    studioMode.addEventListener("change", () => {
-  updateStudioMode();
-});
-
-randomStickerBtn.addEventListener("click", () => {
-  randomSticker();
-});
-
-resetStickerBtn.addEventListener("click", () => {
-  resetSticker();
-});
-
-clearStickerBtn.addEventListener("click", () => {
-  clearSticker();
-});
-
-generateStickerBtn.addEventListener("click", () => {
-  generateSticker();
-});
-
-generate5StickerBtn.addEventListener("click", () => {
-  generateStickerVariations(5);
-});
   }
 
-    stickerSubMode.addEventListener("change", () => {
+  studioMode.addEventListener("change", () => {
+    updateStudioMode();
+  });
+
+  // Sticker listeners
+  randomStickerBtn.addEventListener("click", () => {
+    randomSticker();
+  });
+
+  resetStickerBtn.addEventListener("click", () => {
+    resetSticker();
+  });
+
+  clearStickerBtn.addEventListener("click", () => {
+    clearSticker();
+  });
+
+  generateStickerBtn.addEventListener("click", () => {
+    generateSticker();
+  });
+
+  generate5StickerBtn.addEventListener("click", () => {
+    generateStickerVariations(5);
+  });
+
+  // Kindle listeners
+  stickerSubMode.addEventListener("change", () => {
     updateStickerSubMode();
   });
 
@@ -836,7 +689,7 @@ generate5StickerBtn.addEventListener("click", () => {
     generateKindleVariations(5);
   });
 
-  
+  // Init
   populateArchetypeOptions();
   resetBuilder();
 
@@ -845,7 +698,7 @@ generate5StickerBtn.addEventListener("click", () => {
 
   populateKindleControls();
   resetKindle();
-  
+
   updateStickerSubMode();
   updateStudioMode();
 });
