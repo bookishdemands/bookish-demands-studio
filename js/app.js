@@ -118,4 +118,7 @@ generateBtn.addEventListener("click", () => {
   generate();
 });
 
-initialize();
+document.addEventListener("DOMContentLoaded", () => {
+  initialize();
+  randomizeAll();
+});
