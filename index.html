@@ -1,33 +1,181 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
 <head>
-<title>Bookish Demands Studio</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Bookish Demands Studio</title>
+  <style>
+    :root{
+      --bg:#0c0c10;
+      --panel:#151523;
+      --panel2:#1c1c2e;
+      --text:#f2f2f7;
+      --muted:#b7b7c9;
+      --accent:#E0009A;
+      --accent2:#7c3aed;
+      --line:#2a2a3f;
+    }
+
+    *{ box-sizing:border-box; }
+
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background:
+        radial-gradient(1200px 700px at 20% 0%, rgba(224,0,154,.16), transparent 60%),
+        radial-gradient(1000px 700px at 85% 10%, rgba(124,58,237,.12), transparent 60%),
+        var(--bg);
+      color:var(--text);
+    }
+
+    .wrap{
+      max-width:1100px;
+      margin:0 auto;
+      padding:24px 18px 40px;
+    }
+
+    h1{
+      margin:0 0 8px;
+      font-size:28px;
+      letter-spacing:.2px;
+      background: linear-gradient(90deg,#ffffff,#ffd3f2);
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+    }
+
+    .sub{
+      margin:0 0 20px;
+      color:var(--muted);
+      line-height:1.5;
+      font-size:14px;
+      max-width:760px;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns: 420px 1fr;
+      gap:16px;
+    }
+
+    @media (max-width: 900px){
+      .grid{ grid-template-columns:1fr; }
+    }
+
+    .card{
+      background: linear-gradient(180deg, rgba(21,21,35,.96), rgba(21,21,35,.78));
+      border:1px solid var(--line);
+      border-radius:16px;
+      padding:16px;
+    }
+
+    h2{
+      margin:0 0 14px;
+      font-size:15px;
+      letter-spacing:.2px;
+    }
+
+    label{
+      display:block;
+      margin:0 0 6px;
+      font-size:12px;
+      color:var(--muted);
+    }
+
+    select, textarea, button{
+      width:100%;
+      border-radius:12px;
+      border:1px solid var(--line);
+      background:var(--panel2);
+      color:var(--text);
+      padding:11px 12px;
+      font-size:14px;
+    }
+
+    textarea{
+      min-height:420px;
+      resize:vertical;
+      line-height:1.55;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    }
+
+    .btnrow{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:12px;
+    }
+
+    button{
+      cursor:pointer;
+      font-weight:700;
+    }
+
+    button.primary{
+      background: linear-gradient(90deg, rgba(224,0,154,1), rgba(124,58,237,1));
+      border:0;
+    }
+
+    .note{
+      color:var(--muted);
+      font-size:12px;
+      line-height:1.5;
+      margin-top:8px;
+    }
+
+    .spacer{
+      height:14px;
+    }
+  </style>
 </head>
-
 <body>
+  <div class="wrap">
+    <h1>Bookish Demands Studio</h1>
+    <p class="sub">
+      Character Studio first. Sticker Studio next.
+      Build branded cartoon character prompts with stronger archetype DNA, cleaner style consistency, and easier testing.
+    </p>
 
-<h1>Bookish Demands Studio</h1>
+    <div class="grid">
+      <section class="card">
+        <h2>Studio Controls</h2>
 
-<select id="studioMode">
-  <option value="character">Character Studio</option>
-  <option value="sticker">Sticker Studio</option>
-</select>
+        <label for="studioMode">Studio Mode</label>
+        <select id="studioMode">
+          <option value="character" selected>Character Studio</option>
+          <option value="sticker">Sticker Studio</option>
+        </select>
 
-<div id="characterControls" style="margin-top:12px;">
-  <label for="archetypeSelect">Choose Archetype</label>
-  <select id="archetypeSelect">
-    <option value="">Random Archetype</option>
-  </select>
+        <div class="spacer"></div>
 
-  <div style="margin-top:10px; display:flex; gap:10px; flex-wrap:wrap;">
-    <button id="randomArchetypeBtn" type="button">Random Archetype</button>
-    <button id="generateBtn" type="button">Generate</button>
+        <div id="characterControls">
+          <label for="archetypeSelect">Choose Archetype</label>
+          <select id="archetypeSelect"></select>
+
+          <div class="btnrow">
+            <button type="button" id="randomArchetypeBtn">Random Archetype</button>
+            <button type="button" id="generateBtn" class="primary">Generate Character Prompt</button>
+          </div>
+
+          <div class="note">
+            This stage is for testing archetype DNA fast before we add the full advanced builder back in.
+          </div>
+        </div>
+
+        <div class="spacer"></div>
+
+        <div class="note">
+          After this works, we’ll add:
+          manual controls for hair, outfit, prop, palette, complexion, and background.
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Prompt Output</h2>
+        <textarea id="output" readonly placeholder="Generated prompt will appear here..."></textarea>
+      </section>
+    </div>
   </div>
-</div>
 
-<textarea id="output"></textarea>
-
-<script type="module" src="./js/app.js?v=9"></script>
-
+  <script type="module" src="./js/app.js?v=21"></script>
 </body>
 </html>
