@@ -10,6 +10,7 @@ import { MICRO_EXPRESSIONS } from "./character/microExpressions.js";
 import { ATTITUDES } from "./character/attitudes.js";
 import { SCENES } from "./character/scenes.js";
 import { buildCharacterPrompt } from "./character/characterPromptBuilder.js";
+import { buildStickerPrompt } from "./sticker/stickerPromptBuilder.js";
 
 function pick(arr) {
   return arr[Math.floor(Math.random() * arr.length)];
@@ -70,6 +71,30 @@ document.addEventListener("DOMContentLoaded", () => {
   const clearOutputBtn = document.getElementById("clearOutputBtn");
   const output = document.getElementById("output");
 
+const studioMode = document.getElementById("studioMode");
+const characterControls = document.getElementById("characterControls");
+const stickerControls = document.getElementById("stickerControls");
+
+const stickerProductSelect = document.getElementById("stickerProductSelect");
+const stickerQuoteInput = document.getElementById("stickerQuoteInput");
+const stickerMicroQuoteInput = document.getElementById("stickerMicroQuoteInput");
+const stickerVibeSelect = document.getElementById("stickerVibeSelect");
+const stickerPaletteSelect = document.getElementById("stickerPaletteSelect");
+const stickerBackgroundSelect = document.getElementById("stickerBackgroundSelect");
+const stickerBorderSelect = document.getElementById("stickerBorderSelect");
+const stickerOutlineSelect = document.getElementById("stickerOutlineSelect");
+const stickerSpiceSelect = document.getElementById("stickerSpiceSelect");
+
+const stickerProductCustom = document.getElementById("stickerProductCustom");
+const stickerVibeCustom = document.getElementById("stickerVibeCustom");
+const stickerPaletteCustom = document.getElementById("stickerPaletteCustom");
+
+const randomStickerBtn = document.getElementById("randomStickerBtn");
+const resetStickerBtn = document.getElementById("resetStickerBtn");
+const clearStickerBtn = document.getElementById("clearStickerBtn");
+const generateStickerBtn = document.getElementById("generateStickerBtn");
+const generate5StickerBtn = document.getElementById("generate5StickerBtn");
+
   const COMPLEXIONS = [
     "deep espresso brown skin",
     "rich dark chocolate skin",
@@ -93,6 +118,54 @@ document.addEventListener("DOMContentLoaded", () => {
     "softened square face shape"
   ];
 
+  const STICKER_PRODUCTS = [
+  "quote sticker",
+  "reaction sticker",
+  "kindle insert sticker",
+  "warning label sticker",
+  "book club sticker",
+  "dark romance sticker",
+  "reader mood sticker",
+  "annotation sticker"
+];
+
+const STICKER_VIBES = [
+  "bookish glam",
+  "dark romance luxe",
+  "urban fiction energy",
+  "soft girl reader",
+  "morally gray obsession",
+  "kindle after dark",
+  "high drama reader reaction"
+];
+
+const STICKER_BACKGROUNDS = [
+  "transparent background",
+  "white background",
+  "soft pink glow background",
+  "matte black background"
+];
+
+const STICKER_BORDERS = [
+  "clean white sticker border",
+  "no border",
+  "thick sticker border"
+];
+
+const STICKER_OUTLINES = [
+  "bold clean outline",
+  "soft outline",
+  "no outline"
+];
+
+const STICKER_SPICE = [
+  "level 1 sweet tension",
+  "level 2 spicy energy",
+  "level 3 dark romance heat",
+  "level 4 unhinged tension",
+  "level 5 maximum spice vibe"
+];
+  
   function populateArchetypeOptions() {
     fillSelect(archetypeSelect, ARCHETYPES);
   }
@@ -246,6 +319,102 @@ document.addEventListener("DOMContentLoaded", () => {
     output.value = variants.join("\n\n====================\n\n");
   }
 
+    function updateStudioMode() {
+    if (studioMode.value === "character") {
+      characterControls.classList.remove("hidden");
+      stickerControls.classList.add("hidden");
+    } else {
+      characterControls.classList.add("hidden");
+      stickerControls.classList.remove("hidden");
+    }
+  }
+
+  function populateStickerControls() {
+    fillSelect(stickerProductSelect, STICKER_PRODUCTS);
+    fillSelect(stickerVibeSelect, STICKER_VIBES);
+    fillSelect(stickerPaletteSelect, PALETTES);
+    fillSelect(stickerBackgroundSelect, STICKER_BACKGROUNDS);
+    fillSelect(stickerBorderSelect, STICKER_BORDERS);
+    fillSelect(stickerOutlineSelect, STICKER_OUTLINES);
+    fillSelect(stickerSpiceSelect, STICKER_SPICE);
+  }
+
+  function clearStickerCustomInputs() {
+    stickerProductCustom.value = "";
+    stickerVibeCustom.value = "";
+    stickerPaletteCustom.value = "";
+    stickerQuoteInput.value = "";
+    stickerMicroQuoteInput.value = "";
+  }
+
+  function resetSticker() {
+    populateStickerControls();
+
+    stickerProductSelect.value = STICKER_PRODUCTS[0];
+    stickerVibeSelect.value = STICKER_VIBES[0];
+    stickerPaletteSelect.value = PALETTES[0];
+    stickerBackgroundSelect.value = STICKER_BACKGROUNDS[0];
+    stickerBorderSelect.value = STICKER_BORDERS[0];
+    stickerOutlineSelect.value = STICKER_OUTLINES[0];
+    stickerSpiceSelect.value = STICKER_SPICE[1];
+
+    clearStickerCustomInputs();
+  }
+
+  function clearSticker() {
+    stickerProductSelect.value = "";
+    stickerVibeSelect.value = "";
+    stickerPaletteSelect.value = "";
+    stickerBackgroundSelect.value = "";
+    stickerBorderSelect.value = "";
+    stickerOutlineSelect.value = "";
+    stickerSpiceSelect.value = "";
+
+    clearStickerCustomInputs();
+  }
+
+  function randomSticker() {
+    randomizeSelect(stickerProductSelect);
+    randomizeSelect(stickerVibeSelect);
+    randomizeSelect(stickerPaletteSelect);
+    randomizeSelect(stickerBackgroundSelect);
+    randomizeSelect(stickerBorderSelect);
+    randomizeSelect(stickerOutlineSelect);
+    randomizeSelect(stickerSpiceSelect);
+  }
+
+  function getStickerOptionsFromUI() {
+    return {
+      product: stickerProductSelect.value,
+      productCustom: stickerProductCustom.value,
+      quote: stickerQuoteInput.value,
+      microQuote: stickerMicroQuoteInput.value,
+      vibe: stickerVibeSelect.value,
+      vibeCustom: stickerVibeCustom.value,
+      palette: stickerPaletteSelect.value,
+      paletteCustom: stickerPaletteCustom.value,
+      background: stickerBackgroundSelect.value,
+      border: stickerBorderSelect.value,
+      outline: stickerOutlineSelect.value,
+      spice: stickerSpiceSelect.value
+    };
+  }
+
+  function generateSticker() {
+    output.value = buildStickerPrompt(getStickerOptionsFromUI());
+  }
+
+  function generateStickerVariations(count = 5) {
+    const baseOptions = getStickerOptionsFromUI();
+    const rows = [];
+
+    for (let i = 0; i < count; i++) {
+      rows.push(`STICKER ${i + 1}\n\n${buildStickerPrompt(baseOptions)}`);
+    }
+
+    output.value = rows.join("\n\n====================\n\n");
+  }
+  
   archetypeSelect.addEventListener("change", () => {
     populateBuilderOptions(archetypeSelect.value);
   });
@@ -315,8 +484,37 @@ document.addEventListener("DOMContentLoaded", () => {
         }, 1200);
       }
     });
+
+    studioMode.addEventListener("change", () => {
+  updateStudioMode();
+});
+
+randomStickerBtn.addEventListener("click", () => {
+  randomSticker();
+});
+
+resetStickerBtn.addEventListener("click", () => {
+  resetSticker();
+});
+
+clearStickerBtn.addEventListener("click", () => {
+  clearSticker();
+});
+
+generateStickerBtn.addEventListener("click", () => {
+  generateSticker();
+});
+
+generate5StickerBtn.addEventListener("click", () => {
+  generateStickerVariations(5);
+});
   }
 
-  populateArchetypeOptions();
+    populateArchetypeOptions();
   resetBuilder();
+
+  populateStickerControls();
+  resetSticker();
+
+  updateStudioMode();
 });
