@@ -265,6 +265,20 @@ document.addEventListener("DOMContentLoaded", () => {
     selectEl.value = random.value;
   }
 
+function randomFrom(arr) {
+  return arr[Math.floor(Math.random() * arr.length)];
+}
+
+function autofillStickerText() {
+  if (!stickerQuoteInput.value.trim()) {
+    stickerQuoteInput.value = randomFrom(STICKER_QUOTES);
+  }
+
+  if (!stickerMicroQuoteInput.value.trim()) {
+    stickerMicroQuoteInput.value = randomFrom(STICKER_MICRO_QUOTES);
+  }
+}
+  
   function clearCustomInputs() {
     [
       complexionCustom, bodyTypeCustom, faceShapeCustom, hairCustom, outfitCustom,
@@ -439,6 +453,9 @@ stickerMicroQuoteInput.value = STICKER_MICRO_QUOTES[0] || "";
   randomizeSelect(stickerBorderSelect);
   randomizeSelect(stickerOutlineSelect);
   randomizeSelect(stickerSpiceSelect);
+
+  autofillStickerText();
+}
 
   stickerQuoteInput.value = randomFrom(STICKER_QUOTES);
   stickerMicroQuoteInput.value = randomFrom(STICKER_MICRO_QUOTES);
