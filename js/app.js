@@ -106,28 +106,32 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function resetBuilder() {
-    if (!ARCHETYPES.length) return;
+  if (!ARCHETYPES.length) return;
 
-    const defaultArchetype = ARCHETYPES[0];
-    archetypeSelect.value = defaultArchetype;
-    populateBuilderOptions(defaultArchetype);
+  const defaultArchetype = ARCHETYPES[0];
+  archetypeSelect.value = defaultArchetype;
+  populateBuilderOptions(defaultArchetype);
 
-    complexionSelect.value = COMPLEXIONS[0];
-    bodyTypeSelect.value = BODY_TYPES[0];
-    faceShapeSelect.value = FACE_SHAPES[0];
+  fillSelect(complexionSelect, COMPLEXIONS);
+  fillSelect(bodyTypeSelect, BODY_TYPES);
+  fillSelect(faceShapeSelect, FACE_SHAPES);
 
-    if (hairSelect.options.length) hairSelect.selectedIndex = 0;
-    if (outfitSelect.options.length) outfitSelect.selectedIndex = 0;
-    if (expressionSelect.options.length) expressionSelect.selectedIndex = 0;
-    if (microSelect.options.length) microSelect.selectedIndex = 0;
-    if (attitudeSelect.options.length) attitudeSelect.selectedIndex = 0;
-    if (poseSelect.options.length) poseSelect.selectedIndex = 0;
-    if (propSelect.options.length) propSelect.selectedIndex = 0;
-    if (sceneSelect.options.length) sceneSelect.selectedIndex = 0;
-    if (paletteSelect.options.length) paletteSelect.selectedIndex = 0;
+  complexionSelect.value = COMPLEXIONS[0];
+  bodyTypeSelect.value = BODY_TYPES[0];
+  faceShapeSelect.value = FACE_SHAPES[0];
 
-    output.value = "";
-  }
+  if (hairSelect.options.length) hairSelect.value = hairSelect.options[0].value;
+  if (outfitSelect.options.length) outfitSelect.value = outfitSelect.options[0].value;
+  if (expressionSelect.options.length) expressionSelect.value = expressionSelect.options[0].value;
+  if (microSelect.options.length) microSelect.value = microSelect.options[0].value;
+  if (attitudeSelect.options.length) attitudeSelect.value = attitudeSelect.options[0].value;
+  if (poseSelect.options.length) poseSelect.value = poseSelect.options[0].value;
+  if (propSelect.options.length) propSelect.value = propSelect.options[0].value;
+  if (sceneSelect.options.length) sceneSelect.value = sceneSelect.options[0].value;
+  if (paletteSelect.options.length) paletteSelect.value = paletteSelect.options[0].value;
+
+  output.value = "";
+}
 
   function initialize() {
     populateArchetypeOptions();
@@ -175,9 +179,11 @@ document.addEventListener("DOMContentLoaded", () => {
     randomizeAll();
   });
 
+  if (resetBtn) {
   resetBtn.addEventListener("click", () => {
     resetBuilder();
   });
+}
 
   generateBtn.addEventListener("click", () => {
     generate();
