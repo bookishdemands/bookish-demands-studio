@@ -11,6 +11,9 @@ import { ATTITUDES } from "./character/attitudes.js";
 import { SCENES } from "./character/scenes.js";
 import { buildCharacterPrompt } from "./character/characterPromptBuilder.js";
 import { buildStickerPrompt } from "./sticker/stickerPromptBuilder.js";
+import { buildKindleInsertPrompt } from "./sticker/kindleInsertPromptBuilder.js";
+
+
 
 function pick(arr) {
   return arr[Math.floor(Math.random() * arr.length)];
@@ -95,6 +98,27 @@ const clearStickerBtn = document.getElementById("clearStickerBtn");
 const generateStickerBtn = document.getElementById("generateStickerBtn");
 const generate5StickerBtn = document.getElementById("generate5StickerBtn");
 
+  const stickerSubMode = document.getElementById("stickerSubMode");
+  const stickerModeControls = document.getElementById("stickerModeControls");
+  const kindleModeControls = document.getElementById("kindleModeControls");
+
+  const kindleQuoteInput = document.getElementById("kindleQuoteInput");
+  const kindleMicroQuoteInput = document.getElementById("kindleMicroQuoteInput");
+  const kindleThemeSelect = document.getElementById("kindleThemeSelect");
+  const kindleThemeCustom = document.getElementById("kindleThemeCustom");
+  const kindlePaletteSelect = document.getElementById("kindlePaletteSelect");
+  const kindlePaletteCustom = document.getElementById("kindlePaletteCustom");
+  const kindleBackgroundSelect = document.getElementById("kindleBackgroundSelect");
+  const kindleLayoutSelect = document.getElementById("kindleLayoutSelect");
+  const kindleHeatSelect = document.getElementById("kindleHeatSelect");
+  const kindleExtraInput = document.getElementById("kindleExtraInput");
+
+  const randomKindleBtn = document.getElementById("randomKindleBtn");
+  const resetKindleBtn = document.getElementById("resetKindleBtn");
+  const clearKindleBtn = document.getElementById("clearKindleBtn");
+  const generateKindleBtn = document.getElementById("generateKindleBtn");
+  const generate5KindleBtn = document.getElementById("generate5KindleBtn");
+ 
   const COMPLEXIONS = [
     "deep espresso brown skin",
     "rich dark chocolate skin",
@@ -306,6 +330,41 @@ const STICKER_SPICE = [
   "level 4 unhinged tension",
   "level 5 maximum spice vibe"
 ];
+
+  const KINDLE_THEMES = [
+    "luxury dark romance",
+    "soft girl reader",
+    "morally gray obsession",
+    "urban fiction glam",
+    "bookish chaos",
+    "romantic drama",
+    "dangerous devotion"
+  ];
+
+  const KINDLE_BACKGROUNDS = [
+    "clean white insert background",
+    "soft blush insert background",
+    "matte black luxe insert background",
+    "dark floral insert background",
+    "marble glam insert background"
+  ];
+
+  const KINDLE_LAYOUTS = [
+    "centered quote layout",
+    "quote over collage layout",
+    "minimal luxe layout",
+    "top quote + bottom accent layout",
+    "editorial insert layout"
+  ];
+
+  const KINDLE_HEAT = [
+    "heat level 1 soft tension",
+    "heat level 2 spicy tease",
+    "heat level 3 dark romance heat",
+    "heat level 4 unhinged devotion",
+    "heat level 5 maximum obsession"
+  ];
+
   
   function populateArchetypeOptions() {
     fillSelect(archetypeSelect, ARCHETYPES);
@@ -548,6 +607,95 @@ const STICKER_SPICE = [
   function getStickerProductObject(productValue) {
   return STICKER_PRODUCTS.find(item => item.value === productValue) || null;
 }
+    function updateStickerSubMode() {
+    if (stickerSubMode.value === "sticker") {
+      stickerModeControls.classList.remove("hidden");
+      kindleModeControls.classList.add("hidden");
+    } else {
+      stickerModeControls.classList.add("hidden");
+      kindleModeControls.classList.remove("hidden");
+    }
+  }
+
+  function populateKindleControls() {
+    fillSelect(kindleThemeSelect, KINDLE_THEMES);
+    fillSelect(kindlePaletteSelect, PALETTES);
+    fillSelect(kindleBackgroundSelect, KINDLE_BACKGROUNDS);
+    fillSelect(kindleLayoutSelect, KINDLE_LAYOUTS);
+    fillSelect(kindleHeatSelect, KINDLE_HEAT);
+  }
+
+  function clearKindleInputs() {
+    kindleQuoteInput.value = "";
+    kindleMicroQuoteInput.value = "";
+    kindleThemeCustom.value = "";
+    kindlePaletteCustom.value = "";
+    kindleExtraInput.value = "";
+  }
+
+  function resetKindle() {
+    populateKindleControls();
+
+    kindleThemeSelect.value = KINDLE_THEMES[0];
+    kindlePaletteSelect.value = PALETTES[0];
+    kindleBackgroundSelect.value = KINDLE_BACKGROUNDS[0];
+    kindleLayoutSelect.value = KINDLE_LAYOUTS[0];
+    kindleHeatSelect.value = KINDLE_HEAT[1];
+
+    clearKindleInputs();
+  }
+
+  function clearKindle() {
+    kindleQuoteInput.value = "";
+    kindleMicroQuoteInput.value = "";
+    kindleThemeSelect.value = "";
+    kindlePaletteSelect.value = "";
+    kindleBackgroundSelect.value = "";
+    kindleLayoutSelect.value = "";
+    kindleHeatSelect.value = "";
+    kindleExtraInput.value = "";
+
+    kindleThemeCustom.value = "";
+    kindlePaletteCustom.value = "";
+  }
+
+  function randomKindle() {
+    randomizeSelect(kindleThemeSelect);
+    randomizeSelect(kindlePaletteSelect);
+    randomizeSelect(kindleBackgroundSelect);
+    randomizeSelect(kindleLayoutSelect);
+    randomizeSelect(kindleHeatSelect);
+  }
+
+  function getKindleOptionsFromUI() {
+    return {
+      quote: kindleQuoteInput.value,
+      microQuote: kindleMicroQuoteInput.value,
+      theme: kindleThemeSelect.value,
+      themeCustom: kindleThemeCustom.value,
+      palette: kindlePaletteSelect.value,
+      paletteCustom: kindlePaletteCustom.value,
+      background: kindleBackgroundSelect.value,
+      layout: kindleLayoutSelect.value,
+      heat: kindleHeatSelect.value,
+      extra: kindleExtraInput.value
+    };
+  }
+
+  function generateKindle() {
+    output.value = buildKindleInsertPrompt(getKindleOptionsFromUI());
+  }
+
+  function generateKindleVariations(count = 5) {
+    const baseOptions = getKindleOptionsFromUI();
+    const rows = [];
+
+    for (let i = 0; i < count; i++) {
+      rows.push(`KINDLE INSERT ${i + 1}\n\n${buildKindleInsertPrompt(baseOptions)}`);
+    }
+
+    output.value = rows.join("\n\n====================\n\n");
+  }
   
   function generateSticker() {
     output.value = buildStickerPrompt(getStickerOptionsFromUI());
@@ -659,11 +807,40 @@ generate5StickerBtn.addEventListener("click", () => {
 });
   }
 
-    populateArchetypeOptions();
+    stickerSubMode.addEventListener("change", () => {
+    updateStickerSubMode();
+  });
+
+  randomKindleBtn.addEventListener("click", () => {
+    randomKindle();
+  });
+
+  resetKindleBtn.addEventListener("click", () => {
+    resetKindle();
+  });
+
+  clearKindleBtn.addEventListener("click", () => {
+    clearKindle();
+  });
+
+  generateKindleBtn.addEventListener("click", () => {
+    generateKindle();
+  });
+
+  generate5KindleBtn.addEventListener("click", () => {
+    generateKindleVariations(5);
+  });
+
+  
+  populateArchetypeOptions();
   resetBuilder();
 
   populateStickerControls();
   resetSticker();
 
+  populateKindleControls();
+  resetKindle();
+  
+  updateStickerSubMode();
   updateStudioMode();
 });
