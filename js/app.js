@@ -118,6 +118,17 @@ const generate5StickerBtn = document.getElementById("generate5StickerBtn");
     "softened square face shape"
   ];
 
+  const STICKER_TYPES = [
+  "quote sticker",
+  "reaction sticker",
+  "kindle insert sticker",
+  "warning label sticker",
+  "book club sticker",
+  "dark romance sticker",
+  "reader mood sticker",
+  "annotation sticker"
+];
+  
   const STICKER_PRODUCTS = [
   {
     value: "IV Drip Bag",
@@ -258,7 +269,7 @@ const generate5StickerBtn = document.getElementById("generate5StickerBtn");
     subject: "progress bar sticker with percentage ticks and a big quote line above or below, bold readable typography"
   }
 ];
-
+  
 const STICKER_VIBES = [
   "bookish glam",
   "dark romance luxe",
