@@ -9,17 +9,23 @@
 <h1>Bookish Demands Studio</h1>
 
 <select id="studioMode">
-<option value="character">Character Studio</option>
-<option value="sticker">Sticker Studio</option>
+  <option value="character">Character Studio</option>
+  <option value="sticker">Sticker Studio</option>
 </select>
 
-<br><br>
+<div id="characterControls" style="margin-top:12px;">
+  <label for="archetypeSelect">Choose Archetype</label>
+  <select id="archetypeSelect">
+    <option value="">Random Archetype</option>
+  </select>
 
-<button id="generateBtn">Generate</button>
+  <div style="margin-top:10px; display:flex; gap:10px; flex-wrap:wrap;">
+    <button id="randomArchetypeBtn" type="button">Random Archetype</button>
+    <button id="generateBtn" type="button">Generate</button>
+  </div>
+</div>
 
-<br><br>
-
-<textarea id="output" rows="20" cols="80"></textarea>
+<textarea id="output"></textarea>
 
 <script type="module" src="./js/app.js?v=8"></script>
 
