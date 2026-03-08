@@ -53,6 +53,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const clearBtn = document.getElementById("clearBtn");
   const resetBtn = document.getElementById("resetBtn");
   const generateBtn = document.getElementById("generateBtn");
+  const copyBtn = document.getElementById("copyBtn");
   const output = document.getElementById("output");
 
   const COMPLEXIONS = [
@@ -237,12 +238,6 @@ function randomizeAll() {
       scene: sceneSelect.value,
       palette: paletteSelect.value
     };
-
-    const copyBtn = document.getElementById("copyBtn");
-
-  copyBtn.addEventListener("click", () => {
-  navigator.clipboard.writeText(output.value);
-});
     
     output.value = buildCharacterPrompt(archetype, options);
   }
@@ -289,5 +284,25 @@ function randomizeAll() {
     generate();
   });
 
+  if (copyBtn) {
+  copyBtn.addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(output.value);
+      copyBtn.textContent = "Copied!";
+      setTimeout(() => {
+        copyBtn.textContent = "Copy Prompt";
+      }, 1200);
+    } catch (err) {
+      output.select();
+      output.setSelectionRange(0, output.value.length);
+      document.execCommand("copy");
+
+      copyBtn.textContent = "Copied!";
+      setTimeout(() => {
+        copyBtn.textContent = "Copy Prompt";
+      }, 1200);
+    }
+  });
+}
   initialize();
 });
