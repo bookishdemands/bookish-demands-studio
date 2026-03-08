@@ -1,15 +1,26 @@
-document.getElementById("generateBtn").onclick = function(){
+import { ARCHETYPES } from "./core/archetypes.js";
+import { buildCharacterPrompt } from "./character/characterPromptBuilder.js";
 
-const mode = document.getElementById("studioMode").value;
+const modeSelect = document.getElementById("studioMode");
+const generateBtn = document.getElementById("generateBtn");
+const output = document.getElementById("output");
 
-if(mode === "character"){
-document.getElementById("output").value =
-"Character Studio generator coming online...";
+function generateCharacterStudio() {
+  const archetype = ARCHETYPES[0];
+  const prompt = buildCharacterPrompt(archetype);
+  output.value = `CHARACTER STUDIO\n\nArchetype: ${archetype}\n\nPROMPT\n${prompt}`;
 }
 
-if(mode === "sticker"){
-document.getElementById("output").value =
-"Sticker Studio generator coming online...";
+function generateStickerStudio() {
+  output.value = "Sticker Studio generator coming next.";
 }
 
-};
+generateBtn.addEventListener("click", () => {
+  const mode = modeSelect.value;
+
+  if (mode === "character") {
+    generateCharacterStudio();
+  } else if (mode === "sticker") {
+    generateStickerStudio();
+  }
+});
