@@ -14,7 +14,13 @@ function pick(arr) {
 
 function fillSelect(selectEl, options) {
   if (!selectEl) return;
+
   selectEl.innerHTML = "";
+
+  const blank = document.createElement("option");
+  blank.value = "";
+  blank.textContent = "None";
+  selectEl.appendChild(blank);
 
   (options || []).forEach((option) => {
     const el = document.createElement("option");
@@ -41,6 +47,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const randomArchetypeBtn = document.getElementById("randomArchetypeBtn");
   const randomizeAllBtn = document.getElementById("randomizeAllBtn");
+  const clearBtn = document.getElementById("clearBtn");
   const resetBtn = document.getElementById("resetBtn");
   const generateBtn = document.getElementById("generateBtn");
   const output = document.getElementById("output");
@@ -133,6 +140,27 @@ document.addEventListener("DOMContentLoaded", () => {
   output.value = "";
 }
 
+  function clearAll() {
+
+  archetypeSelect.value = "";
+
+  complexionSelect.value = "";
+  bodyTypeSelect.value = "";
+  faceShapeSelect.value = "";
+
+  hairSelect.value = "";
+  outfitSelect.value = "";
+  expressionSelect.value = "";
+  microSelect.value = "";
+  attitudeSelect.value = "";
+  poseSelect.value = "";
+  propSelect.value = "";
+  sceneSelect.value = "";
+  paletteSelect.value = "";
+
+  output.value = "";
+
+}
   function initialize() {
     populateArchetypeOptions();
 
@@ -179,6 +207,12 @@ document.addEventListener("DOMContentLoaded", () => {
     randomizeAll();
   });
 
+  if (clearBtn) {
+  clearBtn.addEventListener("click", () => {
+    clearAll();
+  });
+}
+  
   if (resetBtn) {
   resetBtn.addEventListener("click", () => {
     resetBuilder();
