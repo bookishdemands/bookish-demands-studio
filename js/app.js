@@ -408,14 +408,14 @@ function autofillStickerText() {
   }
 
   function populateStickerControls() {
-    fillSelect(stickerProductSelect, STICKER_PRODUCTS.map((item) => item.value));
-    fillSelect(stickerVibeSelect, STICKER_VIBES);
-    fillSelect(stickerPaletteSelect, PALETTES);
-    fillSelect(stickerBackgroundSelect, STICKER_BACKGROUNDS);
-    fillSelect(stickerBorderSelect, STICKER_BORDERS);
-    fillSelect(stickerOutlineSelect, STICKER_OUTLINES);
-    fillSelect(stickerSpiceSelect, STICKER_SPICE);
-  }
+  fillSelect(stickerProductSelect, STICKER_PRODUCTS.map(p => p.value));
+  fillSelect(stickerVibeSelect, STICKER_VIBES);
+  fillSelect(stickerPaletteSelect, PALETTES);
+  fillSelect(stickerBackgroundSelect, STICKER_BACKGROUNDS);
+  fillSelect(stickerBorderSelect, STICKER_BORDERS);
+  fillSelect(stickerOutlineSelect, STICKER_OUTLINES);
+  fillSelect(stickerSpiceSelect, STICKER_SPICE);
+}
 
   function clearStickerCustomInputs() {
     stickerProductCustom.value = "";
