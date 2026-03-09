@@ -378,6 +378,42 @@
           <button id="copyBtn" type="button">Copy Prompt</button>
           <button id="clearOutputBtn" type="button">Clear Output</button>
         </div>
+        <div class="btnrow" style="margin-top:0;margin-bottom:12px;">
+  <button id="exportTxtBtn" type="button">Export TXT</button>
+  <button id="exportCsvBtn" type="button">Export CSV</button>
+  <button id="exportDropJsonBtn" type="button">Export Drop JSON</button>
+</div>
+
+<div class="spacer"></div>
+
+<label for="presetNameInput">Preset Name</label>
+<input id="presetNameInput" type="text" placeholder="Example: Petty Reader — Side Eye" />
+
+<label for="presetSelect">Saved Presets</label>
+<select id="presetSelect"></select>
+
+<div class="btnrow" style="margin-top:0;margin-bottom:12px;">
+  <button id="savePresetBtn" type="button">Save Preset</button>
+  <button id="loadPresetBtn" type="button">Load Preset</button>
+  <button id="deletePresetBtn" type="button">Delete Preset</button>
+  <button id="exportPresetsBtn" type="button">Export Presets JSON</button>
+  <button id="importPresetsBtn" type="button">Import Presets JSON</button>
+</div>
+
+<input id="importPresetsFile" type="file" accept="application/json" style="display:none;" />
+
+<label for="dropLibrarySelect">Saved Drops</label>
+<select id="dropLibrarySelect"></select>
+
+<div class="btnrow" style="margin-top:0;margin-bottom:12px;">
+  <button id="saveDropBtn" type="button">Save Current Drop</button>
+  <button id="loadDropBtn" type="button">Load Drop</button>
+  <button id="deleteDropBtn" type="button">Delete Drop</button>
+  <button id="exportDropLibraryBtn" type="button">Export Drop Library JSON</button>
+  <button id="importDropLibraryBtn" type="button">Import Drop Library JSON</button>
+</div>
+
+<input id="importDropLibraryFile" type="file" accept="application/json" style="display:none;" />
         <textarea id="output" readonly placeholder="Generated prompt will appear here..."></textarea>
       </section>
     </div>
