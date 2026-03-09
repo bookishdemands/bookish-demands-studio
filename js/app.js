@@ -830,10 +830,31 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function randomSticker() {
-    [stickerProductSelect, stickerVibeSelect, stickerPaletteSelect, stickerBackgroundSelect, stickerBorderSelect, stickerOutlineSelect, stickerSpiceSelect].forEach(randomizeSelect);
-    if (stickerQuoteInput) stickerQuoteInput.value = randomFrom(getActiveStickerQuotes());
-    if (stickerMicroQuoteInput) stickerMicroQuoteInput.value = randomFrom(STICKER_MICRO_QUOTES);
+  [stickerProductSelect, stickerVibeSelect, stickerPaletteSelect, stickerBackgroundSelect, stickerBorderSelect, stickerOutlineSelect, stickerSpiceSelect].forEach(randomizeSelect);
+
+  const quoteVal = stickerQuoteInput?.value.trim();
+  const microVal = stickerMicroQuoteInput?.value.trim();
+
+  if (quoteVal && !microVal) {
+    stickerMicroQuoteInput.value = "";
+    return;
   }
+
+  if (microVal && !quoteVal) {
+    stickerQuoteInput.value = "";
+    return;
+  }
+
+  const useQuote = Math.random() < 0.5;
+
+  if (useQuote) {
+    if (stickerQuoteInput) stickerQuoteInput.value = randomFrom(getActiveStickerQuotes());
+    if (stickerMicroQuoteInput) stickerMicroQuoteInput.value = "";
+  } else {
+    if (stickerMicroQuoteInput) stickerMicroQuoteInput.value = randomFrom(STICKER_MICRO_QUOTES);
+    if (stickerQuoteInput) stickerQuoteInput.value = "";
+  }
+}
 
   function getStickerOptions() {
     const productObj = getStickerProductObject(stickerProductSelect?.value || "");
@@ -883,10 +904,31 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function randomKindle() {
-    [kindleThemeSelect, kindlePaletteSelect, kindleBackgroundSelect, kindleLayoutSelect, kindleHeatSelect].forEach(randomizeSelect);
-    if (kindleQuoteInput) kindleQuoteInput.value = randomFrom(KINDLE_QUOTES);
-    if (kindleMicroQuoteInput) kindleMicroQuoteInput.value = randomFrom(KINDLE_MICRO_QUOTES);
+  [kindleThemeSelect, kindlePaletteSelect, kindleBackgroundSelect, kindleLayoutSelect, kindleHeatSelect].forEach(randomizeSelect);
+
+  const quoteVal = kindleQuoteInput?.value.trim();
+  const microVal = kindleMicroQuoteInput?.value.trim();
+
+  if (quoteVal && !microVal) {
+    kindleMicroQuoteInput.value = "";
+    return;
   }
+
+  if (microVal && !quoteVal) {
+    kindleQuoteInput.value = "";
+    return;
+  }
+
+  const useQuote = Math.random() < 0.5;
+
+  if (useQuote) {
+    if (kindleQuoteInput) kindleQuoteInput.value = randomFrom(KINDLE_QUOTES);
+    if (kindleMicroQuoteInput) kindleMicroQuoteInput.value = "";
+  } else {
+    if (kindleMicroQuoteInput) kindleMicroQuoteInput.value = randomFrom(KINDLE_MICRO_QUOTES);
+    if (kindleQuoteInput) kindleQuoteInput.value = "";
+  }
+}
 
   function getKindleOptions() {
     return {
