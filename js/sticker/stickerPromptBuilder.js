@@ -3,7 +3,7 @@ import { resolveValue } from "../utils/resolveValue.js";
 export function buildStickerPrompt(options = {}) {
   const productName = resolveValue(options.productCustom, options.product, "Reaction Sticker");
   const productSubject = resolveValue("", options.productSubject, "clean die-cut sticker design");
-  const quote = resolveValue("", options.quote, "bookish reaction quote");
+  const quote = resolveValue("", options.quote, "");
   const microQuote = resolveValue("", options.microQuote, "");
   const vibe = resolveValue(options.vibeCustom, options.vibe, "bookish glam");
   const palette = resolveValue(options.paletteCustom, options.palette, "black + hot pink + silver");
@@ -20,8 +20,7 @@ export function buildStickerPrompt(options = {}) {
     productSubject,
     "",
     "TEXT HIERARCHY",
-    quote,
-    microQuote,
+    quote || microQuote,
     "large readable quote treatment",
     "clean text placement",
     "balanced typography layout",
