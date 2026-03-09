@@ -19,7 +19,7 @@ import { buildStickerPrompt } from "./sticker/stickerPromptBuilder.js";
 import { buildKindleInsertPrompt } from "./sticker/kindleInsertPromptBuilder.js";
 import { KINDLE_QUOTES } from "./sticker/kindleQuotes.js";
 import { KINDLE_MICRO_QUOTES } from "./sticker/kindleMicroQuotes.js";
-
+import { runReaderverseMode } from "./readerverse/modeEngine.js";
 
 function pick(arr) {
   return arr[Math.floor(Math.random() * arr.length)];
@@ -27,6 +27,98 @@ function pick(arr) {
 
 function randomFrom(arr) {
   return arr[Math.floor(Math.random() * arr.length)];
+}
+
+function getReaderverseMode() {
+  const modeEl = document.getElementById("readerverseMode");
+  return modeEl ? modeEl.value : "single";
+}
+
+function getReaderverseSelections() {
+  const quoteInput = document.getElementById("quoteInput");
+  const matchStrength = document.getElementById("matchStrength");
+  const contentMode = document.getElementById("contentMode");
+  const carouselTitleStyle = document.getElementById("carouselTitleStyle");
+  const dropTheme = document.getElementById("dropTheme");
+  const dropName = document.getElementById("dropName");
+
+  return {
+    mode: getReaderverseMode(),
+    matchStrength: matchStrength ? matchStrength.value : "balanced",
+    contentMode: contentMode ? contentMode.checked : false,
+    carouselTitleStyle: carouselTitleStyle ? carouselTitleStyle.value : "none",
+    dropTheme: dropTheme ? dropTheme.value : "",
+    dropName: dropName ? dropName.value.trim() : "",
+    quote: quoteInput ? quoteInput.value.trim() : "",
+
+    archetype: archetypeSelect.value,
+    complexion: complexionSelect.value,
+    bodyType: bodyTypeSelect.value,
+    faceShape: faceShapeSelect.value,
+    hair: hairSelect.value,
+    outfit: outfitSelect.value,
+    expression: expressionSelect.value,
+    micro: microSelect.value,
+    attitude: attitudeSelect.value,
+    pose: poseSelect.value,
+    prop: propSelect.value,
+    scene: sceneSelect.value,
+    palette: paletteSelect.value,
+
+    complexionCustom: complexionCustom.value,
+    bodyTypeCustom: bodyTypeCustom.value,
+    faceShapeCustom: faceShapeCustom.value,
+    hairCustom: hairCustom.value,
+    outfitCustom: outfitCustom.value,
+    expressionCustom: expressionCustom.value,
+    microCustom: microCustom.value,
+    attitudeCustom: attitudeCustom.value,
+    poseCustom: poseCustom.value,
+    propCustom: propCustom.value,
+    sceneCustom: sceneCustom.value,
+    paletteCustom: paletteCustom.value
+  };
+}
+
+function randomizeCharacterOptions(baseSelections = {}) {
+  return {
+    ...baseSelections,
+    complexion: baseSelections.complexionCustom?.trim() || randomFrom(COMPLEXIONS),
+    bodyType: baseSelections.bodyTypeCustom?.trim() || randomFrom(BODY_TYPES),
+    faceShape: baseSelections.faceShapeCustom?.trim() || randomFrom(FACE_SHAPES),
+    hair: baseSelections.hairCustom?.trim() || randomFrom(HAIR),
+    outfit: baseSelections.outfitCustom?.trim() || randomFrom(OUTFITS),
+    expression: baseSelections.expressionCustom?.trim() || randomFrom(EXPRESSIONS),
+    micro: baseSelections.microCustom?.trim() || randomFrom(MICRO_EXPRESSIONS),
+    attitude: baseSelections.attitudeCustom?.trim() || randomFrom(ATTITUDES),
+    pose: baseSelections.poseCustom?.trim() || randomFrom(POSES),
+    prop: baseSelections.propCustom?.trim() || randomFrom(PROPS),
+    scene: baseSelections.sceneCustom?.trim() || randomFrom(SCENES),
+    palette: baseSelections.paletteCustom?.trim() || randomFrom(PALETTES)
+  };
+}
+
+function runCharacterStudio() {
+  const readerverseModeEl = document.getElementById("readerverseMode");
+  const useReaderverseEngine = !!readerverseModeEl;
+
+  if (!useReaderverseEngine) {
+    output.value = buildCharacterPrompt(archetypeSelect.value, getCharacterOptions());
+    return;
+  }
+
+  const selections = getReaderverseSelections();
+
+  const result = runReaderverseMode({
+    mode: selections.mode,
+    selections,
+    buildCharacterPrompt,
+    archetypes: ARCHETYPES,
+    randomizeCharacterOptions,
+    applyQuoteMatch: selections.mode === "match" || selections.mode === "pack10" || selections.mode === "pack30" || selections.mode === "dropbuilder"
+  });
+
+  output.value = result.outputText || "";
 }
 
 function fillSelect(selectEl, options) {
@@ -562,8 +654,8 @@ document.addEventListener("DOMContentLoaded", () => {
   clearBtn.addEventListener("click", clearAll);
 
   generateBtn.addEventListener("click", () => {
-    output.value = buildCharacterPrompt(archetypeSelect.value, getCharacterOptions());
-  });
+  runCharacterStudio();
+});
 
   generate5Btn.addEventListener("click", () => {
   const archetype = archetypeSelect.value || ARCHETYPES[0];
