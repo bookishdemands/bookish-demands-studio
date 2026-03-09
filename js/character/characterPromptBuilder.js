@@ -204,9 +204,11 @@ export function buildCharacterPrompt(archetype, options = {}) {
 
   const parts = [
     "PROMPT",
-
+    
     ...STYLE_LOCK,
 
+    "high detail, polished composition, clean anatomy, symmetrical features, consistent lighting, premium digital illustration quality",
+    
     complexion,
     bodyType,
     faceShape,
