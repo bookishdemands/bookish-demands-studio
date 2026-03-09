@@ -62,6 +62,28 @@ function fillSelect(selectEl, options) {
   });
 }
 
+let STICKER_QUOTE_BAG = [];
+let STICKER_MICRO_BAG = [];
+let KINDLE_QUOTE_BAG = [];
+let KINDLE_MICRO_BAG = [];
+
+function pullFromBag(source = [], bagRefName = "") {
+  if (!Array.isArray(source) || !source.length) return "";
+
+  if (!window.__BD_BAGS__) window.__BD_BAGS__ = {};
+
+  if (!Array.isArray(window.__BD_BAGS__[bagRefName]) || !window.__BD_BAGS__[bagRefName].length) {
+    window.__BD_BAGS__[bagRefName] = [...source];
+
+    for (let i = window.__BD_BAGS__[bagRefName].length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [window.__BD_BAGS__[bagRefName][i], window.__BD_BAGS__[bagRefName][j]] = [window.__BD_BAGS__[bagRefName][j], window.__BD_BAGS__[bagRefName][i]];
+    }
+  }
+
+  return window.__BD_BAGS__[bagRefName].pop() || "";
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   // Shared
   const studioMode = document.getElementById("studioMode");
@@ -832,27 +854,23 @@ document.addEventListener("DOMContentLoaded", () => {
   function randomSticker() {
   [stickerProductSelect, stickerVibeSelect, stickerPaletteSelect, stickerBackgroundSelect, stickerBorderSelect, stickerOutlineSelect, stickerSpiceSelect].forEach(randomizeSelect);
 
-  const quoteVal = stickerQuoteInput?.value.trim();
-  const microVal = stickerMicroQuoteInput?.value.trim();
-
-  if (quoteVal && !microVal) {
-    stickerMicroQuoteInput.value = "";
-    return;
-  }
-
-  if (microVal && !quoteVal) {
-    stickerQuoteInput.value = "";
-    return;
-  }
-
+  const activeQuotes = getActiveStickerQuotes();
   const useQuote = Math.random() < 0.5;
 
   if (useQuote) {
-    if (stickerQuoteInput) stickerQuoteInput.value = randomFrom(getActiveStickerQuotes());
-    if (stickerMicroQuoteInput) stickerMicroQuoteInput.value = "";
+    if (stickerQuoteInput) {
+      stickerQuoteInput.value = pullFromBag(activeQuotes, `sticker-main-${stickerQuoteBankSelect?.value || "general"}`);
+    }
+    if (stickerMicroQuoteInput) {
+      stickerMicroQuoteInput.value = "";
+    }
   } else {
-    if (stickerMicroQuoteInput) stickerMicroQuoteInput.value = randomFrom(STICKER_MICRO_QUOTES);
-    if (stickerQuoteInput) stickerQuoteInput.value = "";
+    if (stickerMicroQuoteInput) {
+      stickerMicroQuoteInput.value = pullFromBag(STICKER_MICRO_QUOTES, "sticker-micro");
+    }
+    if (stickerQuoteInput) {
+      stickerQuoteInput.value = "";
+    }
   }
 }
 
@@ -906,27 +924,22 @@ document.addEventListener("DOMContentLoaded", () => {
   function randomKindle() {
   [kindleThemeSelect, kindlePaletteSelect, kindleBackgroundSelect, kindleLayoutSelect, kindleHeatSelect].forEach(randomizeSelect);
 
-  const quoteVal = kindleQuoteInput?.value.trim();
-  const microVal = kindleMicroQuoteInput?.value.trim();
-
-  if (quoteVal && !microVal) {
-    kindleMicroQuoteInput.value = "";
-    return;
-  }
-
-  if (microVal && !quoteVal) {
-    kindleQuoteInput.value = "";
-    return;
-  }
-
   const useQuote = Math.random() < 0.5;
 
   if (useQuote) {
-    if (kindleQuoteInput) kindleQuoteInput.value = randomFrom(KINDLE_QUOTES);
-    if (kindleMicroQuoteInput) kindleMicroQuoteInput.value = "";
+    if (kindleQuoteInput) {
+      kindleQuoteInput.value = pullFromBag(KINDLE_QUOTES, "kindle-main");
+    }
+    if (kindleMicroQuoteInput) {
+      kindleMicroQuoteInput.value = "";
+    }
   } else {
-    if (kindleMicroQuoteInput) kindleMicroQuoteInput.value = randomFrom(KINDLE_MICRO_QUOTES);
-    if (kindleQuoteInput) kindleQuoteInput.value = "";
+    if (kindleMicroQuoteInput) {
+      kindleMicroQuoteInput.value = pullFromBag(KINDLE_MICRO_QUOTES, "kindle-micro");
+    }
+    if (kindleQuoteInput) {
+      kindleQuoteInput.value = "";
+    }
   }
 }
 
@@ -1354,13 +1367,23 @@ applyKindleSelections(presetData);
 
     if (useMainQuote) {
       resolvedQuote =
-        pullUnique(availableMainQuotes, randomFrom(getActiveStickerQuotes())) ||
-        randomFrom(getActiveStickerQuotes());
-    } else {
+  pullUnique(
+    availableMainQuotes,
+    pullFromBag(
+      getActiveStickerQuotes(),
+      `sticker-main-${stickerQuoteBankSelect?.value || "general"}`
+    )
+  ) ||
+  pullFromBag(
+    getActiveStickerQuotes(),
+    `sticker-main-${stickerQuoteBankSelect?.value || "general"}`
+  );
       resolvedMicroQuote =
-        pullUnique(availableMicroQuotes, randomFrom(STICKER_MICRO_QUOTES)) ||
-        randomFrom(STICKER_MICRO_QUOTES);
-    }
+  pullUnique(
+    availableMicroQuotes,
+    pullFromBag(STICKER_MICRO_QUOTES, "sticker-micro")
+  ) ||
+  pullFromBag(STICKER_MICRO_QUOTES, "sticker-micro");
 
     const options = {
       product: randomProduct?.value || "",
@@ -1447,23 +1470,31 @@ applyKindleSelections(presetData);
   generate5KindleBtn?.addEventListener("click", () => {
   const rendered = [];
   const exportRows = [];
-
+    
+  const availableMainQuotes = [...KINDLE_QUOTES];
+  const availableMicroQuotes = [...KINDLE_MICRO_QUOTES];
+    
   for (let i = 0; i < 5; i++) {
     const useMainQuote = Math.random() < 0.5;
 
-    const resolvedQuote =
-      kindleQuoteInput?.value.trim()
-        ? kindleQuoteInput.value.trim()
-        : useMainQuote
-          ? randomFrom(KINDLE_QUOTES)
-          : "";
+let resolvedQuote = "";
+let resolvedMicroQuote = "";
 
-    const resolvedMicroQuote =
-      kindleMicroQuoteInput?.value.trim()
-        ? kindleMicroQuoteInput.value.trim()
-        : resolvedQuote
-          ? ""
-          : randomFrom(KINDLE_MICRO_QUOTES);
+if (useMainQuote) {
+  resolvedQuote =
+    pullUnique(
+      availableMainQuotes,
+      pullFromBag(KINDLE_QUOTES, "kindle-main")
+    ) ||
+    pullFromBag(KINDLE_QUOTES, "kindle-main");
+} else {
+  resolvedMicroQuote =
+    pullUnique(
+      availableMicroQuotes,
+      pullFromBag(KINDLE_MICRO_QUOTES, "kindle-micro")
+    ) ||
+    pullFromBag(KINDLE_MICRO_QUOTES, "kindle-micro");
+}
 
     const options = {
       quote: resolvedQuote,
