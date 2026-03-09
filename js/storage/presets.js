@@ -5,22 +5,26 @@ export function loadPresets() {
     const raw = localStorage.getItem(STORAGE_KEY_PRESETS);
     if (!raw) return {};
     return JSON.parse(raw) || {};
-  } catch (error) {
+  } catch {
     return {};
   }
 }
 
 export function savePresetsMap(presets = {}) {
-  localStorage.setItem(STORAGE_KEY_PRESETS, JSON.stringify(presets));
+  try {
+    localStorage.setItem(STORAGE_KEY_PRESETS, JSON.stringify(presets));
+  } catch {
+    alert("Storage unavailable in this browser mode.");
+  }
 }
 
-export function savePreset(name, data, presets = {}) {
-  const next = { ...presets, [name]: data };
+export function savePreset(name, data, presets = loadPresets()) {
+  const next = { ...presets, [name]: { version: 1, data } };
   savePresetsMap(next);
   return next;
 }
 
-export function deletePreset(name, presets = {}) {
+export function deletePreset(name, presets = loadPresets()) {
   const next = { ...presets };
   delete next[name];
   savePresetsMap(next);
