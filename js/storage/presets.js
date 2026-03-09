@@ -10,19 +10,19 @@ export function loadPresets() {
   }
 }
 
-export function savePresets(presets = {}) {
+export function savePresetsMap(presets = {}) {
   localStorage.setItem(STORAGE_KEY_PRESETS, JSON.stringify(presets));
 }
 
 export function savePreset(name, data, presets = {}) {
   const next = { ...presets, [name]: data };
-  savePresets(next);
+  savePresetsMap(next);
   return next;
 }
 
 export function deletePreset(name, presets = {}) {
   const next = { ...presets };
   delete next[name];
-  savePresets(next);
+  savePresetsMap(next);
   return next;
 }
