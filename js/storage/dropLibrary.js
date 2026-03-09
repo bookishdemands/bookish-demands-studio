@@ -5,23 +5,27 @@ export function loadDropLibrary() {
     const raw = localStorage.getItem(STORAGE_KEY_DROP_LIBRARY);
     if (!raw) return {};
     return JSON.parse(raw) || {};
-  } catch (error) {
+  } catch {
     return {};
   }
 }
 
 export function saveDropLibraryMap(dropLibrary = {}) {
-  localStorage.setItem(STORAGE_KEY_DROP_LIBRARY, JSON.stringify(dropLibrary));
+  try {
+    localStorage.setItem(STORAGE_KEY_DROP_LIBRARY, JSON.stringify(dropLibrary));
+  } catch {
+    alert("Storage unavailable in this browser mode.");
+  }
 }
 
-export function saveDrop(drop, dropLibrary = {}) {
+export function saveDrop(drop, dropLibrary = loadDropLibrary()) {
   if (!drop?.id) return dropLibrary;
   const next = { ...dropLibrary, [drop.id]: drop };
   saveDropLibraryMap(next);
   return next;
 }
 
-export function deleteDrop(dropId, dropLibrary = {}) {
+export function deleteDrop(dropId, dropLibrary = loadDropLibrary()) {
   const next = { ...dropLibrary };
   delete next[dropId];
   saveDropLibraryMap(next);
