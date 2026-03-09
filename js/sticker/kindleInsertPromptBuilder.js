@@ -10,6 +10,7 @@ export function buildKindleInsertPrompt(options = {}) {
 
   return [
     "PROMPT,",
+    "high detail, polished composition, clean typography hierarchy, balanced layout, premium digital design quality",
     "Kindle insert design",
     "high-end digital reader insert artwork",
     `"${quote}"`,
