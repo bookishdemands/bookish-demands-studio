@@ -11,44 +11,42 @@ export function buildStickerPrompt(options = {}) {
   const border = resolveValue("", options.border, "clean white sticker border");
   const outline = resolveValue("", options.outline, "bold clean outline");
   const spice = resolveValue("", options.spice, "level 2 spicy energy");
+  const paletteLock = resolveValue("", options.paletteLock, "");
 
-  const sections = [
-    "STICKER PROMPT",
-    "",
-    "PRODUCT",
-    productName,
-    productSubject,
-    "",
-    "TEXT HIERARCHY",
-    quote || microQuote,
-    "large readable quote treatment",
-    "clean text placement",
-    "balanced typography layout",
-    "",
-    "VIBE",
+  const textLine = quote || microQuote || "";
+  const textInstruction = textLine
+    ? `quote text integrated into the design: "${textLine}"`
+    : "";
+
+  const paletteInstruction = palette ? `palette influence: ${palette}` : "";
+  const paletteLockInstruction = paletteLock ? `palette family lock: ${paletteLock}` : "";
+
+  const parts = [
+    `${productName}, ${productSubject}`,
+    textInstruction,
     vibe,
-    palette ? `palette influence: ${palette}` : "",
-    options.paletteLock ? `palette family lock: ${options.paletteLock}` : "",
     spice,
-    "",
-    "STYLE",
-    "high-end digital sticker art",
-    "bold die-cut sticker design",
-    "clean vector-like polish",
-    "graphic, scroll-stopping composition",
+    paletteInstruction,
+    paletteLockInstruction,
+    "high-end digital sticker design",
+    "clean vector-style illustration",
+    "die-cut sticker composition",
+    "centered graphic layout",
+    "bold readable typography",
+    "strong text hierarchy",
+    "balanced text placement",
+    "scroll-stopping composition",
     "bookish branded aesthetic",
     "luxury reader lifestyle energy",
-    "",
-    "FINISH",
     border,
     outline,
     background,
-    "centered composition",
     "strong silhouette readability",
     "print-ready sticker aesthetic",
+    "crisp edges",
     "no watermark",
     "no logo"
   ];
 
-  return sections.filter(Boolean).join("\n");
+  return parts.filter(Boolean).join(", ");
 }
