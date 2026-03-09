@@ -1,9 +1,3 @@
-function resolveValue(customValue, selectedValue, fallback = "") {
-  if (customValue && customValue.trim()) return customValue.trim();
-  if (selectedValue && selectedValue.trim()) return selectedValue.trim();
-  return fallback;
-}
-
 export function buildKindleInsertPrompt(options = {}) {
   const quote = resolveValue("", options.quote, "dark romance reader quote");
   const microQuote = resolveValue("", options.microQuote, "");
@@ -14,32 +8,26 @@ export function buildKindleInsertPrompt(options = {}) {
   const heat = resolveValue("", options.heat, "heat level 2");
   const extra = resolveValue("", options.extra, "");
 
-  const sections = [
-    "KINDLE INSERT PROMPT",
-    "",
-    "TEXT",
-    quote,
+  return [
+    "PROMPT,",
+    "Kindle insert design",
+    "high-end digital reader insert artwork",
+    `"${quote}"`,
     microQuote,
-    "",
-    "THEME",
     theme,
-    palette ? `palette influence: ${palette}` : "",
+    `palette influence: ${palette}`,
     heat,
-    "",
-    "LAYOUT",
     layout,
     background,
-    extra,
-    "",
-    "STYLE",
-    "flat rectangular Kindle insert design",
-    "clean polished graphic layout",
-    "luxury reader aesthetic",
-    "high-end digital insert art",
-    "visually balanced typography zones",
+    "clean luxury typography layout",
+    "balanced text hierarchy",
+    "reader aesthetic",
+    "flat rectangular insert design",
     "designed for e-reader insert style",
-    "no watermark, no logo"
-  ];
-
-  return sections.filter(Boolean).join("\n");
+    extra,
+    "no watermark",
+    "no logo"
+  ]
+  .filter(Boolean)
+  .join(", ");
 }
