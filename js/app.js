@@ -17,6 +17,9 @@ import { STICKER_MICRO_QUOTES } from "./sticker/microQuotes.js";
 import { STICKER_QUOTE_BANKS } from "./sticker/quoteBanks.js";
 import { buildStickerPrompt } from "./sticker/stickerPromptBuilder.js";
 import { buildKindleInsertPrompt } from "./sticker/kindleInsertPromptBuilder.js";
+import { KINDLE_QUOTES } from "./sticker/kindleQuotes.js";
+import { KINDLE_MICRO_QUOTES } from "./sticker/kindleMicroQuotes.js";
+
 
 function pick(arr) {
   return arr[Math.floor(Math.random() * arr.length)];
@@ -480,14 +483,18 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function resetKindle() {
-    populateKindleControls();
-    kindleThemeSelect.value = KINDLE_THEMES[0] || "";
-    kindlePaletteSelect.value = PALETTES[0] || "";
-    kindleBackgroundSelect.value = KINDLE_BACKGROUNDS[0] || "";
-    kindleLayoutSelect.value = KINDLE_LAYOUTS[0] || "";
-    kindleHeatSelect.value = KINDLE_HEAT[1] || "";
-    clearKindleInputs();
-  }
+  populateKindleControls();
+
+  kindleThemeSelect.value = KINDLE_THEMES[0] || "";
+  kindlePaletteSelect.value = PALETTES[0] || "";
+  kindleBackgroundSelect.value = KINDLE_BACKGROUNDS[0] || "";
+  kindleLayoutSelect.value = KINDLE_LAYOUTS[0] || "";
+  kindleHeatSelect.value = KINDLE_HEAT[1] || "";
+
+  clearKindleInputs();
+  kindleQuoteInput.value = KINDLE_QUOTES[0] || "";
+  kindleMicroQuoteInput.value = KINDLE_MICRO_QUOTES[0] || "";
+}
 
   function clearKindle() {
     kindleQuoteInput.value = "";
@@ -503,12 +510,15 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function randomKindle() {
-    randomizeSelect(kindleThemeSelect);
-    randomizeSelect(kindlePaletteSelect);
-    randomizeSelect(kindleBackgroundSelect);
-    randomizeSelect(kindleLayoutSelect);
-    randomizeSelect(kindleHeatSelect);
-  }
+  randomizeSelect(kindleThemeSelect);
+  randomizeSelect(kindlePaletteSelect);
+  randomizeSelect(kindleBackgroundSelect);
+  randomizeSelect(kindleLayoutSelect);
+  randomizeSelect(kindleHeatSelect);
+
+  kindleQuoteInput.value = randomFrom(KINDLE_QUOTES);
+  kindleMicroQuoteInput.value = randomFrom(KINDLE_MICRO_QUOTES);
+}
 
   function getKindleOptions() {
     return {
