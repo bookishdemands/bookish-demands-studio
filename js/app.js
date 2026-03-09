@@ -1333,24 +1333,51 @@ applyKindleSelections(presetData);
   const rendered = [];
   const exportRows = [];
 
+  const availableProducts = [...STICKER_PRODUCTS];
+  const availableMainQuotes = [...getActiveStickerQuotes()];
+  const availableMicroQuotes = [...STICKER_MICRO_QUOTES];
+
+  function pullUnique(list = [], fallback = "") {
+    if (!list.length) return fallback;
+    const index = Math.floor(Math.random() * list.length);
+    return list.splice(index, 1)[0];
+  }
+
   for (let i = 0; i < 5; i++) {
-    const randomProduct = randomFrom(STICKER_PRODUCTS);
+    const randomProduct = pullUnique(
+      availableProducts,
+      randomFrom(STICKER_PRODUCTS)
+    );
 
-    const useMainQuote = Math.random() < 0.5;
+    const useLockedMainQuote = !!stickerQuoteInput?.value.trim();
+    const useLockedMicroQuote = !!stickerMicroQuoteInput?.value.trim();
 
-    const resolvedQuote =
-      stickerQuoteInput?.value.trim()
-        ? stickerQuoteInput.value.trim()
-        : useMainQuote
-          ? randomFrom(getActiveStickerQuotes())
-          : "";
+    let resolvedQuote = "";
+    let resolvedMicroQuote = "";
 
-    const resolvedMicroQuote =
-      stickerMicroQuoteInput?.value.trim()
-        ? stickerMicroQuoteInput.value.trim()
-        : resolvedQuote
-          ? ""
-          : randomFrom(STICKER_MICRO_QUOTES);
+    if (useLockedMainQuote) {
+      resolvedQuote = stickerQuoteInput.value.trim();
+      resolvedMicroQuote = "";
+    } else if (useLockedMicroQuote) {
+      resolvedQuote = "";
+      resolvedMicroQuote = stickerMicroQuoteInput.value.trim();
+    } else {
+      const useMainQuote = Math.random() < 0.5;
+
+      if (useMainQuote) {
+        resolvedQuote = pullUnique(
+          availableMainQuotes,
+          randomFrom(getActiveStickerQuotes())
+        );
+        resolvedMicroQuote = "";
+      } else {
+        resolvedQuote = "";
+        resolvedMicroQuote = pullUnique(
+          availableMicroQuotes,
+          randomFrom(STICKER_MICRO_QUOTES)
+        );
+      }
+    }
 
     const options = {
       product: randomProduct.value,
@@ -1368,6 +1395,28 @@ applyKindleSelections(presetData);
       spice: stickerSpiceSelect?.value || randomFrom(STICKER_SPICE),
       paletteLock: randomProduct.paletteLock || ""
     };
+
+    const prompt = buildStickerPrompt(options);
+
+    rendered.push(`STICKER ${i + 1}\n\n${prompt}`);
+
+    exportRows.push({
+      label: `Sticker ${i + 1}`,
+      dropName: "",
+      dropTheme: "",
+      quoteReference: resolvedQuote || resolvedMicroQuote,
+      prompt,
+      caption: "",
+      hook: "",
+      hashtags: "",
+      slideText: ""
+    });
+  }
+
+  output.value = rendered.join("\n\n━━━━━━━━━━━━━━━━━━━━\n\n");
+  LAST_ROWS = exportRows;
+  LAST_DROP = null;
+});
 
     const prompt = buildStickerPrompt(options);
 
