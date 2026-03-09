@@ -418,32 +418,34 @@ function autofillStickerText() {
   }
 
   function resetSticker() {
-    populateStickerControls();
+  populateStickerControls();
 
-    stickerProductSelect.value = STICKER_PRODUCTS[0]?.value || "";
-    stickerVibeSelect.value = STICKER_VIBES[0] || "";
-    stickerPaletteSelect.value = PALETTES[0] || "";
-    stickerBackgroundSelect.value = STICKER_BACKGROUNDS[0] || "";
-    stickerBorderSelect.value = STICKER_BORDERS[0] || "";
-    stickerOutlineSelect.value = STICKER_OUTLINES[0] || "";
-    stickerSpiceSelect.value = STICKER_SPICE[1] || "";
+  stickerProductSelect.value = STICKER_PRODUCTS[0]?.value || "";
+  stickerVibeSelect.value = STICKER_VIBES[0] || "";
+  stickerPaletteSelect.value = PALETTES[0] || "";
+  stickerBackgroundSelect.value = STICKER_BACKGROUNDS[0] || "";
+  stickerBorderSelect.value = STICKER_BORDERS[0] || "";
+  stickerOutlineSelect.value = STICKER_OUTLINES[0] || "";
+  stickerSpiceSelect.value = STICKER_SPICE[1] || "";
 
-    clearStickerCustomInputs();
-  }
+  clearStickerCustomInputs();
+  stickerQuoteInput.value = STICKER_QUOTES[0] || "";
+  stickerMicroQuoteInput.value = STICKER_MICRO_QUOTES[0] || "";
+}
 
   function clearSticker() {
-    stickerProductSelect.value = "";
-    stickerVibeSelect.value = "";
-    stickerPaletteSelect.value = "";
-    stickerBackgroundSelect.value = "";
-    stickerBorderSelect.value = "";
-    stickerOutlineSelect.value = "";
-    stickerSpiceSelect.value = "";
+  stickerProductSelect.value = "";
+  stickerVibeSelect.value = "";
+  stickerPaletteSelect.value = "";
+  stickerBackgroundSelect.value = "";
+  stickerBorderSelect.value = "";
+  stickerOutlineSelect.value = "";
+  stickerSpiceSelect.value = "";
 
-    clearStickerCustomInputs();
-stickerQuoteInput.value = STICKER_QUOTES[0] || "";
-stickerMicroQuoteInput.value = STICKER_MICRO_QUOTES[0] || "";
-  }
+  clearStickerCustomInputs();
+  stickerQuoteInput.value = "";
+  stickerMicroQuoteInput.value = "";
+}
 
   function randomSticker() {
   randomizeSelect(stickerProductSelect);
@@ -455,7 +457,6 @@ stickerMicroQuoteInput.value = STICKER_MICRO_QUOTES[0] || "";
   randomizeSelect(stickerSpiceSelect);
 
   autofillStickerText();
-}
 
   stickerQuoteInput.value = randomFrom(STICKER_QUOTES);
   stickerMicroQuoteInput.value = randomFrom(STICKER_MICRO_QUOTES);
