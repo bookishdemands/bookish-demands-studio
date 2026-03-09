@@ -1466,7 +1466,8 @@ applyKindleSelections(presetData);
     alert(`Kindle generate error: ${error?.message || error}`);
   }
 });
-    generate5KindleBtn?.addEventListener("click", () => {
+
+  generate5KindleBtn?.addEventListener("click", () => {
   const rendered = [];
   const exportRows = [];
 
