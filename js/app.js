@@ -15,7 +15,7 @@ import { buildKindleInsertPrompt } from "./sticker/kindleInsertPromptBuilder.js"
 import { STICKER_PRODUCTS } from "./sticker/products.js";
 import { STICKER_QUOTES } from "./sticker/quotes.js";
 import { STICKER_MICRO_QUOTES } from "./sticker/microQuotes.js";
-
+import { STICKER_QUOTE_BANKS } from "./sticker/quoteBanks.js";
 
 function pick(arr) {
   return arr[Math.floor(Math.random() * arr.length)];
@@ -88,6 +88,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const kindleModeControls = document.getElementById("kindleModeControls");
 
   const stickerProductSelect = document.getElementById("stickerProductSelect");
+  const stickerQuoteBankSelect = document.getElementById("stickerQuoteBankSelect");
   const stickerQuoteInput = document.getElementById("stickerQuoteInput");
   const stickerMicroQuoteInput = document.getElementById("stickerMicroQuoteInput");
   const stickerVibeSelect = document.getElementById("stickerVibeSelect");
@@ -269,9 +270,16 @@ function randomFrom(arr) {
   return arr[Math.floor(Math.random() * arr.length)];
 }
 
+function getActiveStickerQuotes() {
+  const bank = stickerQuoteBankSelect?.value || "general";
+  return STICKER_QUOTE_BANKS[bank] || STICKER_QUOTE_BANKS.general;
+}
+  
 function autofillStickerText() {
+  const activeQuotes = getActiveStickerQuotes();
+
   if (!stickerQuoteInput.value.trim()) {
-    stickerQuoteInput.value = randomFrom(STICKER_QUOTES);
+    stickerQuoteInput.value = randomFrom(activeQuotes);
   }
 
   if (!stickerMicroQuoteInput.value.trim()) {
@@ -428,8 +436,10 @@ function autofillStickerText() {
   stickerOutlineSelect.value = STICKER_OUTLINES[0] || "";
   stickerSpiceSelect.value = STICKER_SPICE[1] || "";
 
+  if (stickerQuoteBankSelect) stickerQuoteBankSelect.value = "general";
+
   clearStickerCustomInputs();
-  stickerQuoteInput.value = STICKER_QUOTES[0] || "";
+  stickerQuoteInput.value = STICKER_QUOTE_BANKS.general[0] || "";
   stickerMicroQuoteInput.value = STICKER_MICRO_QUOTES[0] || "";
 }
 
@@ -458,7 +468,7 @@ function autofillStickerText() {
 
   autofillStickerText();
 
-  stickerQuoteInput.value = randomFrom(STICKER_QUOTES);
+  stickerQuoteInput.value = randomFrom(getActiveStickerQuotes());
   stickerMicroQuoteInput.value = randomFrom(STICKER_MICRO_QUOTES);
 }
 
