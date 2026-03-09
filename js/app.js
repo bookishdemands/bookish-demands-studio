@@ -466,8 +466,6 @@ function autofillStickerText() {
   randomizeSelect(stickerOutlineSelect);
   randomizeSelect(stickerSpiceSelect);
 
-  autofillStickerText();
-
   stickerQuoteInput.value = randomFrom(getActiveStickerQuotes());
   stickerMicroQuoteInput.value = randomFrom(STICKER_MICRO_QUOTES);
 }
