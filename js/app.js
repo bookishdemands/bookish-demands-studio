@@ -945,6 +945,40 @@ document.addEventListener("DOMContentLoaded", () => {
     };
   }
 
+  function applyStickerSelections(data = {}) {
+  if (!data) return;
+
+  if (stickerQuoteInput) stickerQuoteInput.value = data.quote || "";
+  if (stickerMicroQuoteInput) stickerMicroQuoteInput.value = data.microQuote || "";
+
+  if (stickerVibeSelect) stickerVibeSelect.value = data.vibe || stickerVibeSelect.value;
+  if (stickerPaletteSelect) stickerPaletteSelect.value = data.palette || stickerPaletteSelect.value;
+  if (stickerBackgroundSelect) stickerBackgroundSelect.value = data.background || stickerBackgroundSelect.value;
+  if (stickerBorderSelect) stickerBorderSelect.value = data.border || stickerBorderSelect.value;
+  if (stickerOutlineSelect) stickerOutlineSelect.value = data.outline || stickerOutlineSelect.value;
+  if (stickerSpiceSelect) stickerSpiceSelect.value = data.spice || stickerSpiceSelect.value;
+
+  if (stickerProductCustom) stickerProductCustom.value = data.productCustom || "";
+  if (stickerVibeCustom) stickerVibeCustom.value = data.vibeCustom || "";
+  if (stickerPaletteCustom) stickerPaletteCustom.value = data.paletteCustom || "";
+}
+  function applyKindleSelections(data = {}) {
+  if (!data) return;
+
+  if (kindleQuoteInput) kindleQuoteInput.value = data.quote || "";
+  if (kindleMicroQuoteInput) kindleMicroQuoteInput.value = data.microQuote || "";
+
+  if (kindleThemeSelect) kindleThemeSelect.value = data.theme || kindleThemeSelect.value;
+  if (kindlePaletteSelect) kindlePaletteSelect.value = data.palette || kindlePaletteSelect.value;
+  if (kindleBackgroundSelect) kindleBackgroundSelect.value = data.background || kindleBackgroundSelect.value;
+  if (kindleLayoutSelect) kindleLayoutSelect.value = data.layout || kindleLayoutSelect.value;
+  if (kindleHeatSelect) kindleHeatSelect.value = data.heat || kindleHeatSelect.value;
+
+  if (kindleThemeCustom) kindleThemeCustom.value = data.themeCustom || "";
+  if (kindlePaletteCustom) kindlePaletteCustom.value = data.paletteCustom || "";
+  if (kindleExtraInput) kindleExtraInput.value = data.extra || "";
+}
+  
   // Character listeners
   archetypeSelect?.addEventListener("change", () => {
     populateBuilderOptions(archetypeSelect.value);
@@ -1111,8 +1145,11 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    applyCharacterSelections(PRESETS[name]);
-  });
+    const presetData = PRESETS[name].data || {};
+
+applyCharacterSelections(presetData);
+applyStickerSelections(presetData);
+applyKindleSelections(presetData);
 
   deletePresetBtn?.addEventListener("click", () => {
     const name = presetSelect?.value;
@@ -1174,6 +1211,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const drop = DROP_LIBRARY[dropId];
     LAST_DROP = drop;
     LAST_ROWS = drop.rows || [];
+    applyStickerSelections(drop);
+    applyKindleSelections(drop);
     output.value = (drop.rows || [])
       .map((row) => {
         return row.caption || row.hook || row.hashtags
