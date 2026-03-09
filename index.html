@@ -133,6 +133,47 @@
         <div class="spacer"></div>
 
         <div id="characterControls">
+
+          <label for="readerverseMode">Readerverse Mode</label>
+<select id="readerverseMode">
+  <option value="single" selected>Single Character</option>
+  <option value="match">Match Character to Quote</option>
+  <option value="expression4">Archetype Pack (4)</option>
+  <option value="carousel4">Carousel Generator (4 slides)</option>
+  <option value="pack10">10-Pack From Quote</option>
+  <option value="pack30">30-Pack</option>
+  <option value="dropbuilder">Drop Builder</option>
+  <option value="batch5">Generate 5 Characters (Random)</option>
+</select>
+
+<label for="matchStrength">Match Strength</label>
+<select id="matchStrength">
+  <option value="balanced" selected>Balanced</option>
+  <option value="ontheme">On-theme</option>
+  <option value="super">Super on-theme</option>
+</select>
+
+<label for="quoteInput">Quote</label>
+<input id="quoteInput" type="text" placeholder="Paste a quote for matching / packs..." />
+
+<label for="dropTheme">Drop Theme</label>
+<input id="dropTheme" type="text" placeholder="Optional drop theme..." />
+
+<label for="dropName">Drop Name</label>
+<input id="dropName" type="text" placeholder="Optional custom drop name..." />
+
+<label for="carouselTitleStyle">Carousel Title Style</label>
+<select id="carouselTitleStyle">
+  <option value="none" selected>No slide titles</option>
+  <option value="short">Short slide titles</option>
+  <option value="spicy">Spicy slide titles</option>
+</select>
+
+<label style="display:flex;gap:8px;align-items:center;margin:10px 0 12px;">
+  <input id="contentMode" type="checkbox" checked style="width:auto;" />
+  <span style="margin:0;color:var(--text);font-size:13px;">Content Generator Mode</span>
+</label>
+          
           <label for="archetypeSelect">Choose Archetype</label>
           <select id="archetypeSelect"></select>
 
@@ -306,6 +347,6 @@
     </div>
   </div>
 
-  <script type="module" src="./js/app.js?v=73"></script>
+  <script type="module" src="./js/app.js?v=74"></script>
 </body>
 </html>
