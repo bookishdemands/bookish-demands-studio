@@ -84,6 +84,12 @@ function pullFromBag(source = [], bagRefName = "") {
   return window.__BD_BAGS__[bagRefName].pop() || "";
 }
 
+function pullUnique(list = [], fallback) {
+  if (!list.length) return fallback;
+  const index = Math.floor(Math.random() * list.length);
+  return list.splice(index, 1)[0];
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   // Shared
   const studioMode = document.getElementById("studioMode");
@@ -1342,19 +1348,14 @@ applyKindleSelections(presetData);
   }
 });
 
-  generate5StickerBtn?.addEventListener("click", () => {
+  
+    generate5StickerBtn?.addEventListener("click", () => {
   const rendered = [];
   const exportRows = [];
 
   const availableProducts = [...STICKER_PRODUCTS];
   const availableMainQuotes = [...getActiveStickerQuotes()];
   const availableMicroQuotes = [...STICKER_MICRO_QUOTES];
-
-  function pullUnique(list = [], fallback) {
-    if (!list.length) return fallback;
-    const index = Math.floor(Math.random() * list.length);
-    return list.splice(index, 1)[0];
-  }
 
   for (let i = 0; i < 5; i++) {
     const randomProduct =
@@ -1367,23 +1368,25 @@ applyKindleSelections(presetData);
 
     if (useMainQuote) {
       resolvedQuote =
-  pullUnique(
-    availableMainQuotes,
-    pullFromBag(
-      getActiveStickerQuotes(),
-      `sticker-main-${stickerQuoteBankSelect?.value || "general"}`
-    )
-  ) ||
-  pullFromBag(
-    getActiveStickerQuotes(),
-    `sticker-main-${stickerQuoteBankSelect?.value || "general"}`
-  );
+        pullUnique(
+          availableMainQuotes,
+          pullFromBag(
+            getActiveStickerQuotes(),
+            `sticker-main-${stickerQuoteBankSelect?.value || "general"}`
+          )
+        ) ||
+        pullFromBag(
+          getActiveStickerQuotes(),
+          `sticker-main-${stickerQuoteBankSelect?.value || "general"}`
+        );
+    } else {
       resolvedMicroQuote =
-  pullUnique(
-    availableMicroQuotes,
-    pullFromBag(STICKER_MICRO_QUOTES, "sticker-micro")
-  ) ||
-  pullFromBag(STICKER_MICRO_QUOTES, "sticker-micro");
+        pullUnique(
+          availableMicroQuotes,
+          pullFromBag(STICKER_MICRO_QUOTES, "sticker-micro")
+        ) ||
+        pullFromBag(STICKER_MICRO_QUOTES, "sticker-micro");
+    }
 
     const options = {
       product: randomProduct?.value || "",
