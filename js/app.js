@@ -1272,44 +1272,66 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   generate5StickerBtn?.addEventListener("click", () => {
-    const rows = [];
+  const rendered = [];
+  const exportRows = [];
 
-    for (let i = 0; i < 5; i++) {
-      const randomProduct = randomFrom(STICKER_PRODUCTS);
-      const options = {
-        product: randomProduct.value,
-        productSubject: randomProduct.subject,
-        productCustom: stickerProductCustom?.value || "",
-        quote: stickerQuoteInput?.value.trim() || randomFrom(getActiveStickerQuotes()),
-        microQuote: stickerMicroQuoteInput?.value.trim() || randomFrom(STICKER_MICRO_QUOTES),
-        vibe: stickerVibeCustom?.value.trim() || randomFrom(STICKER_VIBES),
-        vibeCustom: stickerVibeCustom?.value || "",
-        palette: stickerPaletteCustom?.value.trim() || randomFrom(PALETTES),
-        paletteCustom: stickerPaletteCustom?.value || "",
-        background: randomFrom(STICKER_BACKGROUNDS),
-        border: randomFrom(STICKER_BORDERS),
-        outline: randomFrom(STICKER_OUTLINES),
-        spice: randomFrom(STICKER_SPICE),
-        paletteLock: randomProduct.paletteLock || ""
-      };
+  for (let i = 0; i < 5; i++) {
+    const randomProduct = randomFrom(STICKER_PRODUCTS);
 
-      rows.push(`STICKER ${i + 1}\n\n${buildStickerPrompt(options)}`);
-    }
+    const useMainQuote = Math.random() < 0.5;
 
-    output.value = rows.rows.join("\n\n━━━━━━━━━━━━━━━━━━━━\n\n");
-    LAST_ROWS = rows.map((prompt, index) => ({
-      label: `Sticker ${index + 1}`,
+    const resolvedQuote =
+      stickerQuoteInput?.value.trim()
+        ? stickerQuoteInput.value.trim()
+        : useMainQuote
+          ? randomFrom(getActiveStickerQuotes())
+          : "";
+
+    const resolvedMicroQuote =
+      stickerMicroQuoteInput?.value.trim()
+        ? stickerMicroQuoteInput.value.trim()
+        : resolvedQuote
+          ? ""
+          : randomFrom(STICKER_MICRO_QUOTES);
+
+    const options = {
+      product: randomProduct.value,
+      productSubject: randomProduct.subject,
+      productCustom: stickerProductCustom?.value || "",
+      quote: resolvedQuote,
+      microQuote: resolvedMicroQuote,
+      vibe: stickerVibeCustom?.value.trim() || stickerVibeSelect?.value || randomFrom(STICKER_VIBES),
+      vibeCustom: stickerVibeCustom?.value || "",
+      palette: stickerPaletteCustom?.value.trim() || stickerPaletteSelect?.value || randomFrom(PALETTES),
+      paletteCustom: stickerPaletteCustom?.value || "",
+      background: stickerBackgroundSelect?.value || randomFrom(STICKER_BACKGROUNDS),
+      border: stickerBorderSelect?.value || randomFrom(STICKER_BORDERS),
+      outline: stickerOutlineSelect?.value || randomFrom(STICKER_OUTLINES),
+      spice: stickerSpiceSelect?.value || randomFrom(STICKER_SPICE),
+      paletteLock: randomProduct.paletteLock || ""
+    };
+
+    const prompt = buildStickerPrompt(options);
+
+    rendered.push(`STICKER ${i + 1}\n\n${prompt}`);
+
+    exportRows.push({
+      label: `Sticker ${i + 1}`,
       dropName: "",
       dropTheme: "",
-      quoteReference: "",
+      quoteReference: resolvedQuote || resolvedMicroQuote,
       prompt,
       caption: "",
       hook: "",
       hashtags: "",
       slideText: ""
-    }));
-    LAST_DROP = null;
-  });
+    });
+  }
+
+  output.value = rendered.join("\n\n━━━━━━━━━━━━━━━━━━━━\n\n");
+  LAST_ROWS = exportRows;
+  LAST_DROP = null;
+});
 
   // Kindle listeners
   randomKindleBtn?.addEventListener("click", randomKindle);
