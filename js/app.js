@@ -566,14 +566,45 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   generate5Btn.addEventListener("click", () => {
-    const archetype = archetypeSelect.value;
-    const options = getCharacterOptions();
-    const variants = [];
-    for (let i = 0; i < 5; i++) {
-      variants.push(`VARIATION ${i + 1}\n\n${buildCharacterPrompt(archetype, options)}`);
-    }
-    output.value = variants.join("\n\n====================\n\n");
-  });
+  const archetype = archetypeSelect.value || ARCHETYPES[0];
+  const variants = [];
+
+  for (let i = 0; i < 5; i++) {
+    populateBuilderOptions(archetype);
+
+    const options = {
+      complexion: complexionCustom.value.trim() || randomFrom(COMPLEXIONS),
+      bodyType: bodyTypeCustom.value.trim() || randomFrom(BODY_TYPES),
+      faceShape: faceShapeCustom.value.trim() || randomFrom(FACE_SHAPES),
+      hair: hairCustom.value.trim() || randomFrom(HAIR),
+      outfit: outfitCustom.value.trim() || randomFrom(OUTFITS),
+      expression: expressionCustom.value.trim() || expressionSelect.value || randomFrom(EXPRESSIONS),
+      micro: microCustom.value.trim() || microSelect.value || randomFrom(MICRO_EXPRESSIONS),
+      attitude: attitudeCustom.value.trim() || attitudeSelect.value || randomFrom(ATTITUDES),
+      pose: poseCustom.value.trim() || poseSelect.value || randomFrom(POSES),
+      prop: propCustom.value.trim() || propSelect.value || randomFrom(PROPS),
+      scene: sceneCustom.value.trim() || sceneSelect.value || randomFrom(SCENES),
+      palette: paletteCustom.value.trim() || paletteSelect.value || randomFrom(PALETTES),
+
+      complexionCustom: complexionCustom.value,
+      bodyTypeCustom: bodyTypeCustom.value,
+      faceShapeCustom: faceShapeCustom.value,
+      hairCustom: hairCustom.value,
+      outfitCustom: outfitCustom.value,
+      expressionCustom: expressionCustom.value,
+      microCustom: microCustom.value,
+      attitudeCustom: attitudeCustom.value,
+      poseCustom: poseCustom.value,
+      propCustom: propCustom.value,
+      sceneCustom: sceneCustom.value,
+      paletteCustom: paletteCustom.value
+    };
+
+    variants.push(`VARIATION ${i + 1}\n\n${buildCharacterPrompt(archetype, options)}`);
+  }
+
+  output.value = variants.join("\n\n====================\n\n");
+});
 
   // Shared listeners
   studioMode.addEventListener("change", updateStudioMode);
@@ -607,13 +638,32 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   generate5StickerBtn.addEventListener("click", () => {
-    const options = getStickerOptions();
-    const rows = [];
-    for (let i = 0; i < 5; i++) {
-      rows.push(`STICKER ${i + 1}\n\n${buildStickerPrompt(options)}`);
-    }
-    output.value = rows.join("\n\n====================\n\n");
-  });
+  const rows = [];
+
+  for (let i = 0; i < 5; i++) {
+    const randomProduct = randomFrom(STICKER_PRODUCTS);
+    const options = {
+      product: randomProduct.value,
+      productSubject: randomProduct.subject,
+      productCustom: stickerProductCustom.value,
+      quote: stickerQuoteInput.value.trim() || randomFrom(getActiveStickerQuotes()),
+      microQuote: stickerMicroQuoteInput.value.trim() || randomFrom(STICKER_MICRO_QUOTES),
+      vibe: stickerVibeCustom.value.trim() || randomFrom(STICKER_VIBES),
+      vibeCustom: stickerVibeCustom.value,
+      palette: stickerPaletteCustom.value.trim() || randomFrom(PALETTES),
+      paletteCustom: stickerPaletteCustom.value,
+      background: randomFrom(STICKER_BACKGROUNDS),
+      border: randomFrom(STICKER_BORDERS),
+      outline: randomFrom(STICKER_OUTLINES),
+      spice: randomFrom(STICKER_SPICE),
+      paletteLock: randomProduct.paletteLock || ""
+    };
+
+    rows.push(`STICKER ${i + 1}\n\n${buildStickerPrompt(options)}`);
+  }
+
+  output.value = rows.join("\n\n====================\n\n");
+});
 
   // Kindle listeners
   randomKindleBtn.addEventListener("click", randomKindle);
@@ -625,13 +675,27 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   generate5KindleBtn.addEventListener("click", () => {
-    const options = getKindleOptions();
-    const rows = [];
-    for (let i = 0; i < 5; i++) {
-      rows.push(`KINDLE INSERT ${i + 1}\n\n${buildKindleInsertPrompt(options)}`);
-    }
-    output.value = rows.join("\n\n====================\n\n");
-  });
+  const rows = [];
+
+  for (let i = 0; i < 5; i++) {
+    const options = {
+      quote: kindleQuoteInput.value.trim() || randomFrom(KINDLE_QUOTES),
+      microQuote: kindleMicroQuoteInput.value.trim() || randomFrom(KINDLE_MICRO_QUOTES),
+      theme: kindleThemeCustom.value.trim() || randomFrom(KINDLE_THEMES),
+      themeCustom: kindleThemeCustom.value,
+      palette: kindlePaletteCustom.value.trim() || randomFrom(PALETTES),
+      paletteCustom: kindlePaletteCustom.value,
+      background: randomFrom(KINDLE_BACKGROUNDS),
+      layout: randomFrom(KINDLE_LAYOUTS),
+      heat: randomFrom(KINDLE_HEAT),
+      extra: kindleExtraInput.value.trim()
+    };
+
+    rows.push(`KINDLE INSERT ${i + 1}\n\n${buildKindleInsertPrompt(options)}`);
+  }
+
+  output.value = rows.join("\n\n====================\n\n");
+});
 
   // Init
   populateArchetypeOptions();
