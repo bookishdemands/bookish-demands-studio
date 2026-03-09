@@ -1,8 +1,4 @@
-function resolveValue(customValue, selectedValue, fallback = "") {
-  if (customValue && String(customValue).trim()) return String(customValue).trim();
-  if (selectedValue && String(selectedValue).trim()) return String(selectedValue).trim();
-  return fallback;
-}
+import { resolveValue } from "../utils/resolveValue.js";
 
 export function buildKindleInsertPrompt(options = {}) {
   const quote = resolveValue("", options.quote, "dark romance reader quote");
