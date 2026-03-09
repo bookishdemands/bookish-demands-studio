@@ -1337,51 +1337,43 @@ applyKindleSelections(presetData);
   const availableMainQuotes = [...getActiveStickerQuotes()];
   const availableMicroQuotes = [...STICKER_MICRO_QUOTES];
 
-  function pullUnique(list = [], fallback = "") {
+  function pullUnique(list = [], fallback) {
     if (!list.length) return fallback;
     const index = Math.floor(Math.random() * list.length);
     return list.splice(index, 1)[0];
   }
 
   for (let i = 0; i < 5; i++) {
-    const randomProduct = pullUnique(
-      availableProducts,
-      randomFrom(STICKER_PRODUCTS)
-    );
+    const randomProduct =
+      pullUnique(availableProducts, randomFrom(STICKER_PRODUCTS)) || randomFrom(STICKER_PRODUCTS);
 
-    const useLockedMainQuote = !!stickerQuoteInput?.value.trim();
-    const useLockedMicroQuote = !!stickerMicroQuoteInput?.value.trim();
+    const hasLockedMainQuote = !!stickerQuoteInput?.value.trim();
+    const hasLockedMicroQuote = !!stickerMicroQuoteInput?.value.trim();
 
     let resolvedQuote = "";
     let resolvedMicroQuote = "";
 
-    if (useLockedMainQuote) {
+    if (hasLockedMainQuote) {
       resolvedQuote = stickerQuoteInput.value.trim();
-      resolvedMicroQuote = "";
-    } else if (useLockedMicroQuote) {
-      resolvedQuote = "";
+    } else if (hasLockedMicroQuote) {
       resolvedMicroQuote = stickerMicroQuoteInput.value.trim();
     } else {
       const useMainQuote = Math.random() < 0.5;
 
       if (useMainQuote) {
-        resolvedQuote = pullUnique(
-          availableMainQuotes,
-          randomFrom(getActiveStickerQuotes())
-        );
-        resolvedMicroQuote = "";
+        resolvedQuote =
+          pullUnique(availableMainQuotes, randomFrom(getActiveStickerQuotes())) ||
+          randomFrom(getActiveStickerQuotes());
       } else {
-        resolvedQuote = "";
-        resolvedMicroQuote = pullUnique(
-          availableMicroQuotes,
-          randomFrom(STICKER_MICRO_QUOTES)
-        );
+        resolvedMicroQuote =
+          pullUnique(availableMicroQuotes, randomFrom(STICKER_MICRO_QUOTES)) ||
+          randomFrom(STICKER_MICRO_QUOTES);
       }
     }
 
     const options = {
-      product: randomProduct.value,
-      productSubject: randomProduct.subject,
+      product: randomProduct?.value || "",
+      productSubject: randomProduct?.subject || randomProduct?.mainSubject || "",
       productCustom: stickerProductCustom?.value || "",
       quote: resolvedQuote,
       microQuote: resolvedMicroQuote,
@@ -1393,7 +1385,7 @@ applyKindleSelections(presetData);
       border: stickerBorderSelect?.value || randomFrom(STICKER_BORDERS),
       outline: stickerOutlineSelect?.value || randomFrom(STICKER_OUTLINES),
       spice: stickerSpiceSelect?.value || randomFrom(STICKER_SPICE),
-      paletteLock: randomProduct.paletteLock || ""
+      paletteLock: randomProduct?.paletteLock || ""
     };
 
     const prompt = buildStickerPrompt(options);
@@ -1418,27 +1410,6 @@ applyKindleSelections(presetData);
   LAST_DROP = null;
 });
 
-    const prompt = buildStickerPrompt(options);
-
-    rendered.push(`STICKER ${i + 1}\n\n${prompt}`);
-
-    exportRows.push({
-      label: `Sticker ${i + 1}`,
-      dropName: "",
-      dropTheme: "",
-      quoteReference: resolvedQuote || resolvedMicroQuote,
-      prompt,
-      caption: "",
-      hook: "",
-      hashtags: "",
-      slideText: ""
-    });
-  }
-
-  output.value = rendered.join("\n\n━━━━━━━━━━━━━━━━━━━━\n\n");
-  LAST_ROWS = exportRows;
-  LAST_DROP = null;
-});
 
   // Kindle listeners
   randomKindleBtn?.addEventListener("click", randomKindle);
