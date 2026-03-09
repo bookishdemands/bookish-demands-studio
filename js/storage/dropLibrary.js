@@ -10,20 +10,20 @@ export function loadDropLibrary() {
   }
 }
 
-export function saveDropLibrary(dropLibrary = {}) {
+export function saveDropLibraryMap(dropLibrary = {}) {
   localStorage.setItem(STORAGE_KEY_DROP_LIBRARY, JSON.stringify(dropLibrary));
 }
 
 export function saveDrop(drop, dropLibrary = {}) {
   if (!drop?.id) return dropLibrary;
   const next = { ...dropLibrary, [drop.id]: drop };
-  saveDropLibrary(next);
+  saveDropLibraryMap(next);
   return next;
 }
 
 export function deleteDrop(dropId, dropLibrary = {}) {
   const next = { ...dropLibrary };
   delete next[dropId];
-  saveDropLibrary(next);
+  saveDropLibraryMap(next);
   return next;
 }
