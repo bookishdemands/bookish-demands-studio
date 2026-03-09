@@ -1395,39 +1395,60 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
   generate5KindleBtn?.addEventListener("click", () => {
-    const rows = [];
+  const rendered = [];
+  const exportRows = [];
 
-    for (let i = 0; i < 5; i++) {
-      const options = {
-        quote: kindleQuoteInput?.value.trim() || randomFrom(KINDLE_QUOTES),
-        microQuote: kindleMicroQuoteInput?.value.trim() || randomFrom(KINDLE_MICRO_QUOTES),
-        theme: kindleThemeCustom?.value.trim() || randomFrom(KINDLE_THEMES),
-        themeCustom: kindleThemeCustom?.value || "",
-        palette: kindlePaletteCustom?.value.trim() || randomFrom(PALETTES),
-        paletteCustom: kindlePaletteCustom?.value || "",
-        background: randomFrom(KINDLE_BACKGROUNDS),
-        layout: randomFrom(KINDLE_LAYOUTS),
-        heat: randomFrom(KINDLE_HEAT),
-        extra: kindleExtraInput?.value.trim() || ""
-      };
+  for (let i = 0; i < 5; i++) {
+    const useMainQuote = Math.random() < 0.5;
 
-      rows.push(`KINDLE INSERT ${i + 1}\n\n${buildKindleInsertPrompt(options)}`);
-    }
+    const resolvedQuote =
+      kindleQuoteInput?.value.trim()
+        ? kindleQuoteInput.value.trim()
+        : useMainQuote
+          ? randomFrom(KINDLE_QUOTES)
+          : "";
 
-    output.value = rows.rows.join("\n\n━━━━━━━━━━━━━━━━━━━━\n\n");
-    LAST_ROWS = rows.map((prompt, index) => ({
-      label: `Kindle Insert ${index + 1}`,
+    const resolvedMicroQuote =
+      kindleMicroQuoteInput?.value.trim()
+        ? kindleMicroQuoteInput.value.trim()
+        : resolvedQuote
+          ? ""
+          : randomFrom(KINDLE_MICRO_QUOTES);
+
+    const options = {
+      quote: resolvedQuote,
+      microQuote: resolvedMicroQuote,
+      theme: kindleThemeCustom?.value.trim() || kindleThemeSelect?.value || randomFrom(KINDLE_THEMES),
+      themeCustom: kindleThemeCustom?.value || "",
+      palette: kindlePaletteCustom?.value.trim() || kindlePaletteSelect?.value || randomFrom(PALETTES),
+      paletteCustom: kindlePaletteCustom?.value || "",
+      background: kindleBackgroundSelect?.value || randomFrom(KINDLE_BACKGROUNDS),
+      layout: kindleLayoutSelect?.value || randomFrom(KINDLE_LAYOUTS),
+      heat: kindleHeatSelect?.value || randomFrom(KINDLE_HEAT),
+      extra: kindleExtraInput?.value.trim() || ""
+    };
+
+    const prompt = buildKindleInsertPrompt(options);
+
+    rendered.push(`KINDLE INSERT ${i + 1}\n\n${prompt}`);
+
+    exportRows.push({
+      label: `Kindle Insert ${i + 1}`,
       dropName: "",
       dropTheme: "",
-      quoteReference: "",
+      quoteReference: resolvedQuote || resolvedMicroQuote,
       prompt,
       caption: "",
       hook: "",
       hashtags: "",
       slideText: ""
-    }));
-    LAST_DROP = null;
-  });
+    });
+  }
+
+  output.value = rendered.join("\n\n━━━━━━━━━━━━━━━━━━━━\n\n");
+  LAST_ROWS = exportRows;
+  LAST_DROP = null;
+});
 
   // Init
   populateArchetypeOptions();
