@@ -1,6 +1,12 @@
+function resolveValue(customValue, selectedValue, fallback = "") {
+  if (customValue && String(customValue).trim()) return String(customValue).trim();
+  if (selectedValue && String(selectedValue).trim()) return String(selectedValue).trim();
+  return fallback;
+}
+
 export function buildStickerPrompt(options = {}) {
-  const productName = resolveValue(options.productCustom, options.product, "reaction sticker");
-  const productSubject = resolveValue("", options.productSubject, "die-cut sticker design");
+  const productName = resolveValue(options.productCustom, options.product, "Reaction Sticker");
+  const productSubject = resolveValue("", options.productSubject, "clean die-cut sticker design");
   const quote = resolveValue("", options.quote, "bookish reaction quote");
   const microQuote = resolveValue("", options.microQuote, "");
   const vibe = resolveValue(options.vibeCustom, options.vibe, "bookish glam");
@@ -10,31 +16,44 @@ export function buildStickerPrompt(options = {}) {
   const outline = resolveValue("", options.outline, "bold clean outline");
   const spice = resolveValue("", options.spice, "level 2 spicy energy");
 
-  return [
-    "PROMPT,",
-    "high detail, polished composition, crisp typography hierarchy, clean edges, premium digital illustration quality",
-    "high-end digital sticker illustration",
-    "bold die-cut sticker design",
+  const sections = [
+    "STICKER PROMPT",
+    "",
+    "PRODUCT",
     productName,
     productSubject,
-    `"${quote}"`,
+    "",
+    "TEXT HIERARCHY",
+    quote,
     microQuote,
-    "large readable quote typography",
-    "clean balanced text layout",
+    "large readable quote treatment",
+    "clean text placement",
+    "balanced typography layout",
+    "",
+    "VIBE",
     vibe,
-    `palette influence: ${palette}`,
+    palette ? `palette influence: ${palette}` : "",
+    options.paletteLock ? `palette family lock: ${options.paletteLock}` : "",
     spice,
+    "",
+    "STYLE",
+    "high-end digital sticker art",
+    "bold die-cut sticker design",
+    "clean vector-like polish",
+    "graphic, scroll-stopping composition",
+    "bookish branded aesthetic",
+    "luxury reader lifestyle energy",
+    "",
+    "FINISH",
     border,
     outline,
     background,
     "centered composition",
-    "clean vector-like polish",
-    "scroll-stopping graphic composition",
-    "print-ready sticker aesthetic",
     "strong silhouette readability",
+    "print-ready sticker aesthetic",
     "no watermark",
     "no logo"
-  ]
-  .filter(Boolean)
-  .join(", ");
+  ];
+
+  return sections.filter(Boolean).join("\n");
 }
