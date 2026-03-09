@@ -1,12 +1,6 @@
-function resolveValue(customValue, selectedValue, fallback = "") {
-  if (customValue && customValue.trim()) return customValue.trim();
-  if (selectedValue && selectedValue.trim()) return selectedValue.trim();
-  return fallback;
-}
-
 export function buildStickerPrompt(options = {}) {
-  const productName = resolveValue(options.productCustom, options.product, "Reaction Sticker");
-  const productSubject = resolveValue("", options.productSubject, "clean die-cut sticker design");
+  const productName = resolveValue(options.productCustom, options.product, "reaction sticker");
+  const productSubject = resolveValue("", options.productSubject, "die-cut sticker design");
   const quote = resolveValue("", options.quote, "bookish reaction quote");
   const microQuote = resolveValue("", options.microQuote, "");
   const vibe = resolveValue(options.vibeCustom, options.vibe, "bookish glam");
@@ -16,44 +10,30 @@ export function buildStickerPrompt(options = {}) {
   const outline = resolveValue("", options.outline, "bold clean outline");
   const spice = resolveValue("", options.spice, "level 2 spicy energy");
 
-  const sections = [
-    "STICKER PROMPT",
-    "",
-    "PRODUCT",
+  return [
+    "PROMPT,",
+    "high-end digital sticker illustration",
+    "bold die-cut sticker design",
     productName,
     productSubject,
-    "",
-    "TEXT HIERARCHY",
-    quote,
+    `"${quote}"`,
     microQuote,
-    "large readable quote treatment",
-    "clean text placement",
-    "balanced typography layout",
-    "",
-    "VIBE",
+    "large readable quote typography",
+    "clean balanced text layout",
     vibe,
-    palette ? `palette influence: ${palette}` : "",
-    options.paletteLock ? `palette family lock: ${options.paletteLock}` : "",
+    `palette influence: ${palette}`,
     spice,
-    "",
-    "STYLE",
-    "high-end digital sticker art",
-    "bold die-cut sticker design",
-    "clean vector-like polish",
-    "graphic, scroll-stopping composition",
-    "bookish branded aesthetic",
-    "luxury reader lifestyle energy",
-    "",
-    "FINISH",
     border,
     outline,
     background,
     "centered composition",
-    "strong silhouette readability",
+    "clean vector-like polish",
+    "scroll-stopping graphic composition",
     "print-ready sticker aesthetic",
+    "strong silhouette readability",
     "no watermark",
     "no logo"
-  ];
-
-  return sections.filter(Boolean).join("\n");
+  ]
+  .filter(Boolean)
+  .join(", ");
 }
