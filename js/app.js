@@ -945,79 +945,87 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   generate5Btn?.addEventListener("click", () => {
-    const archetype = archetypeSelect?.value || ARCHETYPES[0];
-    const variants = [];
+  const archetype = archetypeSelect?.value || ARCHETYPES[0];
+  const base = getCharacterOptions();
+  const variants = [];
+  const rows = [];
 
-    for (let i = 0; i < 5; i++) {
-      populateBuilderOptions(archetype);
+  for (let i = 0; i < 5; i++) {
+    const options = {
+      complexion: base.complexionCustom.trim() || randomFrom(COMPLEXIONS),
+      bodyType: base.bodyTypeCustom.trim() || randomFrom(BODY_TYPES),
+      faceShape: base.faceShapeCustom.trim() || randomFrom(FACE_SHAPES),
 
-      const options = {
-        complexion: complexionCustom?.value.trim() || randomFrom(COMPLEXIONS),
-        bodyType: bodyTypeCustom?.value.trim() || randomFrom(BODY_TYPES),
-        faceShape: faceShapeCustom?.value.trim() || randomFrom(FACE_SHAPES),
+      extras: base.extrasCustom.trim() || randomFrom(EXTRAS),
+      hairColor: base.hairColorCustom.trim() || randomFrom(HAIR_COLORS),
+      hair: base.hairCustom.trim() || randomFrom(HAIR),
+      makeup: base.makeupCustom.trim() || randomFrom(MAKEUP),
+      lighting: base.lightingCustom.trim() || randomFrom(LIGHTING),
 
-        extras: extrasCustom?.value.trim() || randomFrom(EXTRAS),
-        hairColor: hairColorCustom?.value.trim() || randomFrom(HAIR_COLORS),
-        hair: hairCustom?.value.trim() || randomFrom(HAIR),
-        makeup: makeupCustom?.value.trim() || randomFrom(MAKEUP),
-        lighting: lightingCustom?.value.trim() || randomFrom(LIGHTING),
+      nailShape: base.nailShapeCustom.trim() || randomFrom(NAIL_SHAPES),
+      nailDesign: base.nailDesignCustom.trim() || randomFrom(NAIL_DESIGNS),
 
-        nailShape: nailShapeCustom?.value.trim() || randomFrom(NAIL_SHAPES),
-        nailDesign: nailDesignCustom?.value.trim() || randomFrom(NAIL_DESIGNS),
+      outfit: base.outfitCustom.trim() || randomFrom(OUTFITS),
+      accessories: base.accessoriesCustom.trim() || randomFrom(ACCESSORIES),
 
-        outfit: outfitCustom?.value.trim() || randomFrom(OUTFITS),
-        accessories: accessoriesCustom?.value.trim() || randomFrom(ACCESSORIES),
+      expression: base.expressionCustom.trim() || randomFrom(EXPRESSIONS),
+      micro: base.microCustom.trim() || randomFrom(MICRO_EXPRESSIONS),
+      attitude: base.attitudeCustom.trim() || randomFrom(ATTITUDES),
+      pose: base.poseCustom.trim() || randomFrom(POSES),
+      prop: base.propCustom.trim() || randomFrom(PROPS),
+      scene: base.sceneCustom.trim() || randomFrom(SCENES),
+      background: base.backgroundCustom.trim() || randomFrom(BACKGROUNDS),
+      palette: base.paletteCustom.trim() || randomFrom(PALETTES),
+      composition: base.compositionCustom.trim() || randomFrom(COMPOSITIONS),
 
-        expression: expressionCustom?.value.trim() || expressionSelect?.value || randomFrom(EXPRESSIONS),
-        micro: microCustom?.value.trim() || microSelect?.value || randomFrom(MICRO_EXPRESSIONS),
-        attitude: attitudeCustom?.value.trim() || attitudeSelect?.value || randomFrom(ATTITUDES),
-        pose: poseCustom?.value.trim() || poseSelect?.value || randomFrom(POSES),
-        prop: propCustom?.value.trim() || propSelect?.value || randomFrom(PROPS),
-        scene: sceneCustom?.value.trim() || sceneSelect?.value || randomFrom(SCENES),
-        background: backgroundCustom?.value.trim() || randomFrom(BACKGROUNDS),
-        palette: paletteCustom?.value.trim() || paletteSelect?.value || randomFrom(PALETTES),
-        composition: compositionCustom?.value.trim() || randomFrom(COMPOSITIONS),
+      complexionCustom: base.complexionCustom,
+      bodyTypeCustom: base.bodyTypeCustom,
+      faceShapeCustom: base.faceShapeCustom,
+      extrasCustom: base.extrasCustom,
+      hairColorCustom: base.hairColorCustom,
+      hairCustom: base.hairCustom,
+      makeupCustom: base.makeupCustom,
+      lightingCustom: base.lightingCustom,
+      nailShapeCustom: base.nailShapeCustom,
+      nailDesignCustom: base.nailDesignCustom,
+      outfitCustom: base.outfitCustom,
+      accessoriesCustom: base.accessoriesCustom,
+      expressionCustom: base.expressionCustom,
+      microCustom: base.microCustom,
+      attitudeCustom: base.attitudeCustom,
+      poseCustom: base.poseCustom,
+      propCustom: base.propCustom,
+      sceneCustom: base.sceneCustom,
+      backgroundCustom: base.backgroundCustom,
+      paletteCustom: base.paletteCustom,
+      compositionCustom: base.compositionCustom,
 
-        complexionCustom: complexionCustom?.value || "",
-        bodyTypeCustom: bodyTypeCustom?.value || "",
-        faceShapeCustom: faceShapeCustom?.value || "",
-        extrasCustom: extrasCustom?.value || "",
-        hairColorCustom: hairColorCustom?.value || "",
-        hairCustom: hairCustom?.value || "",
-        makeupCustom: makeupCustom?.value || "",
-        lightingCustom: lightingCustom?.value || "",
-        nailShapeCustom: nailShapeCustom?.value || "",
-        nailDesignCustom: nailDesignCustom?.value || "",
-        outfitCustom: outfitCustom?.value || "",
-        accessoriesCustom: accessoriesCustom?.value || "",
-        expressionCustom: expressionCustom?.value || "",
-        microCustom: microCustom?.value || "",
-        attitudeCustom: attitudeCustom?.value || "",
-        poseCustom: poseCustom?.value || "",
-        propCustom: propCustom?.value || "",
-        sceneCustom: sceneCustom?.value || "",
-        backgroundCustom: backgroundCustom?.value || "",
-        paletteCustom: paletteCustom?.value || "",
-        compositionCustom: compositionCustom?.value || ""
-      };
+      customCategory: "",
+      customAddons: "",
+      customCategories: "",
+      negativePrompt: ""
+    };
 
-      variants.push(`VARIATION ${i + 1}\n\n${buildCharacterPrompt(archetype, options)}`);
-    }
+    const prompt = buildCharacterPrompt(archetype, options);
+    variants.push(`VARIATION ${i + 1}\n\n${prompt}`);
 
-    output.value = variants.join("\n\n====================\n\n");
-    LAST_ROWS = variants.map((text, index) => ({
-      label: `Variation ${index + 1}`,
+    rows.push({
+      label: `Variation ${i + 1}`,
       dropName: "",
       dropTheme: "",
       quoteReference: "",
-      prompt: text,
+      prompt,
       caption: "",
       hook: "",
       hashtags: "",
       slideText: ""
-    }));
-    LAST_DROP = null;
-  });
+    });
+  }
+
+  output.value = variants.join("\n\n====================\n\n");
+  LAST_ROWS = rows;
+  LAST_DROP = null;
+});
 
   // Shared listeners
   studioMode?.addEventListener("change", updateStudioMode);
