@@ -779,28 +779,54 @@ compositionCustom: compositionCustom.value,
       complexion: complexionCustom.value.trim() || randomFrom(COMPLEXIONS),
       bodyType: bodyTypeCustom.value.trim() || randomFrom(BODY_TYPES),
       faceShape: faceShapeCustom.value.trim() || randomFrom(FACE_SHAPES),
+
+      extras: extrasCustom.value.trim() || randomFrom(EXTRAS),
+      hairColor: hairColorCustom.value.trim() || randomFrom(HAIR_COLORS),
       hair: hairCustom.value.trim() || randomFrom(HAIR),
+      makeup: makeupCustom.value.trim() || randomFrom(MAKEUP),
+      lighting: lightingCustom.value.trim() || randomFrom(LIGHTING),
+
+      nailShape: nailShapeCustom.value.trim() || randomFrom(NAIL_SHAPES),
+      nailDesign: nailDesignCustom.value.trim() || randomFrom(NAIL_DESIGNS),
+
       outfit: outfitCustom.value.trim() || randomFrom(OUTFITS),
+      accessories: accessoriesCustom.value.trim() || randomFrom(ACCESSORIES),
+
       expression: expressionCustom.value.trim() || expressionSelect.value || randomFrom(EXPRESSIONS),
       micro: microCustom.value.trim() || microSelect.value || randomFrom(MICRO_EXPRESSIONS),
       attitude: attitudeCustom.value.trim() || attitudeSelect.value || randomFrom(ATTITUDES),
       pose: poseCustom.value.trim() || poseSelect.value || randomFrom(POSES),
       prop: propCustom.value.trim() || propSelect.value || randomFrom(PROPS),
       scene: sceneCustom.value.trim() || sceneSelect.value || randomFrom(SCENES),
+      background: backgroundCustom.value.trim() || randomFrom(BACKGROUNDS),
       palette: paletteCustom.value.trim() || paletteSelect.value || randomFrom(PALETTES),
+      composition: compositionCustom.value.trim() || randomFrom(COMPOSITIONS),
 
       complexionCustom: complexionCustom.value,
       bodyTypeCustom: bodyTypeCustom.value,
       faceShapeCustom: faceShapeCustom.value,
+
+      extrasCustom: extrasCustom.value,
+      hairColorCustom: hairColorCustom.value,
       hairCustom: hairCustom.value,
+      makeupCustom: makeupCustom.value,
+      lightingCustom: lightingCustom.value,
+
+      nailShapeCustom: nailShapeCustom.value,
+      nailDesignCustom: nailDesignCustom.value,
+
       outfitCustom: outfitCustom.value,
+      accessoriesCustom: accessoriesCustom.value,
+
       expressionCustom: expressionCustom.value,
       microCustom: microCustom.value,
       attitudeCustom: attitudeCustom.value,
       poseCustom: poseCustom.value,
       propCustom: propCustom.value,
       sceneCustom: sceneCustom.value,
-      paletteCustom: paletteCustom.value
+      backgroundCustom: backgroundCustom.value,
+      paletteCustom: paletteCustom.value,
+      compositionCustom: compositionCustom.value
     };
 
     variants.push(`VARIATION ${i + 1}\n\n${buildCharacterPrompt(archetype, options)}`);
