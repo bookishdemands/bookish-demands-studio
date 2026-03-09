@@ -1,6 +1,15 @@
 import { ARCHETYPES } from "./core/archetypes.js";
 import { ARCHETYPE_DNA } from "./character/archetypeDNA.js";
 import { HAIR } from "./character/hair.js";
+import { EXTRAS } from "./character/extras.js";
+import { HAIR_COLORS } from "./character/hairColors.js";
+import { MAKEUP } from "./character/makeup.js";
+import { LIGHTING } from "./character/lighting.js";
+import { NAIL_SHAPES } from "./character/nailShapes.js";
+import { NAIL_DESIGNS } from "./character/nailDesigns.js";
+import { ACCESSORIES } from "./character/accessories.js";
+import { BACKGROUNDS } from "./character/backgrounds.js";
+import { COMPOSITIONS } from "./character/compositions.js";
 import { OUTFITS } from "./character/outfits.js";
 import { EXPRESSIONS } from "./character/expressions.js";
 import { POSES } from "./character/poses.js";
@@ -64,7 +73,26 @@ function getReaderverseSelections() {
     prop: propSelect.value,
     scene: sceneSelect.value,
     palette: paletteSelect.value,
+    extras: extrasSelect.value,
+hairColor: hairColorSelect.value,
+makeup: makeupSelect.value,
+lighting: lightingSelect.value,
+nailShape: nailShapeSelect.value,
+nailDesign: nailDesignSelect.value,
+accessories: accessoriesSelect.value,
+background: backgroundSelect.value,
+composition: compositionSelect.value,
 
+extrasCustom: extrasCustom.value,
+hairColorCustom: hairColorCustom.value,
+makeupCustom: makeupCustom.value,
+lightingCustom: lightingCustom.value,
+nailShapeCustom: nailShapeCustom.value,
+nailDesignCustom: nailDesignCustom.value,
+accessoriesCustom: accessoriesCustom.value,
+backgroundCustom: backgroundCustom.value,
+compositionCustom: compositionCustom.value,
+    
     complexionCustom: complexionCustom.value,
     bodyTypeCustom: bodyTypeCustom.value,
     faceShapeCustom: faceShapeCustom.value,
@@ -87,6 +115,15 @@ function randomizeCharacterOptions(baseSelections = {}) {
     bodyType: baseSelections.bodyTypeCustom?.trim() || randomFrom(BODY_TYPES),
     faceShape: baseSelections.faceShapeCustom?.trim() || randomFrom(FACE_SHAPES),
     hair: baseSelections.hairCustom?.trim() || randomFrom(HAIR),
+    extras: baseSelections.extrasCustom?.trim() || randomFrom(EXTRAS),
+hairColor: baseSelections.hairColorCustom?.trim() || randomFrom(HAIR_COLORS),
+makeup: baseSelections.makeupCustom?.trim() || randomFrom(MAKEUP),
+lighting: baseSelections.lightingCustom?.trim() || randomFrom(LIGHTING),
+nailShape: baseSelections.nailShapeCustom?.trim() || randomFrom(NAIL_SHAPES),
+nailDesign: baseSelections.nailDesignCustom?.trim() || randomFrom(NAIL_DESIGNS),
+accessories: baseSelections.accessoriesCustom?.trim() || randomFrom(ACCESSORIES),
+background: baseSelections.backgroundCustom?.trim() || randomFrom(BACKGROUNDS),
+composition: baseSelections.compositionCustom?.trim() || randomFrom(COMPOSITIONS),
     outfit: baseSelections.outfitCustom?.trim() || randomFrom(OUTFITS),
     expression: baseSelections.expressionCustom?.trim() || randomFrom(EXPRESSIONS),
     micro: baseSelections.microCustom?.trim() || randomFrom(MICRO_EXPRESSIONS),
@@ -169,7 +206,25 @@ document.addEventListener("DOMContentLoaded", () => {
   const propSelect = document.getElementById("propSelect");
   const sceneSelect = document.getElementById("sceneSelect");
   const paletteSelect = document.getElementById("paletteSelect");
+  const extrasSelect = document.getElementById("extrasSelect");
+const hairColorSelect = document.getElementById("hairColorSelect");
+const makeupSelect = document.getElementById("makeupSelect");
+const lightingSelect = document.getElementById("lightingSelect");
+const nailShapeSelect = document.getElementById("nailShapeSelect");
+const nailDesignSelect = document.getElementById("nailDesignSelect");
+const accessoriesSelect = document.getElementById("accessoriesSelect");
+const backgroundSelect = document.getElementById("backgroundSelect");
+const compositionSelect = document.getElementById("compositionSelect");
 
+const extrasCustom = document.getElementById("extrasCustom");
+const hairColorCustom = document.getElementById("hairColorCustom");
+const makeupCustom = document.getElementById("makeupCustom");
+const lightingCustom = document.getElementById("lightingCustom");
+const nailShapeCustom = document.getElementById("nailShapeCustom");
+const nailDesignCustom = document.getElementById("nailDesignCustom");
+const accessoriesCustom = document.getElementById("accessoriesCustom");
+const backgroundCustom = document.getElementById("backgroundCustom");
+const compositionCustom = document.getElementById("compositionCustom");
   const complexionCustom = document.getElementById("complexionCustom");
   const bodyTypeCustom = document.getElementById("bodyTypeCustom");
   const faceShapeCustom = document.getElementById("faceShapeCustom");
@@ -378,7 +433,17 @@ document.addEventListener("DOMContentLoaded", () => {
     fillSelect(propSelect, dna.prop?.length ? dna.prop : PROPS);
     fillSelect(sceneSelect, dna.scene?.length ? dna.scene : SCENES);
     fillSelect(paletteSelect, dna.palette?.length ? dna.palette : PALETTES);
+    fillSelect(extrasSelect, EXTRAS);
+    fillSelect(hairColorSelect, HAIR_COLORS);
+    fillSelect(makeupSelect, MAKEUP);
+    fillSelect(lightingSelect, LIGHTING);
+    fillSelect(nailShapeSelect, NAIL_SHAPES);
+    fillSelect(nailDesignSelect, NAIL_DESIGNS);
+    fillSelect(accessoriesSelect, ACCESSORIES);
+    fillSelect(backgroundSelect, BACKGROUNDS);
+    fillSelect(compositionSelect, COMPOSITIONS);
 
+    
     if (dna.expression?.length) expressionSelect.value = dna.expression[0];
     if (dna.micro?.length) microSelect.value = dna.micro[0];
     if (dna.attitude?.length) attitudeSelect.value = dna.attitude[0];
@@ -410,7 +475,16 @@ document.addEventListener("DOMContentLoaded", () => {
     [
       complexionCustom, bodyTypeCustom, faceShapeCustom, hairCustom, outfitCustom,
       expressionCustom, microCustom, attitudeCustom, poseCustom, propCustom,
-      sceneCustom, paletteCustom
+      sceneCustom, extrasCustom,
+hairColorCustom,
+makeupCustom,
+lightingCustom,
+nailShapeCustom,
+nailDesignCustom,
+accessoriesCustom,
+backgroundCustom,
+compositionCustom,
+      paletteCustom
     ].forEach((input) => {
       if (input) input.value = "";
     });
@@ -440,6 +514,15 @@ document.addEventListener("DOMContentLoaded", () => {
     propSelect.value = "";
     sceneSelect.value = "";
     paletteSelect.value = "";
+    extrasSelect.value = "";
+hairColorSelect.value = "";
+makeupSelect.value = "";
+lightingSelect.value = "";
+nailShapeSelect.value = "";
+nailDesignSelect.value = "";
+accessoriesSelect.value = "";
+backgroundSelect.value = "";
+compositionSelect.value = "";
     clearCharacterCustomInputs();
     output.value = "";
   }
@@ -459,6 +542,15 @@ document.addEventListener("DOMContentLoaded", () => {
     randomizeSelect(propSelect);
     randomizeSelect(sceneSelect);
     randomizeSelect(paletteSelect);
+    randomizeSelect(extrasSelect);
+randomizeSelect(hairColorSelect);
+randomizeSelect(makeupSelect);
+randomizeSelect(lightingSelect);
+randomizeSelect(nailShapeSelect);
+randomizeSelect(nailDesignSelect);
+randomizeSelect(accessoriesSelect);
+randomizeSelect(backgroundSelect);
+randomizeSelect(compositionSelect);
   }
 
   function getCharacterOptions() {
@@ -475,6 +567,25 @@ document.addEventListener("DOMContentLoaded", () => {
       prop: propSelect.value,
       scene: sceneSelect.value,
       palette: paletteSelect.value,
+      extras: extrasSelect.value,
+hairColor: hairColorSelect.value,
+makeup: makeupSelect.value,
+lighting: lightingSelect.value,
+nailShape: nailShapeSelect.value,
+nailDesign: nailDesignSelect.value,
+accessories: accessoriesSelect.value,
+background: backgroundSelect.value,
+composition: compositionSelect.value,
+
+extrasCustom: extrasCustom.value,
+hairColorCustom: hairColorCustom.value,
+makeupCustom: makeupCustom.value,
+lightingCustom: lightingCustom.value,
+nailShapeCustom: nailShapeCustom.value,
+nailDesignCustom: nailDesignCustom.value,
+accessoriesCustom: accessoriesCustom.value,
+backgroundCustom: backgroundCustom.value,
+compositionCustom: compositionCustom.value,
       complexionCustom: complexionCustom.value,
       bodyTypeCustom: bodyTypeCustom.value,
       faceShapeCustom: faceShapeCustom.value,
