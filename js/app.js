@@ -1347,28 +1347,19 @@ applyKindleSelections(presetData);
     const randomProduct =
       pullUnique(availableProducts, randomFrom(STICKER_PRODUCTS)) || randomFrom(STICKER_PRODUCTS);
 
-    const hasLockedMainQuote = !!stickerQuoteInput?.value.trim();
-    const hasLockedMicroQuote = !!stickerMicroQuoteInput?.value.trim();
+    const useMainQuote = Math.random() < 0.5;
 
     let resolvedQuote = "";
     let resolvedMicroQuote = "";
 
-    if (hasLockedMainQuote) {
-      resolvedQuote = stickerQuoteInput.value.trim();
-    } else if (hasLockedMicroQuote) {
-      resolvedMicroQuote = stickerMicroQuoteInput.value.trim();
+    if (useMainQuote) {
+      resolvedQuote =
+        pullUnique(availableMainQuotes, randomFrom(getActiveStickerQuotes())) ||
+        randomFrom(getActiveStickerQuotes());
     } else {
-      const useMainQuote = Math.random() < 0.5;
-
-      if (useMainQuote) {
-        resolvedQuote =
-          pullUnique(availableMainQuotes, randomFrom(getActiveStickerQuotes())) ||
-          randomFrom(getActiveStickerQuotes());
-      } else {
-        resolvedMicroQuote =
-          pullUnique(availableMicroQuotes, randomFrom(STICKER_MICRO_QUOTES)) ||
-          randomFrom(STICKER_MICRO_QUOTES);
-      }
+      resolvedMicroQuote =
+        pullUnique(availableMicroQuotes, randomFrom(STICKER_MICRO_QUOTES)) ||
+        randomFrom(STICKER_MICRO_QUOTES);
     }
 
     const options = {
