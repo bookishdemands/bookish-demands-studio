@@ -1254,14 +1254,29 @@ document.addEventListener("DOMContentLoaded", () => {
   clearStickerBtn?.addEventListener("click", clearSticker);
 
   generateStickerBtn?.addEventListener("click", () => {
-    output.value = buildStickerPrompt(getStickerOptions());
+  try {
+    const currentQuote = stickerQuoteInput?.value.trim() || "";
+    const currentMicro = stickerMicroQuoteInput?.value.trim() || "";
+
+    const resolvedQuote = currentQuote || "";
+    const resolvedMicroQuote = resolvedQuote ? "" : currentMicro;
+
+    const options = {
+      ...getStickerOptions(),
+      quote: resolvedQuote,
+      microQuote: resolvedMicroQuote
+    };
+
+    const prompt = buildStickerPrompt(options);
+
+    output.value = prompt;
     LAST_ROWS = [
       {
         label: "Sticker",
         dropName: "",
         dropTheme: "",
-        quoteReference: stickerQuoteInput?.value || "",
-        prompt: output.value,
+        quoteReference: resolvedQuote || resolvedMicroQuote,
+        prompt,
         caption: "",
         hook: "",
         hashtags: "",
@@ -1269,7 +1284,11 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     ];
     LAST_DROP = null;
-  });
+  } catch (error) {
+    output.value = `STICKER GENERATE ERROR\n\n${error?.message || error}`;
+    alert(`Sticker generate error: ${error?.message || error}`);
+  }
+});
 
   generate5StickerBtn?.addEventListener("click", () => {
   const rendered = [];
@@ -1339,14 +1358,29 @@ document.addEventListener("DOMContentLoaded", () => {
   clearKindleBtn?.addEventListener("click", clearKindle);
 
   generateKindleBtn?.addEventListener("click", () => {
-    output.value = buildKindleInsertPrompt(getKindleOptions());
+  try {
+    const currentQuote = kindleQuoteInput?.value.trim() || "";
+    const currentMicro = kindleMicroQuoteInput?.value.trim() || "";
+
+    const resolvedQuote = currentQuote || "";
+    const resolvedMicroQuote = resolvedQuote ? "" : currentMicro;
+
+    const options = {
+      ...getKindleOptions(),
+      quote: resolvedQuote,
+      microQuote: resolvedMicroQuote
+    };
+
+    const prompt = buildKindleInsertPrompt(options);
+
+    output.value = prompt;
     LAST_ROWS = [
       {
         label: "Kindle Insert",
         dropName: "",
         dropTheme: "",
-        quoteReference: kindleQuoteInput?.value || "",
-        prompt: output.value,
+        quoteReference: resolvedQuote || resolvedMicroQuote,
+        prompt,
         caption: "",
         hook: "",
         hashtags: "",
@@ -1354,7 +1388,11 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     ];
     LAST_DROP = null;
-  });
+  } catch (error) {
+    output.value = `KINDLE GENERATE ERROR\n\n${error?.message || error}`;
+    alert(`Kindle generate error: ${error?.message || error}`);
+  }
+});
 
   generate5KindleBtn?.addEventListener("click", () => {
     const rows = [];
