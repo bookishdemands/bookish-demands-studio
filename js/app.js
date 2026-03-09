@@ -1022,7 +1022,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  output.value = variants.join("\n\n====================\n\n");
+  output.value = variants.join("\n\n━━━━━━━━━━━━━━━━━━━━\n\n");
   LAST_ROWS = rows;
   LAST_DROP = null;
 });
@@ -1254,7 +1254,7 @@ document.addEventListener("DOMContentLoaded", () => {
       rows.push(`STICKER ${i + 1}\n\n${buildStickerPrompt(options)}`);
     }
 
-    output.value = rows.join("\n\n====================\n\n");
+    output.value = rows.rows.join("\n\n━━━━━━━━━━━━━━━━━━━━\n\n");
     LAST_ROWS = rows.map((prompt, index) => ({
       label: `Sticker ${index + 1}`,
       dropName: "",
@@ -1312,7 +1312,7 @@ document.addEventListener("DOMContentLoaded", () => {
       rows.push(`KINDLE INSERT ${i + 1}\n\n${buildKindleInsertPrompt(options)}`);
     }
 
-    output.value = rows.join("\n\n====================\n\n");
+    output.value = rows.rows.join("\n\n━━━━━━━━━━━━━━━━━━━━\n\n");
     LAST_ROWS = rows.map((prompt, index) => ({
       label: `Kindle Insert ${index + 1}`,
       dropName: "",
