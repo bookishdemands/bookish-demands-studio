@@ -12,6 +12,7 @@ export function buildStickerPrompt(options = {}) {
 
   return [
     "PROMPT,",
+    "high detail, polished composition, crisp typography hierarchy, clean edges, premium digital illustration quality",
     "high-end digital sticker illustration",
     "bold die-cut sticker design",
     productName,
