@@ -1466,35 +1466,34 @@ applyKindleSelections(presetData);
     alert(`Kindle generate error: ${error?.message || error}`);
   }
 });
-
-  generate5KindleBtn?.addEventListener("click", () => {
+    generate5KindleBtn?.addEventListener("click", () => {
   const rendered = [];
   const exportRows = [];
-    
+
   const availableMainQuotes = [...KINDLE_QUOTES];
   const availableMicroQuotes = [...KINDLE_MICRO_QUOTES];
-    
+
   for (let i = 0; i < 5; i++) {
     const useMainQuote = Math.random() < 0.5;
 
-let resolvedQuote = "";
-let resolvedMicroQuote = "";
+    let resolvedQuote = "";
+    let resolvedMicroQuote = "";
 
-if (useMainQuote) {
-  resolvedQuote =
-    pullUnique(
-      availableMainQuotes,
-      pullFromBag(KINDLE_QUOTES, "kindle-main")
-    ) ||
-    pullFromBag(KINDLE_QUOTES, "kindle-main");
-} else {
-  resolvedMicroQuote =
-    pullUnique(
-      availableMicroQuotes,
-      pullFromBag(KINDLE_MICRO_QUOTES, "kindle-micro")
-    ) ||
-    pullFromBag(KINDLE_MICRO_QUOTES, "kindle-micro");
-}
+    if (useMainQuote) {
+      resolvedQuote =
+        pullUnique(
+          availableMainQuotes,
+          pullFromBag(KINDLE_QUOTES, "kindle-main")
+        ) ||
+        pullFromBag(KINDLE_QUOTES, "kindle-main");
+    } else {
+      resolvedMicroQuote =
+        pullUnique(
+          availableMicroQuotes,
+          pullFromBag(KINDLE_MICRO_QUOTES, "kindle-micro")
+        ) ||
+        pullFromBag(KINDLE_MICRO_QUOTES, "kindle-micro");
+    }
 
     const options = {
       quote: resolvedQuote,
