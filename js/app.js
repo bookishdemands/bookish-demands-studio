@@ -1150,7 +1150,7 @@ document.addEventListener("DOMContentLoaded", () => {
 applyCharacterSelections(presetData);
 applyStickerSelections(presetData);
 applyKindleSelections(presetData);
-
+});
   deletePresetBtn?.addEventListener("click", () => {
     const name = presetSelect?.value;
     if (!name) {
