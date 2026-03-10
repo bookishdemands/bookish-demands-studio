@@ -1,0 +1,23 @@
+export const DIALOGUE_POV_BANK = {
+  cmere_dialogue: [],
+  female_pov_romance: [],
+  quiet_dangerous_man_noticed_you: [],
+  man_everyone_watches_is_watching_you: [],
+  calm_man_in_corner_cmere: [],
+  man_with_reputation_said_your_name: [],
+  man_who_doesnt_chase_picked_you: [],
+  dangerous_man_interested: [],
+  man_runs_room_tilted_head: [],
+  quiet_one_finally_spoke: [],
+  man_everyone_respects_noticed_you: [],
+  man_with_dangerous_patience: [],
+  man_who_doesnt_repeat_himself: [],
+  calm_man_paying_attention: [],
+  man_who_notices_everything: [],
+  man_with_quiet_authority: [],
+  man_who_already_decided: [],
+  man_who_makes_room_adjust: [],
+  man_who_watches_first: [],
+  man_with_expensive_patience: [],
+  man_who_said_it_quietly: []
+};
